@@ -38,4 +38,4 @@ jobs:
             --cache-control "max-age=86400"
           from: ~/repo/build
           overwrite: true
-          to: 's3://my-s3-bucket-name/prefix'
+          to: 's3://demo.flux.market'
