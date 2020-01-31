@@ -37,6 +37,6 @@ jobs:
       arguments: |
         --acl public-read \
         --cache-control "max-age=86400"
-      from: build
+      from: bucket
       overwrite: true
-      to: 's3://demo.flux.market/'
+      to: 's3://my-s3-bucket-name/prefix'
