@@ -16,7 +16,6 @@ jobs:
       # - image: circleci/mongo:3.4.4
 
     working_directory: ~/repo
-
   steps:
     - checkout
     # Download and cache dependencies
@@ -33,7 +32,6 @@ jobs:
         key: v1-dependencies-{{ checksum "package.json" }}
     # run tests!
     - run: npm run build
-
     - aws-s3/sync:
       arguments: |
         --acl public-read \
