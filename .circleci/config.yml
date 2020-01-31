@@ -17,7 +17,7 @@ jobs:
     working_directory: ~/
 
     steps:
-      - checkout master
+      - checkout
       - npm run build
       # Download and cache dependencies
       - restore_cache:
