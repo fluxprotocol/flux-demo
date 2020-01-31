@@ -124,7 +124,7 @@ function Market({market, marketLoading, accountData, dispatch, contract}) {
 			});
 		}
 		return () => { unmounted = true }
-	})
+	}, [setNoMarketOrder, market, contract, userOrders, accountData.accountId])
 
 	const getAndUpdateUserOrders = () => {
 		market.getUserOrders(contract, accountData.accountId).then(orders => {
@@ -137,7 +137,7 @@ function Market({market, marketLoading, accountData, dispatch, contract}) {
 	}
 
 	const toggleOrderType = () => {
-		setOrderType(orderType == "market" ? "limit" : "market");
+		setOrderType(orderType === "market" ? "limit" : "market");
 	}
 	
 	const updateMarket = () => {
@@ -147,8 +147,8 @@ function Market({market, marketLoading, accountData, dispatch, contract}) {
 	}
 
 	const onInputChange = (field, value) => {
-		if (field == "spend") setSpend(value);
-		else if (field == "odds") setOdds(value);
+		if (field === "spend") setSpend(value);
+		else if (field === "odds") setOdds(value);
 	}
 
 	const ifLastElemIsInputBlur = () => {
@@ -265,7 +265,6 @@ function Market({market, marketLoading, accountData, dispatch, contract}) {
 const mapStateToProps = (state) => ({
 	accountData: state.account,
 	orderType: state.market.orderType,
-	contract: state.near.contract,
 	txLoading: state.market.loading,
 	marketLoading: state.market.marketLoading,
 	contract: state.near.contract

@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
 import { getMarkets } from '../actions/marketsActions';
 import Header from './Header';
 import Markets from './Markets';
 import LoadingScreen from './LoadingScreen';
 import OwnerPortal from './OwnerPortal';
-import Loader from './Loader';
 import styled from 'styled-components';
 
 const AppContainer = styled.div`

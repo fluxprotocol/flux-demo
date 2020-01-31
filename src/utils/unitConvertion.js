@@ -36,6 +36,8 @@ export const fromPayoutDistribution = (payoutDistribution) => {
 		case 5000:
 			result = "invalid";
 			break;
+		default:
+			result = null
 	}
 	return result;
 }

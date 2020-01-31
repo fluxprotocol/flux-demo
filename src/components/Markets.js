@@ -130,7 +130,7 @@ const Markets = ({markets, loading}) => {
 								return (
 									<ClearNav key={i} slide={i}>
 										<li>
-											<a/>
+											<div/>
 										</li>
 									</ClearNav>
 								)
