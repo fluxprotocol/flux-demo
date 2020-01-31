@@ -3,6 +3,8 @@
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
 version: 2.1
+orbs:
+  aws-s3: circleci/aws-s3@1.0.11
 jobs:
   build:
     docker:
@@ -32,17 +34,10 @@ jobs:
       # run tests!
       - run: npm run build
 
-      - run:
-        name: install AWS CLI (first install pip, the Python package manager)
-        command: |
-          apk add --update python python-dev py-pip build-base
-          pip install awscli
-      - deploy:
-          name: deploy to AWS
-          command: |
-            if [ "${CIRCLE_BRANCH}" = "master" ]; then
-              aws s3 sync ~/repo/build \
-              s3://demo.flux.market --delete
-            else
-              echo "Not master branch, dry run only"
-            fi
+      - aws-s3/sync:
+        from: build
+        to: 's3://demo.flux.market/'
+        arguments: |
+          --acl public-read \
+          --cache-control "max-age=86400"
+        overwrite: true
