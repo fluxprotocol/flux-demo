@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import App from '../App';
 import { connect } from 'react-redux';
-// import { getAuthStatus } from '../../actions/authActions';
+import { getAuthStatus } from '../../actions/authActions';
 import LoadingScreen from '../LoadingScreen';
 import { initialize } from '../../actions/nearActions';
 import NearLogin from './NearLogin';
 import { signIn, initializeAccount } from '../../actions/accountActions';
 import EnterAccessToken from './EnterAccessToken';
-import RpcConnector from '../../utils/RpcConnector';
+// import RpcConnector from '../../utils/RpcConnector';
 
 function Authenticate({near, account, dispatch, invalidAccessToken, signedIn, walletAccount, success, loading, error,...props}) {
-	// const [authenticated, setAuthenticated] = useState(false);
-	const [authenticated] = useState(false);
+	const [authenticated, setAuthenticated] = useState(false);
 	const [accountGot, setAccountGot] = useState(false);
 	
 	useEffect(() => {
@@ -24,10 +23,10 @@ function Authenticate({near, account, dispatch, invalidAccessToken, signedIn, wa
 	}
 	
 	if (!authenticated && account !== null) {
-		const RPC = new RpcConnector(window.nearConfig.nodeUrl, account.connection);
-		RPC.sendRpc();
-		// dispatch(getAuthStatus(walletAccount, props.match.params.accessToken, account));
-		// setAuthenticated(true)
+		// const RPC = new RpcConnector(window.nearConfig.nodeUrl, account.connection);
+		// RPC.sendRpc();
+		dispatch(getAuthStatus(walletAccount, props.match.params.accessToken, account));
+		setAuthenticated(true)
 	}
 
 	if (loading) return <LoadingScreen />;
