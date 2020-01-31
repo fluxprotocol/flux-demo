@@ -1,5 +1,3 @@
-// checking weither other branches than master git synced to aws
-
 (function() {
 	const CONTRACT_NAME = 'flux-protocol-alpha';
 	const DEFAULT_ENV = 'development';
