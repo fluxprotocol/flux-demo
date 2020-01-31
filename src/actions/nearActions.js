@@ -32,7 +32,6 @@ const updatedBalance = daiBalance => ({
 
 export const initialize = () => {
 	return async dispatch => {
-		console.log(window.nearConfig);
 		const near = await window.nearlib.connect(Object.assign({ deps: { keyStore: new window.nearlib.keyStores.BrowserLocalStorageKeyStore() } }, window.nearConfig));
 		const walletAccount = new window.nearlib.WalletAccount(near);
 		const accountId = walletAccount.getAccountId();

@@ -178,8 +178,6 @@ function Market({market, marketLoading, accountData, dispatch, contract}) {
 		odds
 	}
 
-	console.log(marketLoading, market.id)
-
 	return (
 		<MarketContainer onClick={ifLastElemIsInputBlur}>
 			{marketLoading === market.id && <Loader />}

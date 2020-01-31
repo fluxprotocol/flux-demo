@@ -109,7 +109,6 @@ function EnterAccessToken({dispatch, accountId, account}) {
 	}
 
 	const onRecaptchaResolved = ( recaptchaToken) => {
-		console.log(inputValue)
 		fetch(`${API_URL}/add_user`, {
 			method: "POST",
 			mode: 'cors',
