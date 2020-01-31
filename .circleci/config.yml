@@ -33,9 +33,9 @@ jobs:
       # run tests!
       - run: npm run build
       - aws-s3/sync:
-        arguments: |
-          --acl public-read \
-          --cache-control "max-age=86400"
-        from: ~/repo/build
-        overwrite: true
-        to: 's3://my-s3-bucket-name/prefix'
+          arguments: |
+            --acl public-read \
+            --cache-control "max-age=86400"
+          from: ~/repo/build
+          overwrite: true
+          to: 's3://my-s3-bucket-name/prefix'
