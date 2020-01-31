@@ -37,7 +37,7 @@ jobs:
         command: |
           apk add --update python python-dev py-pip build-base
           pip install awscli
-      -run:
+      - run:
           name: deploy to AWS
           command: |
             if [ "${CIRCLE_BRANCH}" = "master" ]; then
