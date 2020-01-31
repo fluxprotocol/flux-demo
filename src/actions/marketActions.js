@@ -18,7 +18,6 @@ export const startOrderPlace = (marketId) => ({
 	}
 });
 
-
 export const placeOrder = (account, marketId, outcome, order, updateMarket, getAndUpdateUserOrders, updateUserBalance) => {
 	return dispatch => {
 		const spend = parseInt(dollarsToDai(order.spend));
