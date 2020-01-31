@@ -30,7 +30,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       # run tests!
       - run: npm run build
-      - aws-s3/sync: |
+      - aws-s3/sync:
           if [ "$CIRCLE_BRANCH" = "master" ]; then
               arguments: |
                 --acl public-read \
