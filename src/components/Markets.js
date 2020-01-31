@@ -88,7 +88,6 @@ const Markets = ({markets, loading}) => {
 	let [containerWidth, setContainerWidth] = useState(0)
 	let [containerHeight, setContainerHeight] = useState(0)
 	const marketsContainer = createRef();
-	const mobile = isMobileDevice(); 
 
 	useEffect(() => {
 		let unmounted = false;
@@ -106,7 +105,7 @@ const Markets = ({markets, loading}) => {
 				loading ? 
 				<StyledSpinner /> 
 				:
-				mobile ? 
+				isMobileDevice ? 
 				<Carousel
 				naturalSlideWidth={containerWidth}
 				naturalSlideHeight={containerHeight}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import App from '../App';
 import { connect } from 'react-redux';
-import { getAuthStatus } from '../../actions/authActions';
+// import { getAuthStatus } from '../../actions/authActions';
 import LoadingScreen from '../LoadingScreen';
 import { initialize } from '../../actions/nearActions';
 import NearLogin from './NearLogin';
@@ -10,12 +10,13 @@ import EnterAccessToken from './EnterAccessToken';
 import RpcConnector from '../../utils/RpcConnector';
 
 function Authenticate({near, account, dispatch, invalidAccessToken, signedIn, walletAccount, success, loading, error,...props}) {
-	const [authenticated, setAuthenticated] = useState(false);
+	// const [authenticated, setAuthenticated] = useState(false);
+	const [authenticated] = useState(false);
 	const [accountGot, setAccountGot] = useState(false);
 	
 	useEffect(() => {
 		dispatch(initialize());
-	}, []);
+	}, [dispatch]);
 	
 	if (!accountGot && walletAccount) {
 		dispatch(initializeAccount(near, walletAccount));

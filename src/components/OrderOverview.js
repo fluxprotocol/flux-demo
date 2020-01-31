@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import styled from 'styled-components';
 import OrderViewSwitch from './OrderViewSwitch';
 import Orderbook from './Orderbook';
 
