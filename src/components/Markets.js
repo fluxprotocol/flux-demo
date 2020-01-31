@@ -105,7 +105,7 @@ const Markets = ({markets, loading}) => {
 				loading ? 
 				<StyledSpinner /> 
 				:
-				isMobileDevice ? 
+				isMobileDevice() ? 
 				<Carousel
 				naturalSlideWidth={containerWidth}
 				naturalSlideHeight={containerHeight}
