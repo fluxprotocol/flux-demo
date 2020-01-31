@@ -18,7 +18,6 @@ jobs:
 
     steps:
       - checkout
-      - npm run build
       # Download and cache dependencies
       - restore_cache:
           keys:
