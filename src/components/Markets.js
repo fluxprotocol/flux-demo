@@ -97,7 +97,7 @@ const Markets = ({markets, loading}) => {
 			setContainerHeight(marketsContainer.current.clientHeight);
 		}
 		return () => { unmounted = true };
-	}, []);
+	}, [marketsContainer]);
 
 	return (
 		<MarketsContainer ref={marketsContainer} id="markets-container">
