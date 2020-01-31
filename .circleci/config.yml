@@ -31,9 +31,13 @@ jobs:
       # run tests!
       - run: npm run build
       - aws-s3/sync:
-          arguments: |
-            --acl public-read \
-            --cache-control "max-age=86400"
-          from: ~/repo/build
-          overwrite: true
-          to: 's3://demo.flux.market'
+          if [ "$CIRCLE_BRANCH" = "master" ]; then
+              arguments: |
+                --acl public-read \
+                --cache-control "max-age=86400"
+              from: ~/repo/build
+              overwrite: true
+              to: 's3://demo.flux.market'
+              halt
+          fi
+          
