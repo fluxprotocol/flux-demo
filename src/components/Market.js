@@ -46,8 +46,9 @@ const ButtonSection = styled.div`
   flex-wrap: wrap;
 `;
 const Description = styled.h1`
+	font-size: 20px;
 	color: #310094;
-	padding: 45px 30px;
+	padding: 45px 0px;
 	display: block;
 	margin: 0 auto;
 `
@@ -182,7 +183,7 @@ function Market({market, marketLoading, accountData, dispatch, contract}) {
 		<MarketContainer onClick={ifLastElemIsInputBlur}>
 			{marketLoading === market.id && <Loader />}
 			<AllowanceIndicator allowance={accountData.allowance}/>
-			<Description>{ capitalize(market.description) }?</Description>
+			<Description>{ capitalize(market.description) }</Description>
 			{
 				!market.resoluted ? 
 				<>
