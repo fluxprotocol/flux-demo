@@ -17,7 +17,7 @@ const MarketButton = ({theme, marketOrder, placeOrder, orderType, odds, label, e
 	const Earnings = styled.div`
 		font-size: 18px;
 		width: 100%;
-		text-align: center;
+		text-align: center;		
 		margin-bottom: 5px;
 		color: ${theme};
 	`;
@@ -45,7 +45,8 @@ const MarketButton = ({theme, marketOrder, placeOrder, orderType, odds, label, e
 				onClick={() =>  active && placeOrder(buyPrice) } 
 				type="submit"
 			>
-				{`${label} @ ${ buyPrice}`}
+				{`${label} @ `}
+				<span>{buyPrice}&#162;</span>
 			</Button>
 		</MarketButtonWrapper>
 	)

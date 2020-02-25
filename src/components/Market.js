@@ -195,13 +195,15 @@ function Market({market, marketLoading, accountData, dispatch, contract}) {
 					label = "spend"
 					onChange = {onInputChange}
 					value = {spend}
+					leadingIcon={<div>$</div>}
 					/>
             {
 							orderType === "limit" && (
 								<MarketInput 
-									label = "odds"
+									label = "price"
 									onChange = {onInputChange}
 									value = {odds}
+									leadingIcon={(<div>&#xa2;</div>)}
                 />
               )
             }

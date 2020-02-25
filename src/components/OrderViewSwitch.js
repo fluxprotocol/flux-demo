@@ -6,7 +6,7 @@ const Switch = styled.div`
 	display: block;
 	width: 60%;
 	margin: 0 auto;
-	margin-top: 5%;
+	margin-top: 1%;
 	padding: 0;
 	border-radius: 6px;
 	overflow: hidden;
