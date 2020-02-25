@@ -2,11 +2,11 @@ import React from 'react';
 import TextField, {Input} from '@material/react-text-field';
 
 
-const MarketInput = ({label, onChange, value, leadingIcon}) => {
+const MarketInput = ({title, label, onChange, value, leadingIcon}) => {
 	return (	
 		<TextField 
 			className="material-input"
-			label={label}
+			label={title ? title : label}
 			margin="normal"
 			leadingIcon={leadingIcon}
 		>
