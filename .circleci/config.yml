@@ -29,6 +29,7 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       # run tests!
+      - run: npm install
       - run: npm run build
       - aws-s3/sync:
           arguments: |
