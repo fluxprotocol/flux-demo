@@ -7,6 +7,9 @@ orbs:
   aws-s3: circleci/aws-s3@1.0.15
 jobs:
   build:
+    branches:
+      only:
+        - master
     docker:
       - image: circleci/node:12.9.1-browsers
   
