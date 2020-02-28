@@ -9,7 +9,6 @@ const MarketButton = ({theme, marketOrder, placeOrder, orderType, odds, label, e
 		padding: 25px;
 		border: none;
 		color: white;
-		font-family: 'Gilroy';
 		font-size: 20px;
 		border-radius: 6px;	
 	`;

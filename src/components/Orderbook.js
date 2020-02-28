@@ -8,11 +8,9 @@
 
 // // const Header = styled.div`
 // // 	margin-top: 2%;
-// // 	font-family: "Gilroy";
 // // 	display: flex;
 // // 	justify-content: space-between;
 // // 	width: 100%;
-// // 	font-family: "Gilroy";
 // // `
 // // const CollumnTitle = styled.div`
 // // 	text-align: center;

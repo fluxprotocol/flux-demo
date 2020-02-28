@@ -17,7 +17,6 @@ const SwitchButton = styled.div`
 	text-align: center;
 	padding: 5px 0;
 	color: white;
-	font-family: "Gilroy";
 `
 
 

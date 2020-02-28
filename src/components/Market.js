@@ -71,7 +71,6 @@ const Resolution = styled.span`
 const ClaimButton = styled.button`
 	background-color: ${BLUE};
 	color: white;
-	font-family: "Gilroy";
 	border-radius: 6px;
 	padding: 15px;
 	font-size: 16px;

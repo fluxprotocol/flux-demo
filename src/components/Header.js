@@ -30,7 +30,6 @@ const LoginButton = styled.button`
 	align-self: center;
 	color: white;
 	background-color: #FF009C;
-	font-family: "Gilroy";
 	border: none;
 	border-radius: 6px;
 	padding: 8px 15px;
@@ -39,7 +38,7 @@ const LoginButton = styled.button`
 
 const AccountInfoContainer = styled.div`
 	width: 40%;
-	font-family: "Lato-bold";
+	font-weight: 600;
 	line-height: 140%;
 `
 
