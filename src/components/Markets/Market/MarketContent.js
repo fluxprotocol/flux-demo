@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Countdown from 'react-countdown-now';
 import CountdownTimer from './CountdownTimer.js';
 import { capitalize } from '../../../utils/stringManipulation';
-import { DARK_BLUE } from '../../../constants';
+import { DARK_BLUE, LIGHT_GRAY} from '../../../constants';
 import { moreThanWeekFromNow } from '../../../utils/dateUtils.js';
 import EndDate from './EndDate.js';
 import ExtraInfo from './ExtraInfo.js';
@@ -38,6 +38,36 @@ const PositionsButton = styled.p`
 	text-align: center;
 `;
 
+const HeaderSection = styled.div`
+	color: ${LIGHT_GRAY};
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: calc(100% - 30px);
+	padding: 0 15px;
+	margin: auto;
+`;
+
+const Header = styled.p`
+	font-size: 10px;
+	font-weight: 900;
+	margin: 0;
+	padding: 0;
+`
+
+const FirstHeader = styled(Header)`
+	width: 50%;
+	text-align: left;
+`;
+
+const SecondHeader = styled(Header)`
+	width: 25%;
+	text-align: center;
+`;
+const ThirdHeader = styled(Header)`
+	width: 25%;
+	text-align: right;
+`;
 
 const MarketContent = ({market}) => {
 	const { end_time, description, outcomes, outcome_tags, extra_info } = market;
@@ -65,6 +95,12 @@ const MarketContent = ({market}) => {
 				{ capitalize(description) }
 				<ExtraInfo data={extra_info}/>
 			</Description>
+			
+			<HeaderSection>
+				<FirstHeader>contract</FirstHeader>
+				<SecondHeader>last price traded</SecondHeader>
+				<ThirdHeader>market price</ThirdHeader>
+			</HeaderSection>
 			<ButtonSection>
 				{buttons}
 			</ButtonSection>

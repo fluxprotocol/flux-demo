@@ -22,7 +22,7 @@ const MoveUp = keyframes`
 
 const ModalContainer = styled.div`
 	background-color: white;
-	position: absolute;
+	position: fixed;
 	bottom: 0;
 	height: 30vh;
 	width: 90%;
@@ -33,7 +33,7 @@ const ModalContainer = styled.div`
 `
 
 const Blackground = styled.div`
-	position: absolute;
+	position: fixed;
 	width: 100vw;
 	height: 100vh;
 	top: 0;
