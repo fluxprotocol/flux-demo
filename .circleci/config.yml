@@ -38,3 +38,11 @@ jobs:
           from: ~/repo/build
           overwrite: true
           to: 's3://demo.flux.market'
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: master 
