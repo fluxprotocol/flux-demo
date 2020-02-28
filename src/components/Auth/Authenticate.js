@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import App from '../App';
 import { connect } from 'react-redux';
 import { getAuthStatus } from '../../actions/authActions';
-import LoadingScreen from '../LoadingScreen';
 import { initialize } from '../../actions/nearActions';
 import NearLogin from './NearLogin';
 import { signIn, initializeAccount } from '../../actions/accountActions';
@@ -29,12 +28,11 @@ function Authenticate({near, account, dispatch, invalidAccessToken, signedIn, wa
 		setAuthenticated(true)
 	}
 
-	if (loading) return <LoadingScreen />;
 	if (signedIn === false) return <NearLogin login={() => signIn(walletAccount)}/>
 	if (invalidAccessToken) return <EnterAccessToken account={account} accountId={walletAccount.getAccountId()}/>
-	if (success) return <App />;
 	if (error) return <div>{error}</div>
-	else return <LoadingScreen />;
+	else return <App />;
+
 }
 
 const mapStateToProps = state => ({

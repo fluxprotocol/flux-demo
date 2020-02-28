@@ -12,23 +12,45 @@ const ShowHideButton = styled.button``;
 
 const OwnerPortal = ({markets, contract, dispatch, account}) => {
 	const [description, setDescription] = useState('new market');
+	const [extraInfo, setExtraInfo] = useState('');
+	const [outcomes, setOutcomes] = useState(2);
 	const [endTime, setEndtime] = useState(new Date(new Date().setDate(new Date().getDate() + 1)));
 	const [show, toggleShow] = useState(false);
+	let outcomeTags = [];
+	let outcomeTagInputs = [];
+
+	if (outcomes > 2) {
+		for (let i = 0; i < outcomes; i++ ) {	
+			outcomeTagInputs.push(
+				<input
+					key={i}
+					type="text"
+					placeholder={`outcome tag: ${i}`}
+					onChange={event => {
+						outcomeTags[i] = event.target.value;
+					}} 
+				/>
+			)
+		}
+	}
+
 
 	const getMarkets = () => {
 		dispatch(updateMarkets(contract));
 	}
 	const createMarket = async (e) => {
-		console.log("creating market...")
+		console.log("creating market...");
 		e.preventDefault();
-		// Only access to allowance
+		console.log(outcomeTags)
 		account.functionCall(
 			window.nearConfig.contractName,
 			"create_market",
 			{
-				outcomes: 2,
-				description: description,
-				end_time: endTime.getTime()
+				description,
+				extra_info: extraInfo,
+				outcomes: parseInt(outcomes),
+				outcome_tags: outcomeTags,
+				end_time: endTime.getTime() + 1000000
 			},
 			new BN("10000000000000"),
 			new BN("0")
@@ -48,6 +70,19 @@ const OwnerPortal = ({markets, contract, dispatch, account}) => {
 						value={description}
 						onChange={event => setDescription(event.target.value)} 
 					/>
+					<input
+						type="text"
+						value={extraInfo}
+						placeholder="extra info"
+						onChange={event => setExtraInfo(event.target.value)} 
+					/>
+					<input
+						type="text"
+						value={outcomes}
+						onChange={event => setOutcomes(event.target.value)} 
+					/>
+
+					{outcomeTagInputs}
 
 					<label>end time:</label>
 					<DateTimePicker

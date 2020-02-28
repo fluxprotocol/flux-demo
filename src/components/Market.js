@@ -216,7 +216,7 @@ function Market({market, marketLoading, accountData, dispatch, contract}) {
 					/>
 
 
-					<OrderOverview marketId={market.id} userOrders={userOrders}/>
+					{/* <OrderOverview marketId={market.id} userOrders={userOrders}/> */}
 
 					<ButtonSection>
 						<MarketButton 
