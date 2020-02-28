@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
 import { getMarkets } from '../actions/marketsActions';
 import Header from './Header';
-import Markets from './Markets';
+import Markets from './Markets/Markets';
 import OwnerPortal from './OwnerPortal';
 import styled from 'styled-components';
 
@@ -11,7 +11,7 @@ const AppContainer = styled.div`
 
 `
 
-
+// TODO: send a notification if gas runs low, the user needs to login and out
 function App({contract, dispatch, owner, accountId}) {
   useEffect(() => {
     if (contract) {
@@ -23,7 +23,7 @@ function App({contract, dispatch, owner, accountId}) {
     <AppContainer >
       {
         <>
-          {(owner && accountId) && owner === accountId && <OwnerPortal/> }
+          {/* {(owner && accountId) && owner === accountId && <OwnerPortal/> } */}
           <Header />
           <Markets />
         </>
