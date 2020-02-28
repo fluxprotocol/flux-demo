@@ -1,9 +1,11 @@
-import { START_ORDER_PLACE, PLACED_ORDER } from '../actions/marketActions'
+import { START_ORDER_PLACE, PLACED_ORDER, GET_ORDER_MODAL } from '../actions/marketActions'
 
 const initialState = {
 	loading: false,
 	marketLoading: null,
 	status: null,
+	selectedMarket: null,
+	selectedOutcome: null
 }
 
 export default function marketReducer(state = initialState, action) {
@@ -15,6 +17,12 @@ export default function marketReducer(state = initialState, action) {
 				status: null,
 				marketLoading: action.payload.marketId
 			};
+		case GET_ORDER_MODAL:
+			return {
+				...state,
+				selectedMarket: action.payload.market,
+				selectedOutcome: action.payload.outcome,
+			}
 		case PLACED_ORDER: 
 			return {
 				...state, 

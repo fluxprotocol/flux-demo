@@ -17,11 +17,16 @@ const Logo = styled.img`
 
 const HeaderContainer = styled.header`
 	display: flex;
+	position: fixed;
+	z-index: 99;
+	background-color: white;
 	justify-content: space-between;
 	vertical-align: middle;
 	align-items: center;
 	padding: 2% 5%;
 	font-weight: bold;
+	top: 0;
+	max-height: 70px;
 	width: 90%;
 	border-bottom: 1px solid ${DARK_GRAY};
 	box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.25);

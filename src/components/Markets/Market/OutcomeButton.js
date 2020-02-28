@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { DARK_BLUE, PINK, BLUE } from '../../../constants';
+import { getOrderModal } from '../../../actions/marketActions';
+import { connect } from 'react-redux';
 
-const OutcomeButton = ({label, binary, index}) => {
+const OutcomeButton = ({label, binary, index, market, dispatch}) => {
 	const color = binary ? index === 0 ? PINK : BLUE : DARK_BLUE;
 	// const active = (marketOrder && orderType === "market") || (orderType === "limit") ? true : false;
 	const Button = styled.button`
@@ -48,16 +50,16 @@ const OutcomeButton = ({label, binary, index}) => {
 	return (
 
 		<Button 
-			// onClick={() =>  active && placeOrder(buyPrice) } 
+			onClick={() => dispatch(getOrderModal(market, index))} 
 			type="submit"
 		>
 			<Label>{label}</Label>
 			<LastTradedPrice>71¢</LastTradedPrice>
 			<MarketPrice>73¢</MarketPrice>
-			{/* <span>{buyPrice}&#162;</span> */}
 		</Button>
 
 	)
 }
+const mapDispatchToProps = (dispatch) => ({dispatch});
 
-export default OutcomeButton;
+export default connect(null, mapDispatchToProps)(OutcomeButton);

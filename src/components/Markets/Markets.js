@@ -6,9 +6,10 @@ import Spinner from '../Spinner';
 
 const MarketsContainer = styled.div`
   width: 100%;
-  height: 85vh;
   display: block;
   margin: 0 auto;
+	margin-top: 80px;
+	margin-bottom: 30px;
 `
 
 const StyledSpinner  = styled(Spinner)`

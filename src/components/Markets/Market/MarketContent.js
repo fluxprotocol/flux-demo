@@ -47,11 +47,11 @@ const MarketContent = ({market}) => {
 	// TODO: check if 2 outcomes, if so then create binary market colors with yesno
 	if (outcomes > 2) {
 		buttons = outcome_tags.map((tag, i) => (
-			<OutcomeButton label={tag} key={i} />
+			<OutcomeButton market={market} label={tag} index={i} key={i} />
 		));
 	} else {
 		for (let i = 0; i < 2; i++) {
-			buttons.push(<OutcomeButton label={i === 0 ? "NO" : "YES" } binary index={i} key={i} />)
+			buttons.push(<OutcomeButton market={market} label={i === 0 ? "NO" : "YES" } binary index={i} key={i} />)
 		}
 	}
 	return (
@@ -61,8 +61,8 @@ const MarketContent = ({market}) => {
 					moreThanWeekFromNow(end_time) ? <EndDate endTime={end_time}/> : 	<Countdown zeroPadTime={2} date={end_time} renderer={CountdownTimer} />
 				}
 			</TimeIndicator>
-			<Description>{ 
-				capitalize(description) }
+			<Description>
+				{ capitalize(description) }
 				<ExtraInfo data={extra_info}/>
 			</Description>
 			<ButtonSection>

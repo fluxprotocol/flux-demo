@@ -2,6 +2,7 @@ import BN from 'bn.js';
 import { dollarsToDai } from '../utils/unitConvertion';
 export const PLACED_ORDER = "PLACED_ORDER";
 export const START_ORDER_PLACE = "START_ORDER_PLACE";
+export const GET_ORDER_MODAL = "GET_ORDER_MODAL";
 
 export const placedOrder = result => ({
 	type: PLACED_ORDER,
@@ -17,10 +18,17 @@ export const startOrderPlace = (marketId) => ({
 	}
 });
 
+export const getOrderModal = (market, outcome) => ({
+	type: GET_ORDER_MODAL,
+	payload: {
+		market,
+		outcome
+	}
+})
+
 export const placeOrder = (account, marketId, outcome, order, updateMarket, getAndUpdateUserOrders, updateUserBalance) => {
 	return dispatch => {
 		const spend = parseInt(dollarsToDai(order.spend));
-		console.log(marketId)
 		dispatch(startOrderPlace(marketId));
 		try {
 			account.functionCall(

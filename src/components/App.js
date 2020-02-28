@@ -5,6 +5,7 @@ import Header from './Header';
 import Markets from './Markets/Markets';
 import OwnerPortal from './OwnerPortal';
 import styled from 'styled-components';
+import OrderModal from './Markets/Market/OrderModal';
 
 const AppContainer = styled.div`
 
@@ -26,6 +27,7 @@ function App({contract, dispatch, owner, accountId}) {
           {/* {(owner && accountId) && owner === accountId && <OwnerPortal/> } */}
           <Header />
           <Markets />
+          <OrderModal />
         </>
       }
     </AppContainer>
@@ -35,7 +37,8 @@ function App({contract, dispatch, owner, accountId}) {
 const mapStateToProps = (state) => ({
   contract: state.near.contract,
   owner: state.near.owner,
-  accountId: state.account.accountId
+  accountId: state.account.accountId,
+
 });
 
 
