@@ -6,12 +6,12 @@ import { initialize } from '../../actions/nearActions';
 import NearLogin from './NearLogin';
 import { signIn, initializeAccount } from '../../actions/accountActions';
 import EnterAccessToken from './EnterAccessToken';
+import Loader from './../Loader';
 // import RpcConnector from '../../utils/RpcConnector';
 
 function Authenticate({near, account, dispatch, invalidAccessToken, signedIn, walletAccount, success, loading, error,...props}) {
 	const [authenticated, setAuthenticated] = useState(false);
 	const [accountGot, setAccountGot] = useState(false);
-	
 	useEffect(() => {
 		dispatch(initialize());
 	}, [dispatch]);
@@ -31,7 +31,11 @@ function Authenticate({near, account, dispatch, invalidAccessToken, signedIn, wa
 	if (signedIn === false) return <NearLogin login={() => signIn(walletAccount)}/>
 	if (invalidAccessToken) return <EnterAccessToken account={account} accountId={walletAccount.getAccountId()}/>
 	if (error) return <div>{error}</div>
-	else return <App />;
+	if (success) return <App />
+	else {
+		console.log("were here");
+		return <Loader txLoading={true}/>;
+	}
 
 }
 

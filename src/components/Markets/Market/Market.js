@@ -30,10 +30,9 @@ const MarketContainer = styled.div`
 
 `;
 
-function Market({market, marketLoading}) {
+function Market({market}) {
 	return (
 		<MarketContainer >
-			{marketLoading === market.id && <Loader />}
 			{
 				!market.resoluted ? <MarketContent market={market}/> : <ResolutedSection />
 			}
