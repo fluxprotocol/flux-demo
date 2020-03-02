@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { getMarkets } from '../actions/marketsActions';
 import Header from './Header';
 import Markets from './Markets/Markets';
-import OwnerPortal from './OwnerPortal';
+import OwnerPortal from './OwnerPortal/OwnerPortal';
 import styled from 'styled-components';
 import OrderModal from './Markets/Market/OrderModal';
 

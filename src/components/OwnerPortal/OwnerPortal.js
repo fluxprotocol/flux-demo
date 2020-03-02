@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import OwnerPortalMarket from './OwnerPortalMarket';
 import DateTimePicker from 'react-datetime-picker';
 import { connect } from 'react-redux';
-import { updateMarkets } from '../actions/marketsActions';
+import { updateMarkets } from '../../actions/marketsActions';
 import BN from 'bn.js';
 
 const OwnerPortalContainer = styled.div`
