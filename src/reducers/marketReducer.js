@@ -1,15 +1,20 @@
-import { START_ORDER_PLACE, PLACED_ORDER, GET_ORDER_MODAL } from '../actions/marketActions'
+import { START_ORDER_PLACE, PLACED_ORDER, GET_ORDER_MODAL, ORDER_CANCELED } from '../actions/marketActions'
 
 const initialState = {
 	loading: false,
 	res: null,
 	selectedMarket: null,
 	selectedOutcome: null,
-	marketPrice: null
+	marketPrice: null,
+	orderCanceled: true,
 }
 
 export default function marketReducer(state = initialState, action) {
 	switch(action.type) {
+		case ORDER_CANCELED:
+			return{
+				...state
+		}
 		case START_ORDER_PLACE: 
 			return {
 				...state,

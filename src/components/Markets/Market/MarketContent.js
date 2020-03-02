@@ -8,25 +8,28 @@ import { moreThanWeekFromNow } from '../../../utils/dateUtils.js';
 import EndDate from './EndDate.js';
 import ExtraInfo from './ExtraInfo.js';
 import OutcomeButton from './OutcomeButton.js';
+import UserPositions from './UserPositions/UserPositions.js';
 
 const ButtonSection = styled.div`
   width: 100%;
 `;
-const Description = styled.h1`
+
+export const Description = styled.h1`
 	font-size: 24px;
 	color: ${DARK_BLUE};
-	padding-top: 70px;
+	padding-top: 55px;
 	display: block;
 	font-weight: 500;
 	margin: 0 auto;
 `
 
-const TimeIndicator = styled.span`
-  position: absolute;
-  top: 10px;
+export const TimeIndicator = styled.span`
 	font-size: 12px;
-  right: 5%;
   color: ${DARK_BLUE};
+	display: block;
+	width: 100%;
+	text-align: right;
+	padding-top: 18px;
 `;
 
 const PositionsButton = styled.p`
@@ -38,7 +41,7 @@ const PositionsButton = styled.p`
 	text-align: center;
 `;
 
-const HeaderSection = styled.div`
+export const HeaderSection = styled.div`
 	color: ${LIGHT_GRAY};
 	display: flex;
 	justify-content: space-between;
@@ -48,7 +51,7 @@ const HeaderSection = styled.div`
 	margin: auto;
 `;
 
-const Header = styled.p`
+export const Header = styled.p`
 	font-size: 10px;
 	font-weight: 900;
 	margin: 0;
@@ -71,8 +74,10 @@ const ThirdHeader = styled(Header)`
 
 const MarketContent = ({market}) => {
 	const [marketOrders, setMarketOrders] = useState([]);
-	const { end_time, description, outcomes, outcome_tags, extra_info } = market;
 
+	const [showPositions, setShowPositions] = useState(false);
+
+	const { end_time, description, outcomes, outcome_tags, extra_info } = market;
 	useEffect(() => {
 		let unmounted = false; // new stuff here
 
@@ -114,8 +119,8 @@ const MarketContent = ({market}) => {
 			<ButtonSection>
 				{buttons}
 			</ButtonSection>
-
-				<PositionsButton>my positions</PositionsButton>
+			{showPositions && <UserPositions market={market} closeModal={() => setShowPositions(false)}/>}
+			<PositionsButton onClick={() => setShowPositions(true)}>my positions</PositionsButton>
 		</div>
 	);
 };

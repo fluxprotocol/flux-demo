@@ -44,9 +44,9 @@ const Text = styled.p`
 	padding-bottom: 45px;
 	color: ${DARK_BLUE};
 `;
+
 const BoldText = styled.span`
 	font-weight: bold;
-
 `;
 export default function OrderLoader({amountOfShares}) {
 

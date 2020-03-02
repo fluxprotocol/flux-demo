@@ -9,7 +9,7 @@ const MarketContainer = styled.div`
   width: 90%;
   padding: 0 5%;
 	margin-top: 25px;
-  position: relative;
+  position: static;
 	color: ${DARK_BLUE};
   display: block;
   background-color: white;

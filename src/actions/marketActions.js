@@ -3,6 +3,7 @@ import { dollarsToDai } from '../utils/unitConvertion';
 export const PLACED_ORDER = "PLACED_ORDER";
 export const START_ORDER_PLACE = "START_ORDER_PLACE";
 export const GET_ORDER_MODAL = "GET_ORDER_MODAL";
+export const ORDER_CANCELED = "ORDER_CANCELED";
 
 export const placedOrder = res => ({
 	type: PLACED_ORDER,
@@ -25,7 +26,11 @@ export const getOrderModal = (market, outcome, marketPrice) => ({
 		outcome,
 		marketPrice: marketPrice,
 	}
-})
+});
+
+export const orderCanceled = () => ({
+	type: ORDER_CANCELED
+});
 
 export const placeOrder = (account, marketId, outcome, price, spend, updateUserBalance) => {
 	return dispatch => {
@@ -47,6 +52,27 @@ export const placeOrder = (account, marketId, outcome, price, spend, updateUserB
 			updateUserBalance();
 		}).catch(err => {
 			dispatch(placedOrder(false));
+			console.error(err);
+		});
+	}
+}
+
+export const cancelOrder = (account, marketId, outcome, orderId, updateUserBalance) => {
+	return dispatch => {
+		account.functionCall(
+			window.nearConfig.contractName, 
+			"cancel_order", 
+			{
+				market_id: marketId,
+				outcome,
+				order_id: orderId,
+			},
+			new BN("100000000000000"),
+			new BN("0")
+		).then(res => {
+			dispatch(orderCanceled());
+			updateUserBalance();
+		}).catch(err => {
 			console.error(err);
 		});
 	}

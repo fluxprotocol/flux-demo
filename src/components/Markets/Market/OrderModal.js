@@ -13,7 +13,6 @@ function OrderModal({market, outcome, marketPrice, dispatch, account, accountId,
 	const dispatchPlaceOrder = (price, spend) => {
 		dispatch(placeOrder(account, market.id, outcome, price, spend, callUpdateBalance))
 	};
-	console.log( "actual amount of shares", amountOfShares);
 	return (
 		 
 	 	market && (

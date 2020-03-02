@@ -10,6 +10,7 @@ const OwnerPortalContainer = styled.div`
 	position: absolute;
 	top: 250px;
 	left: 50px;
+	background-color: white;
 `;
 const ShowHideButton = styled.button`
 	position: absolute;
@@ -22,7 +23,7 @@ const OwnerPortal = ({markets, contract, dispatch, account}) => {
 	const [extraInfo, setExtraInfo] = useState('');
 	const [outcomes, setOutcomes] = useState(2);
 	const [endTime, setEndtime] = useState(new Date(new Date().setDate(new Date().getDate() + 1)));
-	const [show, toggleShow] = useState(false);
+	const [show, toggleShow] = useState(true);
 	let outcomeTags = [];
 	let outcomeTagInputs = [];
 
