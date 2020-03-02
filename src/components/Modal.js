@@ -12,7 +12,7 @@ const FadeIn = keyframes`
 
 const MoveUp = keyframes`
 	from {
-		bottom: -30vh;
+		bottom: -40vh;
 	}
 	to {
 		bottom: 0;
@@ -24,12 +24,11 @@ const ModalContainer = styled.div`
 	background-color: white;
 	position: fixed;
 	bottom: 0;
-	height: 30vh;
 	width: 90%;
 	z-index: 102;
 	animation: ${MoveUp} 500ms linear;
 	padding: 0 5%;
-
+	padding-bottom: 18px;
 `
 
 const Blackground = styled.div`

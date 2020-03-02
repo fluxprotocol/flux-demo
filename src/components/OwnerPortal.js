@@ -7,8 +7,15 @@ import { updateMarkets } from '../actions/marketsActions';
 import BN from 'bn.js';
 
 const OwnerPortalContainer = styled.div`
+	position: absolute;
+	top: 250px;
+	left: 50px;
 `;
-const ShowHideButton = styled.button``;
+const ShowHideButton = styled.button`
+	position: absolute;
+	top: 250px;
+	left: 50px;
+`;
 
 const OwnerPortal = ({markets, contract, dispatch, account}) => {
 	const [description, setDescription] = useState('new market');
@@ -41,7 +48,6 @@ const OwnerPortal = ({markets, contract, dispatch, account}) => {
 	const createMarket = async (e) => {
 		console.log("creating market...");
 		e.preventDefault();
-		console.log(outcomeTags)
 		account.functionCall(
 			window.nearConfig.contractName,
 			"create_market",

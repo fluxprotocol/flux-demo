@@ -1,53 +1,33 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
 import Modal from './../../Modal';
 import { connect } from 'react-redux';
-import { getOrderModal } from '../../../actions/marketActions';
-import { PINK, DARK_BLUE } from '../../../constants';
+import { getOrderModal, placeOrder } from '../../../actions/marketActions';
+import PlaceOrder from './PlaceOrder';
+import { updateBalance } from '../../../actions/nearActions';
+import OrderRes from './OrderRes';
+import OrderLoader from './OrderLoader';
 
-const CancelButton = styled.p`
-	color: ${PINK};
-	font-size: 18px;
-	font-weight: lighter;
-	text-decoration: underline;
-	text-align: right;
-`
-
-const Row = styled.div`
-	width: 100%;
-	font-size: 18px;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	border-bottom: 1px solid ${DARK_BLUE};
-`
-
-const Value = styled.span`
-	font-weight: bold;
-`
-
-function OrderModal({selectedMarket, selectedOutcome, dispatch}) {
-	let outcome;
-	if (selectedMarket) {
-		const outcomeTagExists = !!selectedMarket.outcome_tags[selectedOutcome];
-		outcome = outcomeTagExists ? selectedMarket.outcome_tags[selectedOutcome] : selectedOutcome === 0 ? "NO" : "YES";
-	}
+function OrderModal({market, outcome, marketPrice, dispatch, account, accountId, contract, loading, amountOfShares, orderRes}) {
+	const closeModal = () => dispatch(getOrderModal(null, null, null));
+	const callUpdateBalance = () => dispatch(updateBalance(contract, accountId));
+	const dispatchPlaceOrder = (price, spend) => {
+		dispatch(placeOrder(account, market.id, outcome, price, spend, callUpdateBalance))
+	};
+	console.log( "actual amount of shares", amountOfShares);
 	return (
-	 	selectedMarket && (
-		 	<Modal blackground={true} onBlackgroundClick={() => dispatch(getOrderModal(null, null))}>
-				 <CancelButton>cancel</CancelButton>
-				 <Row>
-					 <p>contract:</p>
-					 <Value>{outcome}</Value>
-				 </Row>
-				 <Row>
-					 <p>price:</p>
-					 <Value>{outcome}</Value>
-				 </Row>
-				 <Row>
-					 <p>contract:</p>
-					 <Value>{outcome}</Value>
-				 </Row>
+		 
+	 	market && (
+		 	<Modal blackground={true} onBlackgroundClick={loading ? () => {} : closeModal}>
+				{
+					!loading && orderRes !== null ?
+					<OrderRes closeModal={closeModal} res={orderRes} amountOfShares={amountOfShares}/>
+					:
+					loading 
+					?
+					<OrderLoader amountOfShares={amountOfShares}/>
+					:
+					<PlaceOrder closeModal={closeModal} market={market} placeOrder={dispatchPlaceOrder} marketPrice={marketPrice} outcome={outcome} />
+				}
 			</Modal>
 		)
 	);
@@ -56,8 +36,14 @@ function OrderModal({selectedMarket, selectedOutcome, dispatch}) {
 
 
 const mapStateToProps = (state) => ({
-	selectedMarket: state.market.selectedMarket,
-	selectedOutcome: state.market.selectedOutcome,
-
+	market: state.market.selectedMarket,
+	outcome: state.market.selectedOutcome,
+	loading: state.market.loading,
+	orderRes: state.market.res,
+	amountOfShares: state.market.amountOfShares,
+	marketPrice: state.market.marketPrice,
+	account: state.account.account,
+	accountId: state.account.accountId,
+	contract: state.near.contract,
 });
 export default connect(mapStateToProps)(OrderModal);

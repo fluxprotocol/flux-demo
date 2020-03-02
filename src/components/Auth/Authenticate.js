@@ -33,7 +33,6 @@ function Authenticate({near, account, dispatch, invalidAccessToken, signedIn, wa
 	if (error) return <div>{error}</div>
 	if (success) return <App />
 	else {
-		console.log("were here");
 		return <Loader txLoading={true}/>;
 	}
 

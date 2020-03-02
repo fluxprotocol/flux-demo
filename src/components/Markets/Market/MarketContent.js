@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Countdown from 'react-countdown-now';
 import CountdownTimer from './CountdownTimer.js';
@@ -70,18 +70,28 @@ const ThirdHeader = styled(Header)`
 `;
 
 const MarketContent = ({market}) => {
+	const [marketOrders, setMarketOrders] = useState([]);
 	const { end_time, description, outcomes, outcome_tags, extra_info } = market;
-	
-	let buttons = [];
 
-	// TODO: check if 2 outcomes, if so then create binary market colors with yesno
+	useEffect(() => {
+		let unmounted = false; // new stuff here
+
+		market.getMarketPrices().then(marketOrders => {
+			if (!unmounted) setMarketOrders(marketOrders)}
+		);
+		return () => {
+      unmounted = true; // new stuff here
+    };
+	}, [])
+
+	let buttons = [];
 	if (outcomes > 2) {
 		buttons = outcome_tags.map((tag, i) => (
-			<OutcomeButton market={market} label={tag} index={i} key={i} />
+			<OutcomeButton market={market} label={tag} price={marketOrders[i]} index={i} key={i} />
 		));
 	} else {
 		for (let i = 0; i < 2; i++) {
-			buttons.push(<OutcomeButton market={market} label={i === 0 ? "NO" : "YES" } binary index={i} key={i} />)
+			buttons.push(<OutcomeButton market={market} price={marketOrders[i]} label={i === 0 ? "NO" : "YES" } binary index={i} key={i} />)
 		}
 	}
 	return (

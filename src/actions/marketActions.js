@@ -4,56 +4,51 @@ export const PLACED_ORDER = "PLACED_ORDER";
 export const START_ORDER_PLACE = "START_ORDER_PLACE";
 export const GET_ORDER_MODAL = "GET_ORDER_MODAL";
 
-export const placedOrder = result => ({
+export const placedOrder = res => ({
 	type: PLACED_ORDER,
 	payload: {
-		result,
+		res
 	}
 })
 
-export const startOrderPlace = (marketId) => ({
+export const startOrderPlace = (amountOfShares) => ({
 	type: START_ORDER_PLACE,
 	payload: {
-		marketId,
+		amountOfShares
 	}
 });
 
-export const getOrderModal = (market, outcome) => ({
+export const getOrderModal = (market, outcome, marketPrice) => ({
 	type: GET_ORDER_MODAL,
 	payload: {
 		market,
-		outcome
+		outcome,
+		marketPrice: marketPrice,
 	}
 })
 
-export const placeOrder = (account, marketId, outcome, order, updateMarket, getAndUpdateUserOrders, updateUserBalance) => {
+export const placeOrder = (account, marketId, outcome, price, spend, updateUserBalance) => {
 	return dispatch => {
-		const spend = parseInt(dollarsToDai(order.spend));
-		dispatch(startOrderPlace(marketId));
-		try {
-			account.functionCall(
-				window.nearConfig.contractName, 
-				"place_order", 
-				{
-					market_id: marketId,
-					outcome: outcome,
-					spend,
-					price_per_share: parseInt(order.odds)
-				},
-				new BN("100000000000000"),
-				new BN("0")
-			).then(res => {
-				dispatch(placedOrder(true));
-				updateMarket();
-				getAndUpdateUserOrders();
-				updateUserBalance();
-				// TODO: update account balance (initialized in nearAction/reducer)
-			});
-		}
-		catch (err) {
+		dispatch(startOrderPlace(spend * (price / 100)));
+		spend = parseInt(dollarsToDai(spend));
+		account.functionCall(
+			window.nearConfig.contractName, 
+			"place_order", 
+			{
+				market_id: marketId,
+				outcome: outcome,
+				spend,
+				price_per_share: parseInt(price)
+			},
+			new BN("100000000000000"),
+			new BN("0")
+		).then(res => {
+			dispatch(placedOrder(true));
+			updateUserBalance();
+		}).catch(err => {
+			dispatch(placedOrder(false));
 			console.error(err);
-			dispatch(placedOrder(false))
-		}
+		});
 	}
 }
 

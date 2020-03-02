@@ -12,11 +12,6 @@ const MarketsContainer = styled.div`
 	margin-bottom: 30px;
 `
 
-const StyledSpinner  = styled(Spinner)`
-	left: calc(50% - 32px);
-	top: calc(50% - 32px);
-`
-
 const Markets = ({markets, loading}) => {
 
 	return (
@@ -24,7 +19,7 @@ const Markets = ({markets, loading}) => {
 				
 			{
 				loading ? 
-				<StyledSpinner /> 
+				<Spinner /> 
 				:
 				markets.map((market, i) => (
 					<Market market={market} key={i}/>

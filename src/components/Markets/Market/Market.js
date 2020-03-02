@@ -1,10 +1,7 @@
 import React from 'react';
-import '@material/react-text-field/dist/text-field.min.css';
-import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import { DARK_BLUE } from '../../../constants';
-import Loader from './../../Loader.js';
 import ResolutedSection from './ResolutedSection';
 import MarketContent from './MarketContent.js';
 
@@ -40,13 +37,4 @@ function Market({market}) {
 	)
 }
 
-
-const mapStateToProps = (state) => ({
-	accountData: state.account,
-	orderType: state.market.orderType,
-	txLoading: state.market.loading,
-	marketLoading: state.market.marketLoading,
-	contract: state.near.contract
-})
-
-export default connect(mapStateToProps)(Market);
+export default Market;

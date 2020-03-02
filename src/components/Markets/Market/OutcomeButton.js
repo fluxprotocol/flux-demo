@@ -4,9 +4,10 @@ import { DARK_BLUE, PINK, BLUE } from '../../../constants';
 import { getOrderModal } from '../../../actions/marketActions';
 import { connect } from 'react-redux';
 
-const OutcomeButton = ({label, binary, index, market, dispatch}) => {
+const OutcomeButton = ({label, binary, index, market, dispatch, price}) => {
 	const color = binary ? index === 0 ? PINK : BLUE : DARK_BLUE;
-	// const active = (marketOrder && orderType === "market") || (orderType === "limit") ? true : false;
+	const lastTradedPrice = market.last_price_for_outcomes[index];
+	const hasLastTradedPrice = !!lastTradedPrice;
 	const Button = styled.button`
 		width: 100%;
 		border: 1px solid ${color};
@@ -50,12 +51,12 @@ const OutcomeButton = ({label, binary, index, market, dispatch}) => {
 	return (
 
 		<Button 
-			onClick={() => dispatch(getOrderModal(market, index))} 
+			onClick={() => dispatch(getOrderModal(market, index, price))} 
 			type="submit"
 		>
 			<Label>{label}</Label>
-			<LastTradedPrice>71¢</LastTradedPrice>
-			<MarketPrice>73¢</MarketPrice>
+			<LastTradedPrice>{hasLastTradedPrice ? lastTradedPrice + "¢" : "--"}</LastTradedPrice>
+			<MarketPrice>{price < 100 ? price + "¢" : "--"}</MarketPrice>
 		</Button>
 
 	)

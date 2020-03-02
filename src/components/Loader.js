@@ -15,21 +15,7 @@ const Text = styled.div`
 	display: block;
 `;
 
-const ResText = styled(Text)`
-	text-align: center;
-	margin-top: 38px;
-`;
-
-const LoadingText = styled(Text)`
-	position: absolute;
-	left: 0;
-	bottom: 10%;
-`;
-
-
-//TODO: Handle status => if true success else failure 
-function Loader({txLoading, status}) {
-	console.log("being rendered")
+function Loader() {
 	return (
 		<StyledSpinner />
 	);

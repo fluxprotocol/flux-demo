@@ -24,7 +24,7 @@ function App({contract, dispatch, owner, accountId}) {
     <AppContainer >
       {
         <>
-          {/* {(owner && accountId) && owner === accountId && <OwnerPortal/> } */}
+          {(owner && accountId) && owner === accountId && <OwnerPortal/> }
           <Header />
           <Markets />
           <OrderModal />
