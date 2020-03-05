@@ -7,15 +7,12 @@ import { updateMarkets } from '../../actions/marketsActions';
 import BN from 'bn.js';
 
 const OwnerPortalContainer = styled.div`
-	position: absolute;
-	top: 250px;
-	left: 50px;
+	padding-top: 250px;
 	background-color: white;
 `;
 const ShowHideButton = styled.button`
+	padding-top: 250px;
 	position: absolute;
-	top: 250px;
-	left: 50px;
 `;
 
 const OwnerPortal = ({markets, contract, dispatch, account}) => {
@@ -23,7 +20,7 @@ const OwnerPortal = ({markets, contract, dispatch, account}) => {
 	const [extraInfo, setExtraInfo] = useState('');
 	const [outcomes, setOutcomes] = useState(2);
 	const [endTime, setEndtime] = useState(new Date(new Date().setDate(new Date().getDate() + 1)));
-	const [show, toggleShow] = useState(true);
+	const [show, toggleShow] = useState(false);
 	let outcomeTags = [];
 	let outcomeTagInputs = [];
 
@@ -57,7 +54,7 @@ const OwnerPortal = ({markets, contract, dispatch, account}) => {
 				extra_info: extraInfo,
 				outcomes: parseInt(outcomes),
 				outcome_tags: outcomeTags,
-				end_time: endTime.getTime() + 1000000
+				end_time: endTime.getTime()
 			},
 			new BN("10000000000000"),
 			new BN("0")

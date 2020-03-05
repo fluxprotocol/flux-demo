@@ -31,7 +31,7 @@ function Market({market}) {
 	return (
 		<MarketContainer >
 			{
-				!market.resoluted ? <MarketContent market={market}/> : <ResolutedSection />
+				!market.resoluted ? <MarketContent market={market}/> : <ResolutedSection market={market}/>
 			}
 		</MarketContainer>
 	)

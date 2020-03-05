@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Modal from './../../Modal';
 import { connect } from 'react-redux';
 import { getOrderModal, placeOrder } from '../../../actions/marketActions';
@@ -7,11 +7,11 @@ import { updateBalance } from '../../../actions/nearActions';
 import OrderRes from './OrderRes';
 import OrderLoader from './OrderLoader';
 
-function OrderModal({market, outcome, marketPrice, dispatch, account, accountId, contract, loading, amountOfShares, orderRes}) {
+function OrderModal({market, outcome, marketPrice, dispatch, account, accountId, contract, loading, amountOfShares, orderRes, updateMarketOrders}) {
 	const closeModal = () => dispatch(getOrderModal(null, null, null));
 	const callUpdateBalance = () => dispatch(updateBalance(contract, accountId));
 	const dispatchPlaceOrder = (price, spend) => {
-		dispatch(placeOrder(account, market.id, outcome, price, spend, callUpdateBalance))
+		dispatch(placeOrder(contract, account, market.id, outcome, price, spend, callUpdateBalance, updateMarketOrders));
 	};
 	return (
 		 
@@ -37,6 +37,7 @@ function OrderModal({market, outcome, marketPrice, dispatch, account, accountId,
 const mapStateToProps = (state) => ({
 	market: state.market.selectedMarket,
 	outcome: state.market.selectedOutcome,
+	updateMarketOrders: state.market.updateMarketOrders,
 	loading: state.market.loading,
 	orderRes: state.market.res,
 	amountOfShares: state.market.amountOfShares,

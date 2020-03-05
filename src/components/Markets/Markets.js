@@ -10,6 +10,10 @@ const MarketsContainer = styled.div`
   margin: 0 auto;
 	margin-top: 80px;
 	margin-bottom: 30px;
+
+	@media (min-width: 560px) {
+		margin-top: 115px;
+	}
 `
 
 const Markets = ({markets, loading}) => {

@@ -5,24 +5,26 @@ import { getOrderModal } from '../../../actions/marketActions';
 import { connect } from 'react-redux';
 
 export const Button = styled.button`
-width: 100%;
-background-color: white;
-border-radius: 6px;
-padding: 10px 15px;
-margin: 5px 0;
-display: flex;
-justify-content: space-between;
-align-items: center;
-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
--webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
--moz-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-color: ${DARK_BLUE};
-
-&:active {
-	box-shadow: none;
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-}
+	width: 100%;
+	background-color: white;
+	border-radius: 6px;
+	padding: 10px 15px;
+	margin: 5px 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	-webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	color: ${DARK_BLUE};
+	@media (min-width: 560px) {
+		padding: 15px 25px;
+	}
+	&:active {
+		box-shadow: none;
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+	}
 `;
 
 const Label = styled.span`
@@ -43,7 +45,7 @@ font-size: 20px;
 font-weight: bold;
 `;
 
-const OutcomeButton = ({label, binary, index, market, dispatch, price}) => {
+const OutcomeButton = ({label, binary, index, market, dispatch, price, updateMarketOrders}) => {
 	const color = binary ? index === 0 ? PINK : BLUE : DARK_BLUE;
 	const lastTradedPrice = market.last_price_for_outcomes[index];
 	const hasLastTradedPrice = !!lastTradedPrice;
@@ -54,7 +56,7 @@ const OutcomeButton = ({label, binary, index, market, dispatch, price}) => {
 	return (
 
 		<ColoredButton 
-			onClick={() => dispatch(getOrderModal(market, index, price))} 
+			onClick={() => dispatch(getOrderModal(market, index, price, updateMarketOrders))} 
 		>
 			<Label>{label}</Label>
 			<LastTradedPrice>{hasLastTradedPrice ? lastTradedPrice + "¢" : "--"}</LastTradedPrice>

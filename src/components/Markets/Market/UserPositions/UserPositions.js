@@ -3,20 +3,17 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import ModalButton from '../../../ModalButton';
 import { DARK_BLUE, LIGHT_GRAY } from '../../../../constants';
-import Countdown from 'react-countdown-now';
-import EndDate from '../EndDate';
-import { moreThanWeekFromNow } from '../../../../utils/dateUtils';
-import CountDownTimer from '../CountdownTimer';
 import Loader from '../../../Loader';
 import { filterUserOrders } from '../../../../utils/orderUtils';
 import OpenOrders from './OpenOrders';
 import FilledOrders from './FilledOrders';
-import { TimeIndicator, Description } from './../MarketContent';
+import { Description } from './../MarketContent';
+import ResolutionDate from '../ResolutionDate';
 
 const Container = styled.div`
 	background-color: white;
 	animation: fadein 500ms linear;
-	position: absolute;
+	position: fixed;
 	width: 90%;
 	height: calc(100% - 70px);
 	left: 0;
@@ -51,8 +48,7 @@ const CancelButton = styled(ModalButton)`
 	bottom: 3%;
 `;
 
-const UserPositions = ({closeModal, market, accountId}) => {
-	const {end_time} = market;
+const UserPositions = ({closeModal, market, accountId, updateMarketOrders}) => {
 	const [orders, setOrders] = useState(null);
 
 	useEffect(() => {
@@ -69,15 +65,11 @@ const UserPositions = ({closeModal, market, accountId}) => {
 		<Container>
 			{	orders === null ? <Loader /> : (
 				<>
-					<TimeIndicator>
-						{
-							moreThanWeekFromNow(end_time) ? <EndDate endTime={end_time}/> : 	<Countdown zeroPadTime={2} date={end_time} renderer={CountDownTimer} />
-						}
-					</TimeIndicator>
+					<ResolutionDate endTime={market.end_time} />
 					<Description>{market.description}</Description>
 					<OrderSection>
 						<Title>my open orders</Title>
-						<OpenOrders market={market} orders={orders.openOrders} />
+						<OpenOrders updateMarketOrders={updateMarketOrders} market={market} orders={orders.openOrders} />
 						<Title>my filled orders</Title>
 						<FilledOrders outcomeTags={market.outcome_tags} orders={orders.filledOrders}/>
 					</OrderSection>

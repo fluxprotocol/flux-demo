@@ -29,6 +29,7 @@ export default function marketReducer(state = initialState, action) {
 				selectedOutcome: action.payload.outcome,
 				marketPrice: action.payload.marketPrice,
 				res: null,
+				updateMarketOrders: action.payload.updateMarketOrders,
 			}
 		case PLACED_ORDER: 
 			return {

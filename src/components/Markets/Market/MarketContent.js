@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Countdown from 'react-countdown-now';
-import CountdownTimer from './CountdownTimer.js';
 import { capitalize } from '../../../utils/stringManipulation';
 import { DARK_BLUE, LIGHT_GRAY} from '../../../constants';
-import { moreThanWeekFromNow } from '../../../utils/dateUtils.js';
-import EndDate from './EndDate.js';
 import ExtraInfo from './ExtraInfo.js';
 import OutcomeButton from './OutcomeButton.js';
 import UserPositions from './UserPositions/UserPositions.js';
+import ResolutionDate from './ResolutionDate.js';
 
 const ButtonSection = styled.div`
   width: 100%;
@@ -22,15 +19,6 @@ export const Description = styled.h1`
 	font-weight: 500;
 	margin: 0 auto;
 `
-
-export const TimeIndicator = styled.span`
-	font-size: 12px;
-  color: ${DARK_BLUE};
-	display: block;
-	width: 100%;
-	text-align: right;
-	padding-top: 18px;
-`;
 
 const PositionsButton = styled.p`
 	text-decoration: underline;
@@ -74,38 +62,38 @@ const ThirdHeader = styled(Header)`
 
 const MarketContent = ({market}) => {
 	const [marketOrders, setMarketOrders] = useState([]);
-
 	const [showPositions, setShowPositions] = useState(false);
 
 	const { end_time, description, outcomes, outcome_tags, extra_info } = market;
-	useEffect(() => {
-		let unmounted = false; // new stuff here
-
+	
+	const getAndSetMarketPrices = () => {
 		market.getMarketPrices().then(marketOrders => {
-			if (!unmounted) setMarketOrders(marketOrders)}
+			 setMarketOrders(marketOrders)}
 		);
+	}
+
+	useEffect(() => {
+		let unmounted = false;
+		if (!unmounted) getAndSetMarketPrices();
 		return () => {
-      unmounted = true; // new stuff here
+      unmounted = true; 
     };
 	}, [])
 
 	let buttons = [];
 	if (outcomes > 2) {
 		buttons = outcome_tags.map((tag, i) => (
-			<OutcomeButton market={market} label={tag} price={marketOrders[i]} index={i} key={i} />
+			<OutcomeButton updateMarketOrders={getAndSetMarketPrices} market={market} label={tag} price={marketOrders[i]} index={i} key={i} />
 		));
 	} else {
 		for (let i = 0; i < 2; i++) {
-			buttons.push(<OutcomeButton market={market} price={marketOrders[i]} label={i === 0 ? "NO" : "YES" } binary index={i} key={i} />)
+			buttons.push(<OutcomeButton updateMarketOrders={getAndSetMarketPrices} market={market} price={marketOrders[i]} label={i === 0 ? "NO" : "YES" } binary index={i} key={i} />)
 		}
 	}
+
 	return (
 		<div>
-			<TimeIndicator>
-				{
-					moreThanWeekFromNow(end_time) ? <EndDate endTime={end_time}/> : 	<Countdown zeroPadTime={2} date={end_time} renderer={CountdownTimer} />
-				}
-			</TimeIndicator>
+			<ResolutionDate endTime={end_time} />
 			<Description>
 				{ capitalize(description) }
 				<ExtraInfo data={extra_info}/>
@@ -119,7 +107,7 @@ const MarketContent = ({market}) => {
 			<ButtonSection>
 				{buttons}
 			</ButtonSection>
-			{showPositions && <UserPositions market={market} closeModal={() => setShowPositions(false)}/>}
+			{showPositions && <UserPositions updateMarketOrders={getAndSetMarketPrices} market={market} closeModal={() => setShowPositions(false)}/>}
 			<PositionsButton onClick={() => setShowPositions(true)}>my positions</PositionsButton>
 		</div>
 	);

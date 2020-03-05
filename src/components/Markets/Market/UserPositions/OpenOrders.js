@@ -6,7 +6,7 @@ import CancelButton from './CancelButton';
 import { cancelOrder } from '../../../../actions/marketActions';
 import { updateBalance } from '../../../../actions/nearActions';
 
-const OpenOrders = ({orders, market, dispatch, canceled, account, contract, accountId}) => {
+const OpenOrders = ({orders, market, dispatch, account, contract, accountId, updateMarketOrders}) => {
 	const [selectedOrder, setSelectedOrder] = useState(null)
 	const callUpdateBalance = () => dispatch(updateBalance(contract, accountId));
 	
@@ -14,16 +14,13 @@ const OpenOrders = ({orders, market, dispatch, canceled, account, contract, acco
 		text-align: center;
 		width: 25%;
 	`
-
 	const buttons = orders.map((order, i) => {
 		const callCancelOrder = () => {
-			dispatch(cancelOrder(account, market.id, order.outcome, order.id, callUpdateBalance));
+			dispatch(cancelOrder(account, market.id, order.outcome, order.id, callUpdateBalance, updateMarketOrders));
 		};
 		let selected = i == selectedOrder;
 		return <CancelButton label={market.outcome_tags[order.outcome]} cancelOrder={callCancelOrder} setSelected={() => setSelectedOrder(i) } selected={selected} order={order} key={i} />
 	});
-
-	console.log(buttons);
 
 	return (
 		<>
