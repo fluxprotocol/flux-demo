@@ -56,7 +56,7 @@ const OwnerPortal = ({markets, contract, dispatch, account}) => {
 				outcome_tags: outcomeTags,
 				end_time: endTime.getTime()
 			},
-			new BN("100000000000000"),
+			new BN("10000000000000000"),
 			new BN("0")
 		).then(() => {
 			getMarkets()
