@@ -27,7 +27,6 @@ export default ({order, label}) => {
 		margin: 10px 0 ;
 	`;
 
-	console.log(daiToDollars(order.amt_of_shares * 100));
 	return (
 		<ColoredButton>
 			<Label>{label}</Label>
