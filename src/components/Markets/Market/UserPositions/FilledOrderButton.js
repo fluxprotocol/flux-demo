@@ -32,7 +32,7 @@ export default ({order, label}) => {
 		<ColoredButton>
 			<Label>{label}</Label>
 			<ButtonData><BoldText>{order.price_per_share}¢</BoldText></ButtonData>
-			<ButtonData>{daiToDollars(order.amt_of_shares * 100)}</ButtonData>
+			<ButtonData>{daiToDollars(order.amt_of_shares * 100).toFixed(2)}</ButtonData>
 		</ColoredButton>
 	)
 }

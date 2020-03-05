@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { PINK, API_URL } from '../../constants';
+import { PINK, API_URL, DARK_BLUE } from '../../constants';
 import fluxLogo from '../../assets/flux-logo-white.png';
 import { checkAccessToken } from '../../actions/authActions';
 import { connect } from 'react-redux';
@@ -17,31 +17,33 @@ const Logo = styled.img`
 
 
 const SubmitButton = styled.button`
-	background-color: ${PINK};
-	color: white;
+	background-color: white;
+	color: ${DARK_BLUE};
 	border-radius: 6px;
 	padding: 15px;
-	font-size: 16px;
+	font-size: 20px;
 	border: none;
 	box-sizing: border-box;
-  -webkit-box-shadow: 0 2px 4px 0 rgb(171, 190, 200);
-  -moz-box-shadow: 0 2px 4px 0 rgb(171, 190, 200);
-  box-shadow: 0 2px 4px 0 rgb(171, 190, 200);
 	position: absolute;
 	width: 80%;
+	max-width: 250%;
 	left: 10%;
-	bottom: 40px;
+	bottom: 5%;
+	font-weight: bold;
 
 	@media (min-width: 560px) {
 		width: 250px;
 		left: calc(50% - 125px);
 	}
-`;
 
+	margin: auto;
+`
 const Title = styled.h2`
 	text-align: center;
-	color: #310094;
+	font-size: 24px;
+	color: #FFFFFF;
 `;
+
 
 const Input = styled.input`
 	width: calc(80% - 30px);
@@ -57,10 +59,13 @@ const Input = styled.input`
 		left: calc(50% - 140px);
 	}
 `
-
 const LoginContainer = styled.div`
+	display: block;
+	width: 100%;
+	height: 100vh;
+	background-color: ${DARK_BLUE};
+	margin: 0;
 `
-
 const NoAccessTokenLink = styled.span`
 	text-decoration: underline;
 	font-size: 12px;
