@@ -47,7 +47,7 @@ export const placeOrder = (contract, account, marketId, outcome, price, spend, u
 				spend,
 				price_per_share: parseInt(price)
 			},
-			new BN("10000000000000000"),
+			new BN("1000000000000000"),
 			new BN("0")
 		).then(res => {
 			dispatch(placedOrder(true));
@@ -71,7 +71,7 @@ export const cancelOrder = (account, marketId, outcome, orderId, updateUserBalan
 				outcome,
 				order_id: orderId,
 			},
-			new BN("10000000000000000"),
+			new BN("1000000000000000"),
 			new BN("0")
 		).then(res => {
 			dispatch(orderCanceled());
@@ -92,7 +92,7 @@ export const claimEarnings = (account, marketId, updateUserBalance, updateClaima
 			{
 				market_id: marketId
 			},
-			new BN("10000000000000000"),
+			new BN("1000000000000000"),
 			new BN("0")
 		).then(() => {
 			dispatch(placedOrder(true))

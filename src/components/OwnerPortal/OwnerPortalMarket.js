@@ -16,7 +16,7 @@ const OwnerPortalMarket = ({ account, market, contract, updateMarkets, dispatch 
 				{
 					market_id: market.id,
 				},
-				new BN("10000000000000000"),
+				new BN("1000000000000000"),
 				new BN("0")
 			).then(() => {
 				updateMarkets()
@@ -41,7 +41,7 @@ const OwnerPortalMarket = ({ account, market, contract, updateMarkets, dispatch 
 					market_id: market.id, 
 					winning_outcome: winningOutcome
 				},
-				new BN("10000000000000000"),
+				new BN("1000000000000000"),
 				new BN("0")
 			).then(() => {
 				updateMarkets()
