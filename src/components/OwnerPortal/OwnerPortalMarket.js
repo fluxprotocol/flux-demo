@@ -53,8 +53,13 @@ const OwnerPortalMarket = ({ account, market, contract, updateMarkets, dispatch 
 	}
 
 	// TODO: If outcomes === 2 create resolute no - yes buttons
-	const resoluteButtons = market.outcome_tags.map((outcomeTag, i) => (<button key={i} onClick={() => resolute(i)}>resolute {outcomeTag}</button>));
-
+	let resoluteButtons = [];
+	if (market.outcomes === 2) {
+		resoluteButtons = [<button key={0} onClick={() => resolute(0)}>resolute NO</button>, <button key={1} onClick={() => resolute(1)}>resolute YES</button>];
+	} else {
+		resoluteButtons = market.outcome_tags.map((outcomeTag, i) => (<button key={i} onClick={() => resolute(i)}>resolute {outcomeTag}</button>));
+	
+	}
 	return (
 		<Market>
 			<p>{market.id}. {market.description}</p>

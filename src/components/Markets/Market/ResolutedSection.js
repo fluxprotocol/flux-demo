@@ -53,13 +53,22 @@ const ResolutedSection = ({market, dispatch, account, contract, accountId}) => {
 			mounted = true;
 		};
 	}, []);
-	
+
+	let resolution;
+	if (market.outcomes === 2) {
+		if (market.winning_outcome === 0) resolution = "NO";
+		else if (market.winning_outcome === 1) resolution = "Yes";
+		else resolution = "Invalid";
+	} else {
+		resolution = market.outcome_tags[market.winning_outcome] ? market.outcome_tags[market.winning_outcome] : "invalid"
+	}
+
 	return (
 		<ResolutedContainer>
 			<ResolutionDate endTime={market.end_time}/>
 			<Description>{capitalize(market.description)}</Description>
 			<ResolutionTitle>
-				Resolution: <Resolution>{market.outcome_tags[market.winning_outcome] || "invalid"}</Resolution>
+				Resolution: <Resolution>{resolution}</Resolution>
 			</ResolutionTitle>
 
 			<ClaimButton onClick={() => {

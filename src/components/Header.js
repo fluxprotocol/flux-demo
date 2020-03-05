@@ -6,8 +6,6 @@ import { signIn, signOut } from './../actions/accountActions';
 import { daiToDollars } from '../utils/unitConvertion';
 import { DARK_GRAY, WHITE, DARK_BLUE } from '../constants';
 
-// TODO: Higher def flux-logo
-
 const Logo = styled.img`
 	width: 12%;
 	display: inline-block;

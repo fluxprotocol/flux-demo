@@ -15,7 +15,6 @@ const OpenOrders = ({orders, market, dispatch, account, contract, accountId, upd
 		width: 25%;
 	`
 
-	// TODO: Yes No not being read as outcomes because they don't have outcome tags
 	const buttons = orders.map((order, i) => {
 		const callCancelOrder = () => {
 			dispatch(cancelOrder(account, market.id, order.outcome, order.id, callUpdateBalance, updateMarketOrders));
