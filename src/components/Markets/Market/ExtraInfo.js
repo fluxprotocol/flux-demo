@@ -14,7 +14,6 @@ const ShowInfoButton = styled.button`
 	height: 17px;
 	color: ${DARK_BLUE};
 	text-align: center;
-	vertical-align: middle;
 	display: block;
 	border-radius: 50%;
 	background-color: ${WHITE};

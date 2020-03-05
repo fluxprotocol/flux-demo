@@ -27,12 +27,12 @@ export default ({order, label}) => {
 		margin: 10px 0 ;
 	`;
 
-
+	console.log(daiToDollars(order.amt_of_shares * 100));
 	return (
 		<ColoredButton>
 			<Label>{label}</Label>
 			<ButtonData><BoldText>{order.price_per_share}¢</BoldText></ButtonData>
-			<ButtonData>{daiToDollars(order.amt_of_shares * 100).toFixed(2)}</ButtonData>
+			<ButtonData>{daiToDollars(order.amt_of_shares * 100)}</ButtonData>
 		</ColoredButton>
 	)
 }

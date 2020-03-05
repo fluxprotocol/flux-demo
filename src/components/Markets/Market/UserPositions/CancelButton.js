@@ -54,7 +54,7 @@ export default ({order, label, selected, setSelected, cancelOrder}) => {
 						<Label><BoldText>{label}</BoldText></Label>
 						<ButtonData>{order.price_per_share}¢</ButtonData>
 						<ButtonData><BoldText>${daiToDollars(order.spend)}</BoldText></ButtonData>
-						<ButtonData>{order.filled / order.spend * 100}%</ButtonData>
+						<ButtonData>{(order.filled / order.spend * 100).toFixed(2)}%</ButtonData>
 					</>
 				)}
 			</ColoredButton>
