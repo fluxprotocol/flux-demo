@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 const StyledSpinner = styled(Spinner) `
 	left: calc(50% - 32px);
-	top: 15%;
+	top: calc(50vh - 32px);
 `;
 
 const Text = styled.div`
@@ -15,36 +15,9 @@ const Text = styled.div`
 	display: block;
 `;
 
-const ResText = styled(Text)`
-	text-align: center;
-	margin-top: 38px;
-`;
-
-const LoadingText = styled(Text)`
-	position: absolute;
-	left: 0;
-	bottom: 10%;
-`;
-
-
-//TODO: Handle status => if true success else failure 
-function Loader({txLoading, status}) {
+function Loader() {
 	return (
-	  txLoading && <Modal width={"35%"} height={"100px"} blackground={true}>
-		  {status !== null 
-			  ? 
-			  <ResText >{status === true ? "success" : "failed" }</ResText>
-			  : 
-			  (
-				  <>
-					  <StyledSpinner />
-					  <LoadingText>processing</LoadingText>
-				  </>
-			  )
-		  }
-	  </Modal>
-		  	
-		  
+		<StyledSpinner />
 	);
 
 }

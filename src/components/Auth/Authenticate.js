@@ -2,17 +2,16 @@ import React, { useEffect, useState } from 'react';
 import App from '../App';
 import { connect } from 'react-redux';
 import { getAuthStatus } from '../../actions/authActions';
-import LoadingScreen from '../LoadingScreen';
 import { initialize } from '../../actions/nearActions';
 import NearLogin from './NearLogin';
 import { signIn, initializeAccount } from '../../actions/accountActions';
 import EnterAccessToken from './EnterAccessToken';
+import Loader from './../Loader';
 // import RpcConnector from '../../utils/RpcConnector';
 
 function Authenticate({near, account, dispatch, invalidAccessToken, signedIn, walletAccount, success, loading, error,...props}) {
 	const [authenticated, setAuthenticated] = useState(false);
 	const [accountGot, setAccountGot] = useState(false);
-	
 	useEffect(() => {
 		dispatch(initialize());
 	}, [dispatch]);
@@ -29,12 +28,14 @@ function Authenticate({near, account, dispatch, invalidAccessToken, signedIn, wa
 		setAuthenticated(true)
 	}
 
-	if (loading) return <LoadingScreen />;
 	if (signedIn === false) return <NearLogin login={() => signIn(walletAccount)}/>
 	if (invalidAccessToken) return <EnterAccessToken account={account} accountId={walletAccount.getAccountId()}/>
-	if (success) return <App />;
 	if (error) return <div>{error}</div>
-	else return <LoadingScreen />;
+	if (success) return <App />
+	else {
+		return <Loader txLoading={true}/>;
+	}
+
 }
 
 const mapStateToProps = state => ({

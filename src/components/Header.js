@@ -4,9 +4,10 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { signIn, signOut } from './../actions/accountActions';
 import { daiToDollars } from '../utils/unitConvertion';
+import { DARK_GRAY, WHITE, DARK_BLUE } from '../constants';
 
 const Logo = styled.img`
-	width: 15%;
+	width: 12%;
 	display: inline-block;
 	align-self: center;
 	@media (min-width: 560px) {
@@ -16,11 +17,21 @@ const Logo = styled.img`
 
 const HeaderContainer = styled.header`
 	display: flex;
+	position: fixed;
+	z-index: 99;
+	background-color: white;
 	justify-content: space-between;
 	vertical-align: middle;
 	align-items: center;
-	padding: 3% 5%;
+	padding: 2% 5%;
+	font-weight: bold;
+	top: 0;
+	max-height: 70px;
 	width: 90%;
+	border-bottom: 1px solid ${DARK_GRAY};
+	box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.25);
+	font-size: 12px;
+
 	@media (min-width: 560px) {
 		padding: 1% 5%;
 	}
@@ -28,21 +39,15 @@ const HeaderContainer = styled.header`
 
 const LoginButton = styled.button`
 	align-self: center;
-	color: white;
-	background-color: #FF009C;
-	font-family: "Gilroy";
-	border: none;
+	color: ${DARK_BLUE};
+	background-color: ${WHITE};
+	border: 1px solid ${DARK_BLUE};
 	border-radius: 6px;
-	padding: 8px 15px;
-	font-size: 18px;
-`
+	padding: 8px 12px;
+	font-weight: bold;
 
-const AccountInfoContainer = styled.div`
-	width: 40%;
-	font-family: "Lato-bold";
-	line-height: 140%;
+	font-size: 10px;
 `
-
 const AccountInfo = styled.span`
 	display: block;
 	text-align: center;
@@ -58,10 +63,8 @@ function Header({allowance, daiBalance, walletAccount, accountId, isSignedIn}) {
 			  <LoginButton onClick={() => signIn(walletAccount)} >Login</LoginButton>
 				: (
 					<>
-						<AccountInfoContainer>
-							<AccountInfo> {accountId} </AccountInfo>
-							<AccountInfo> {daiBalance ? `$${daiToDollars(daiBalance)}` : null}</AccountInfo>
-						</AccountInfoContainer>
+						<AccountInfo> {accountId} </AccountInfo>
+						<AccountInfo> {daiBalance ? `$${daiToDollars(daiBalance)}` : null}</AccountInfo>
 						<LoginButton onClick={() => signOut(walletAccount)}>Logout</LoginButton>
 					</>
 				)

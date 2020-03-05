@@ -24,24 +24,6 @@ export const toEarnings = (order) => {
 	return 0;
 } 
 
-export const fromPayoutDistribution = (payoutDistribution) => {
-	let result;
-	switch(payoutDistribution[0]) {
-		case 0:
-			result = "yes";
-			break;
-		case 10000:
-			result = "no"
-			break;
-		case 5000:
-			result = "invalid";
-			break;
-		default:
-			result = null
-	}
-	return result;
-}
-
 export const allowanceToColor = (yocto) => {
 	if (yocto === null) {
 		return WHITE

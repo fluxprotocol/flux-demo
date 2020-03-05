@@ -2,18 +2,17 @@ import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
 import { getMarkets } from '../actions/marketsActions';
 import Header from './Header';
-import Markets from './Markets';
-import LoadingScreen from './LoadingScreen';
-import OwnerPortal from './OwnerPortal';
+import Markets from './Markets/Markets';
+import OwnerPortal from './OwnerPortal/OwnerPortal';
 import styled from 'styled-components';
+import OrderModal from './Markets/Market/OrderModal';
 
 const AppContainer = styled.div`
 
 
 `
-
-
-function App({contract, dispatch, loading, owner, accountId}) {
+// TODO: send a notification if gas runs low, the user needs to login and out
+function App({contract, dispatch, owner, accountId}) {
   useEffect(() => {
     if (contract) {
       dispatch(getMarkets(contract));
@@ -23,14 +22,11 @@ function App({contract, dispatch, loading, owner, accountId}) {
   return (
     <AppContainer >
       {
-        loading 
-        ?
-        <LoadingScreen />
-        :
         <>
           {(owner && accountId) && owner === accountId && <OwnerPortal/> }
           <Header />
           <Markets />
+          <OrderModal />
         </>
       }
     </AppContainer>
@@ -39,9 +35,8 @@ function App({contract, dispatch, loading, owner, accountId}) {
 
 const mapStateToProps = (state) => ({
   contract: state.near.contract,
-  loading: state.near.loading,
   owner: state.near.owner,
-  accountId: state.account.accountId
+  accountId: state.account.accountId,
 });
 
 

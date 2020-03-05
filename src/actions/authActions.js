@@ -70,7 +70,6 @@ export const getAuthStatus = (walletAccount, accessToken, account) => {
 	}
 }
 
-// TODO: make sure message is only signed when this function is being called on itself
 export const checkAccessToken = (accessToken, accountId, signedMessage, account) => {
 	return async dispatch => {
 		if (!account) return dispatch(authStatusSuccess(false));

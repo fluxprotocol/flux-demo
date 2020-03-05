@@ -1,7 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { YES_WINS_PAYOUT, NO_WINS_PAYOUT, INVALID_MARKET_PAYOUT } from '../constants';
-import { fromPayoutDistribution } from '../utils/unitConvertion';
 import { connect } from 'react-redux';
 import BN from 'bn.js';
 const Market = styled.div`
@@ -29,20 +27,19 @@ const OwnerPortalMarket = ({ account, market, contract, updateMarkets, dispatch 
 		}
 	}
 	
-	const resolute = async (payoutDistribution) => {
-		let invalid = payoutDistribution[0] === 5000 ? true : false;
+	const resolute = async (winningOutcome) => {
 		console.log("resoluting...");
-		console.log({	market_id: market.id, 
-			payout: payoutDistribution, 
-			invalid})
+		console.log({	
+			market_id: market.id, 
+			winning_outcome: winningOutcome
+		})
 		try {
 			account.functionCall(
 				window.nearConfig.contractName, 
 				"resolute", 
 				{ 
 					market_id: market.id, 
-					payout: payoutDistribution, 
-					invalid
+					winning_outcome: winningOutcome
 				},
 				new BN("100000000000000"),
 				new BN("0")
@@ -55,19 +52,26 @@ const OwnerPortalMarket = ({ account, market, contract, updateMarkets, dispatch 
 		}
 	}
 
+	// TODO: If outcomes === 2 create resolute no - yes buttons
+	let resoluteButtons = [];
+	if (market.outcomes === 2) {
+		resoluteButtons = [<button key={0} onClick={() => resolute(0)}>resolute NO</button>, <button key={1} onClick={() => resolute(1)}>resolute YES</button>];
+	} else {
+		resoluteButtons = market.outcome_tags.map((outcomeTag, i) => (<button key={i} onClick={() => resolute(i)}>resolute {outcomeTag}</button>));
+	
+	}
 	return (
 		<Market>
 			<p>{market.id}. {market.description}</p>
 			{!market.resoluted ? 
 			<>
 				<p>Resolutable: { market.end_time < new Date().getTime() ? "true" : "false" } </p>
-				<button onClick={() => resolute(YES_WINS_PAYOUT)}>Resolute yes</button>
-				<button onClick={() => resolute(NO_WINS_PAYOUT)}>Resolute no</button>
-				<button onClick={() => resolute(INVALID_MARKET_PAYOUT)}>Resolute invalid</button>
+				{resoluteButtons}
+				<button onClick={() => resolute(null)}>Resolute invalid</button>
 			</>
 		  : 
 			<>
-				<p>Resoluted: {fromPayoutDistribution(market.payout_multipliers)} </p>
+				<p>Resoluted: {market.outcome_tags[market.winning_outcome]} </p>
 			</>	
 			}
 			

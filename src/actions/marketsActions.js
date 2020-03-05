@@ -19,7 +19,7 @@ export const getMarkets = contract => {
 
 		contract.get_all_markets()
 		.then(json => {
-			formattedMarkets = formatMarkets(json);
+			formattedMarkets = formatMarkets(json, contract);
 			dispatch(gotMarkets(formattedMarkets));
 		})
 		.catch (err => console.error(err));
@@ -30,38 +30,12 @@ export const updateMarkets = contract => {
 	return dispatch => {		
 		return contract.get_all_markets()
 		.then(json => {
-			const formattedMarkets = formatMarkets(json);
+			const formattedMarkets = formatMarkets(json, contract);
 			dispatch(gotMarkets(formattedMarkets));
 		})
 		.catch (err => console.error(err));
 
 	}
-}
-
-function updateMarket(contract) {
-	return new Promise((resolve, reject) => {
-		let promArr = [];
-		for (let i = 0; i < this.outcomes; i++) {
-			promArr.push(contract.get_market_order({
-				market_id: this.id,
-				outcome: i,
-			}));
-		}
-	
-		Promise.all(promArr)
-		.then(res => {
-			res.forEach((order, i) => {
-				if (this.orderbooks[i]) {
-					this.orderbooks[i].market_order = order;
-				}
-			});
-
-			resolve(this);
-		})
-		.catch(err => {
-			console.error(err);
-		});
-	});	
 }
 
 function getUserOrders(contract, accountId) {
@@ -85,12 +59,12 @@ function getUserOrders(contract, accountId) {
 
 
 // TODO: filter out completed markets. Probably split UI up and only display completed markets that the user can claim funds in.
-const formatMarkets = marketsObj => {
+const formatMarkets = (marketsObj, contract) => {
 	const formattedMarkets = Object.keys(marketsObj).map(key => {
 		let market = marketsObj[key];
 		market.userOrders = {};
-		market.updateMarket = updateMarket;
 		market.getUserOrders = getUserOrders;
+		market.getMarketPrices = () => contract.get_market_prices({market_id: market.id});
 
 		return market;
 	});
