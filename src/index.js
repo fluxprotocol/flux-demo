@@ -19,7 +19,7 @@ ReactDOM.render(
 	<Provider store={store}>
 		<GlobalStyles/>
 		<Router>
-			<Route exact path="/:accessToken?" component={Authenticate}/>
+			<Route path="/:accessToken?" component={Authenticate}/>
 		</Router>
 	</Provider>
 	, document.getElementById('root')
