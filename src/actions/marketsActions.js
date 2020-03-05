@@ -60,7 +60,6 @@ function getUserOrders(contract, accountId) {
 
 // TODO: filter out completed markets. Probably split UI up and only display completed markets that the user can claim funds in.
 const formatMarkets = (marketsObj, contract) => {
-	console.log(marketsObj);
 	const formattedMarkets = Object.keys(marketsObj).map(key => {
 		let market = marketsObj[key];
 		market.userOrders = {};

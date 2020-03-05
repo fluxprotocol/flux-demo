@@ -71,7 +71,7 @@ const UserPositions = ({closeModal, market, accountId, updateMarketOrders}) => {
 						<Title>my open orders</Title>
 						<OpenOrders updateMarketOrders={updateMarketOrders} market={market} orders={orders.openOrders} />
 						<Title>my filled orders</Title>
-						<FilledOrders outcomeTags={market.outcome_tags} orders={orders.filledOrders}/>
+						<FilledOrders market={market} orders={orders.filledOrders}/>
 					</OrderSection>
 				</>
 			)

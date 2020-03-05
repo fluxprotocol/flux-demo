@@ -21,7 +21,11 @@ const OpenOrders = ({orders, market, dispatch, account, contract, accountId, upd
 			dispatch(cancelOrder(account, market.id, order.outcome, order.id, callUpdateBalance, updateMarketOrders));
 		};
 		let selected = i == selectedOrder;
-		return <CancelButton label={market.outcome_tags[order.outcome]} cancelOrder={callCancelOrder} setSelected={() => setSelectedOrder(i) } selected={selected} order={order} key={i} />
+		let label = market.outcome_tags[order.outcome];
+		if (market.outcomes === 2) {
+			label = i === 0 ? "NO" : "YES";
+		}
+		return <CancelButton label={label} cancelOrder={callCancelOrder} setSelected={() => setSelectedOrder(i) } selected={selected} order={order} key={i} />
 	});
 
 	return (
