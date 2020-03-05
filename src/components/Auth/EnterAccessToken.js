@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { PINK, API_URL } from '../../constants';
-import fluxLogo from '../../assets/flux-logo192.png';
+import fluxLogo from '../../assets/flux-logo-white.png';
 import { checkAccessToken } from '../../actions/authActions';
 import { connect } from 'react-redux';
 import isValidEmail from '../../utils/emailValidation';
 import Recaptcha from 'react-google-invisible-recaptcha';
 
 const Logo = styled.img`
-	width: 35%;
+	width: 80%;
+	max-width: 250px;
 	margin: auto;
 	display: block;
-	max-width: 200px;
-	margin-top: 30vh;
+	padding-top: 30vh;
 `;
+
 
 const SubmitButton = styled.button`
 	background-color: ${PINK};

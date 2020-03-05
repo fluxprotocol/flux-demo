@@ -1,10 +1,12 @@
 import React from 'react';
-import fluxLogo from '../assets/flux-logo.svg';
+import fluxLogo from '../assets/flux-logo.png';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { signIn, signOut } from './../actions/accountActions';
 import { daiToDollars } from '../utils/unitConvertion';
 import { DARK_GRAY, WHITE, DARK_BLUE } from '../constants';
+
+// TODO: Higher def flux-logo
 
 const Logo = styled.img`
 	width: 12%;

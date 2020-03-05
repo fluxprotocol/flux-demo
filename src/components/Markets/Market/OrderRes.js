@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { DARK_BLUE, PINK } from '../../../constants';
-import ErrorIcon from './../../../assets/error-icon.svg'
-import SuccessIcon from './../../../assets/success-icon.svg'
+import ErrorIcon from './../../../assets/error.png'
+import SuccessIcon from './../../../assets/success.png'
 import ModalButton from '../../ModalButton';
 const Container = styled.div`
 
@@ -44,7 +44,7 @@ export default function OrderRes({amountOfShares, res, closeModal}) {
 		<Container>
 			<Title>{res ? "Success" : "Something went wrong"}</Title>
 			<ResIcon src={res ? SuccessIcon : ErrorIcon} alt="logo reflecting if the order faield or was successful"/>
-			<Text>{res ? "order placed for" : "couldn't place order for"} <BoldText>{amountOfShares} shares</BoldText></Text>
+			<Text>{res ? "order placed for" : "couldn't place order for"} <BoldText>{amountOfShares.toFixed(2)} shares</BoldText></Text>
 			<ModalButton onClick={closeModal} color={res ? DARK_BLUE : PINK}>{res ? "Done" : "Close"}</ModalButton>
 		</Container>
 	)

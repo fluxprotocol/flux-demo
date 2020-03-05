@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { DARK_BLUE } from '../../constants';
-import fluxLogo from '../../assets/flux-logo-white-outline.svg';
+import fluxLogo from '../../assets/flux-logo-white.png';
 import nearLogo from '../../assets/near-logo-blue.svg';
 
 const NearLogo = styled.img`
@@ -12,7 +12,6 @@ const NearLogo = styled.img`
 `
 
 const Logo = styled.img`
-	width: 35%;
 	width: 80%;
 	max-width: 250px;
 	margin: auto;

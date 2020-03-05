@@ -41,7 +41,6 @@ const ClaimButton = styled.button`
 `;
 
 
-// TODO update claimable amount on claim.
 const ResolutedSection = ({market, dispatch, account, contract, accountId}) => {
 	const callUpdateBalance = () => dispatch(updateBalance(contract, accountId));
 	const [claimable, setClaimable] = useState(null);

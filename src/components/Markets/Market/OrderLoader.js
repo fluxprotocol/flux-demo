@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { DARK_BLUE } from '../../../constants';
-import fluxLogo from './../../../assets/flux-logo.svg'
+import fluxLogo from './../../../assets/flux-logo.png'
 const Container = styled.div`
 
 `;
@@ -54,7 +54,7 @@ export default function OrderLoader({amountOfShares}) {
 		<Container>
 			<Title>Processing</Title>
 			<FluxLogo src={fluxLogo}/>
-	<Text>placing order for <BoldText>{amountOfShares} shares</BoldText></Text>
+			<Text>placing order for <BoldText>{amountOfShares.toFixed(2)} shares</BoldText></Text>
 		</Container>
 	)
 };

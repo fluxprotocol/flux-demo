@@ -11,7 +11,6 @@ const AppContainer = styled.div`
 
 
 `
-// TODO: test market resolution
 // TODO: send a notification if gas runs low, the user needs to login and out
 function App({contract, dispatch, owner, accountId}) {
   useEffect(() => {
