@@ -16,7 +16,7 @@ const MarketsContainer = styled.div`
 	}
 `
 
-const Markets = ({markets, loading}) => {
+const Markets = ({markets, loading, socket}) => {
 
 	return (
 		<MarketsContainer id="markets-container">
@@ -26,7 +26,7 @@ const Markets = ({markets, loading}) => {
 				<Spinner /> 
 				:
 				markets.map((market, i) => (
-					<Market market={market} key={i}/>
+					<Market socket={socket} market={market} key={i}/>
 				))
 			}	
 		</MarketsContainer>
@@ -35,6 +35,7 @@ const Markets = ({markets, loading}) => {
 
 const mapStateToProps = (state) => ({
 	markets: state.markets.markets,
+	socket: state.auth.socket,
 	loading: state.markets.loading
 })
 export default connect(mapStateToProps)(Markets);

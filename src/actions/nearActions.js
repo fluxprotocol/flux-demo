@@ -36,7 +36,7 @@ export const initialize = () => {
 		const walletAccount = new window.nearlib.WalletAccount(near);
 		const accountId = walletAccount.getAccountId();
 		const contract = await near.loadContract(window.nearConfig.contractName, {
-			viewMethods: ["get_all_markets", "get_fdai_balance", "get_market_order","get_market_prices", "get_owner", "get_claimable"],
+			viewMethods: ["get_all_markets","get_market", "get_fdai_balance", "get_market_order","get_market_prices", "get_owner", "get_claimable"],
 			changeMethods: ["create_market", "claim_fdai" ,"delete_market", "place_order", "claim_earnings", "resolute_market"],
 			sender: accountId,
 		});

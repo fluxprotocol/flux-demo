@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { PINK, API_URL, DARK_BLUE } from '../../constants';
+import { API_URL, DARK_BLUE } from '../../constants';
 import fluxLogo from '../../assets/flux-logo-white.png';
 import { checkAccessToken } from '../../actions/authActions';
 import { connect } from 'react-redux';

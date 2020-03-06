@@ -60,22 +60,28 @@ const ThirdHeader = styled(Header)`
 	text-align: right;
 `;
 
-const MarketContent = ({market}) => {
+const MarketContent = ({socket, ...props}) => {
 	const [marketOrders, setMarketOrders] = useState([]);
+	let [market, setMarket] = useState(props.market);
 	const [showPositions, setShowPositions] = useState(false);
-
 	const { end_time, description, outcomes, outcome_tags, extra_info } = market;
-	
+
+	const updateMarket = () => market.updateMarket().then(updatedMarket => setMarket(updatedMarket));
+
 	const getAndSetMarketPrices = () => {
 		market.getMarketPrices().then(marketOrders => {
-			 setMarketOrders(marketOrders)}
+			setMarketOrders(marketOrders)}
 		);
 	}
 
 	useEffect(() => {
 		let unmounted = false;
+		socket.on("order_placed", ({marketId}) => {
+			if (marketId === market.id) updateMarket();
+		});
 		if (!unmounted) getAndSetMarketPrices();
 		return () => {
+
       unmounted = true; 
     };
 	}, [])

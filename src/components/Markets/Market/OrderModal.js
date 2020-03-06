@@ -7,11 +7,14 @@ import { updateBalance } from '../../../actions/nearActions';
 import OrderRes from './OrderRes';
 import OrderLoader from './OrderLoader';
 
-function OrderModal({market, outcome, marketPrice, dispatch, account, accountId, contract, loading, amountOfShares, orderRes, updateMarketOrders}) {
+function OrderModal({market, outcome, marketPrice, dispatch, account, accountId, contract, loading, amountOfShares, orderRes, socket }) {
 	const closeModal = () => dispatch(getOrderModal(null, null, null));
 	const callUpdateBalance = () => dispatch(updateBalance(contract, accountId));
 	const dispatchPlaceOrder = (price, spend) => {
-		dispatch(placeOrder(contract, account, market.id, outcome, price, spend, callUpdateBalance, updateMarketOrders));
+		const emitUpdateMarket = () => { 
+			socket.emit('order_placed', { marketId: market.id })
+		};
+		dispatch(placeOrder(account, market.id, outcome, price, spend, callUpdateBalance, emitUpdateMarket));
 	};
 	return (
 		 
@@ -35,6 +38,7 @@ function OrderModal({market, outcome, marketPrice, dispatch, account, accountId,
 
 
 const mapStateToProps = (state) => ({
+	socket: state.auth.socket,
 	market: state.market.selectedMarket,
 	outcome: state.market.selectedOutcome,
 	updateMarketOrders: state.market.updateMarketOrders,

@@ -24,7 +24,7 @@ export default function ChangeablePrice({price, changePrice}) {
 	}
 
 	return (
-		marketOrder && price != 100 ? (
+		marketOrder && price !== 100 ? (
 			<div onClick={() => setMarketOrder(false)}>
 				<StaticPrice>{price}¢</StaticPrice>
 				<ChangeButton >change</ChangeButton>

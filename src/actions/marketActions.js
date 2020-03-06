@@ -1,6 +1,5 @@
 import BN from 'bn.js';
 import { dollarsToDai } from '../utils/unitConvertion';
-import { updateMarkets } from './marketsActions';
 export const PLACED_ORDER = "PLACED_ORDER";
 export const START_ORDER_PLACE = "START_ORDER_PLACE";
 export const GET_ORDER_MODAL = "GET_ORDER_MODAL";
@@ -20,13 +19,12 @@ export const startOrderPlace = (amountOfShares) => ({
 	}
 });
 
-export const getOrderModal = (market, outcome, marketPrice, updateMarketOrders) => ({
+export const getOrderModal = (market, outcome, marketPrice) => ({
 	type: GET_ORDER_MODAL,
 	payload: {
 		market,
 		outcome,
 		marketPrice: marketPrice,
-		updateMarketOrders
 	}
 });
 
@@ -34,7 +32,7 @@ export const orderCanceled = () => ({
 	type: ORDER_CANCELED
 });
 
-export const placeOrder = (contract, account, marketId, outcome, price, spend, updateUserBalance, updateMarketOrders) => {
+export const placeOrder = (account, marketId, outcome, price, spend, updateUserBalance, emitOrderPlacement) => {
 	return dispatch => {
 		dispatch(startOrderPlace(spend / (price / 100)));
 		spend = parseInt(dollarsToDai(spend));
@@ -51,8 +49,7 @@ export const placeOrder = (contract, account, marketId, outcome, price, spend, u
 			new BN("0")
 		).then(res => {
 			dispatch(placedOrder(true));
-			dispatch(updateMarkets(contract));
-			updateMarketOrders();
+			emitOrderPlacement();
 			updateUserBalance();
 		}).catch(err => {
 			dispatch(placedOrder(false));

@@ -36,7 +36,7 @@ export default ({value, changeValue, denomination, focus}) => {
 
 	useEffect(() => {
 		if (focus) input.focus();
-	},[])
+	},[focus, input])
 
 	return (
 		<Container>

@@ -34,9 +34,10 @@ export const updateMarkets = contract => {
 			dispatch(gotMarkets(formattedMarkets));
 		})
 		.catch (err => console.error(err));
-
 	}
 }
+
+const updateMarket = (contract, marketId) => contract.get_market({id: marketId})
 
 function getUserOrders(contract, accountId) {
 	return new Promise((resolve, reject) => {
@@ -64,6 +65,7 @@ const formatMarkets = (marketsObj, contract) => {
 		let market = marketsObj[key];
 		market.userOrders = {};
 		market.getUserOrders = getUserOrders;
+		market.updateMarket = () => updateMarket(contract, market.id)
 		market.getMarketPrices = () => contract.get_market_prices({market_id: market.id});
 
 		return market;
