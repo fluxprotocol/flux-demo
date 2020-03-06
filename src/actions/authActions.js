@@ -1,4 +1,5 @@
 import { API_URL } from './../constants';
+import io from 'socket.io-client';
 
 export const GET_AUTH_STATUS_BEGIN = 'GET_AUTH_STATUS_BEGIN';
 export const GET_AUTH_STATUS_SUCCESS = 'GET_AUTH_STATUS_SUCCESS';
@@ -10,8 +11,11 @@ export const invalidAccessToken = () => ({
 	type: INVALID_ACCESS_TOKEN
 })
 
-export const getAuthStatusBegin = () => ({
-	type: GET_AUTH_STATUS_BEGIN
+export const getAuthStatusBegin = (socket) => ({
+	type: GET_AUTH_STATUS_BEGIN,
+	payload: {
+		socket
+	}
 });
 
 export const authStatusSuccess = allowed => ({
@@ -37,7 +41,8 @@ export const authStatusFailure = err => ({
 
 export const getAuthStatus = (walletAccount, accessToken, account) => {
 	return async dispatch => {
-		dispatch(getAuthStatusBegin());
+		const socket = io(API_URL);
+		dispatch(getAuthStatusBegin(socket));
 		const isSignedIn = walletAccount.isSignedIn();
 		dispatch(signedIn(isSignedIn));
 		if (!account) return dispatch(authStatusSuccess(false));

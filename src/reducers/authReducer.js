@@ -5,7 +5,8 @@ const initialState = {
 	success: null,
 	error: null,
 	signedIn: null,
-	invalidAccessToken: null
+	invalidAccessToken: null,
+	socket: null,
 }
 
 export default function authReducer(state = initialState, action) {
@@ -27,6 +28,7 @@ export default function authReducer(state = initialState, action) {
 				success: null,
 				loading: true,
 				error: null,
+				socket: action.payload.socket,
 			}
 		case GET_AUTH_STATUS_SUCCESS:
 			return {

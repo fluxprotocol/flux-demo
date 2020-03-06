@@ -7,15 +7,12 @@ import OwnerPortal from './OwnerPortal/OwnerPortal';
 import styled from 'styled-components';
 import OrderModal from './Markets/Market/OrderModal';
 
-const AppContainer = styled.div`
+const AppContainer = styled.div``;
 
-
-`
 // TODO: send a notification if gas runs low, the user needs to login and out
 function App({contract, dispatch, owner, accountId}) {
   useEffect(() => {
     if (contract) {
-      
       dispatch(getMarkets(contract));
     } 
   });
@@ -27,7 +24,7 @@ function App({contract, dispatch, owner, accountId}) {
           {(owner && accountId) && owner === accountId && <OwnerPortal/> }
           <Header />
           <Markets />
-          <OrderModal />
+          <OrderModal emitOrderPlace={(marketId => {} )}/>
         </>
       }
     </AppContainer>

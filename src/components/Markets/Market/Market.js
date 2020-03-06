@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import { DARK_BLUE } from '../../../constants';
 import ResolutedSection from './ResolutedSection';
 import MarketContent from './MarketContent.js';
@@ -27,11 +26,11 @@ const MarketContainer = styled.div`
 
 `;
 
-function Market({market}) {
+function Market({market, socket}) {
 	return (
 		<MarketContainer >
 			{
-				!market.resoluted ? <MarketContent market={market}/> : <ResolutedSection market={market}/>
+				!market.resoluted ? <MarketContent socket={socket} market={market}/> : <ResolutedSection market={market}/>
 			}
 		</MarketContainer>
 	)
