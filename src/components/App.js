@@ -15,6 +15,7 @@ const AppContainer = styled.div`
 function App({contract, dispatch, owner, accountId}) {
   useEffect(() => {
     if (contract) {
+      
       dispatch(getMarkets(contract));
     } 
   });

@@ -19,7 +19,7 @@ const OpenOrders = ({orders, market, dispatch, account, contract, accountId, upd
 		const callCancelOrder = () => {
 			dispatch(cancelOrder(account, market.id, order.outcome, order.id, callUpdateBalance, updateMarketOrders));
 		};
-		let selected = i == selectedOrder;
+		let selected = i === selectedOrder;
 		let label = market.outcome_tags[order.outcome];
 		if (market.outcomes === 2) {
 			label = i === 0 ? "NO" : "YES";

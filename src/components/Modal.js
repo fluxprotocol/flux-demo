@@ -44,6 +44,7 @@ const Blackground = styled.div`
 `
 function Modal({className, children, blackground, onBlackgroundClick}) {
 	useEffect(() => {
+		
 		document.body.style.overflow = 'hidden';
 		return () => {
 			document.body.style.overflow = 'scroll';

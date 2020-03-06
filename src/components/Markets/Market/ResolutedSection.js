@@ -45,9 +45,9 @@ const ResolutedSection = ({market, dispatch, account, contract, accountId}) => {
 	const callUpdateBalance = () => dispatch(updateBalance(contract, accountId));
 	const [claimable, setClaimable] = useState(null);
 	const updateClaimable = () => contract.get_claimable({market_id: market.id, from: accountId}).then(res => setClaimable(res));
+
 	useEffect(() => {
 		let mounted = false;
-
 		if (!mounted) updateClaimable();
 		return () => {
 			mounted = true;

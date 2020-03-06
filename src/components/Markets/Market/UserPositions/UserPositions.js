@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import ModalButton from '../../../ModalButton';
-import { DARK_BLUE, LIGHT_GRAY } from '../../../../constants';
+import { DARK_BLUE } from '../../../../constants';
 import Loader from '../../../Loader';
 import { filterUserOrders } from '../../../../utils/orderUtils';
 import OpenOrders from './OpenOrders';
@@ -52,14 +52,14 @@ const UserPositions = ({closeModal, market, accountId, updateMarketOrders}) => {
 	const [orders, setOrders] = useState(null);
 
 	useEffect(() => {
-		let cleaned = false;
+		let mounted = false;
 		document.body.style.overflow = 'hidden';
-		if (cleaned === false) setOrders(filterUserOrders(market, accountId));
+		if (mounted === false) setOrders(filterUserOrders(market, accountId));
 		return () => {
 			document.body.style.overflow = 'scroll';
-			cleaned = true;
+			mounted = true;
 		};
-	}, []);
+	}, [setOrders, market, accountId]);
 
 	return (
 		<Container>
