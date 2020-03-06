@@ -53,7 +53,7 @@ export const initialize = () => {
 				daiBalance = await contract.get_fdai_balance({from: accountId});
 			} 
 			catch (err) {
-				await contract.claim_fdai({}, 10000000000000);
+				await contract.claim_fdai({}, 1000000000000000);
 				daiBalance = await contract.get_fdai_balance({from: accountId});
 			}
 
