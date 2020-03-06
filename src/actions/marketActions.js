@@ -36,7 +36,6 @@ export const placeOrder = (account, marketId, outcome, price, spend, updateUserB
 	return dispatch => {
 		dispatch(startOrderPlace(spend / (price / 100)));
 		spend = parseInt(dollarsToDai(spend));
-		console.log(account);
 		account.functionCall(
 			window.nearConfig.contractName, 
 			"place_order", 
