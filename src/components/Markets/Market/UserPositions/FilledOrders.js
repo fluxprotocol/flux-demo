@@ -12,7 +12,7 @@ export default ({orders, market}) => {
 let buttons = orders.map((order, i) => {
 	let label = market.outcome_tags[order.outcome];
 	if (market.outcomes === 2) {
-		label = i === 0 ? "NO" : "YES";
+		label = order.outcome === 0 ? "NO" : "YES";
 	}
 	return <FilledOrderButton label={label} order={order} key={i} />
 })
