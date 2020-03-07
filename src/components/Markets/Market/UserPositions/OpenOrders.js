@@ -22,7 +22,7 @@ const OpenOrders = ({orders, market, dispatch, account, contract, accountId, upd
 		let selected = i === selectedOrder;
 		let label = market.outcome_tags[order.outcome];
 		if (market.outcomes === 2) {
-			label = i === 0 ? "NO" : "YES";
+			label = order.outcome === 0 ? "NO" : "YES";
 		}
 		return <CancelButton label={label} cancelOrder={callCancelOrder} setSelected={() => setSelectedOrder(i) } selected={selected} order={order} key={i} />
 	});
