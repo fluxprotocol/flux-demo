@@ -25,8 +25,8 @@ function App({allowance, contract, dispatch, owner, accountId}) {
           {(owner && accountId) && owner === accountId && <OwnerPortal/> }
           <Header />
           <Markets />
-          <OrderModal emitOrderPlace={(marketId => {} )}/>
-          {allowance > MIN_ALLOWANCE && <AllowanceModal/>}
+          <OrderModal />
+          {allowance < MIN_ALLOWANCE && <AllowanceModal/>}
         </>
       }
     </AppContainer>

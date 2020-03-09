@@ -4,32 +4,43 @@ import styled from 'styled-components';
 import { DARK_BLUE } from '../constants';
 import ModalButton from './ModalButton';
 import { signOut } from '../actions/accountActions';
+import { connect } from 'react-redux';
 
 const WarningIcon = styled.span`
 	color: red; 
 	border: 2px solid red;
 	border-radius: 50%;
 	text-align: center;
-	width: 150px;
-	height: 150px;
+	display: block;
+	width: 45px;
 	font-size: 40px;
+	margin: auto;
+	margin-top: 25px;
 `;
 
 const WarningText = styled.p`
 	color: ${DARK_BLUE};
 	text-align: center;
 `
+const StyledModalButton = styled(ModalButton)`
+	color: ${DARK_BLUE};
+	border-color: ${DARK_BLUE};
+	background-color: ${DARK_BLUE};
+`;
 
-
-function AllowanceModal() {
+function AllowanceModal({walletAccount}) {
 	return ( 
 		<Modal blackground={true} onBlackgroundClick={() => {}}>
 			<WarningIcon>!</WarningIcon>
-			<WarningText>We've run out of gas allowance, please sign in again to top up.</WarningText>
-			<ModalButton onClick={signOut}>Sign out</ModalButton>
+			<WarningText>Out of gas, please sign in again to top up.</WarningText>
+			<StyledModalButton onClick={() => signOut(walletAccount)}>Sign out</StyledModalButton>
 		</Modal>
 	);
 
 }
 
-export default AllowanceModal;
+const mapStateToProps = state => ({
+	walletAccount: state.near.walletAccount
+})
+
+export default connect(mapStateToProps)(AllowanceModal);
