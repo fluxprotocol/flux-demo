@@ -9,3 +9,4 @@ export const GREEN = "#26a65b"
 export const YELLOW = "#F7CA18"
 export const RED = "#f03434"
 export const WHITE = "#FFFFFF"
+export const TRACKING_ID = "UA-159992242-1";

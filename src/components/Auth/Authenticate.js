@@ -7,13 +7,19 @@ import NearLogin from './NearLogin';
 import { signIn, initializeAccount } from '../../actions/accountActions';
 import EnterAccessToken from './EnterAccessToken';
 import Loader from './../Loader';
-// import RpcConnector from '../../utils/RpcConnector';
+import ReactGA from 'react-ga';
+import { TRACKING_ID } from './../../constants';
 
-function Authenticate({near, account, dispatch, invalidAccessToken, signedIn, walletAccount, success, loading, error,...props}) {
+ReactGA.initialize(TRACKING_ID);
+function Authenticate({near, account, accountId, dispatch, invalidAccessToken, signedIn, walletAccount, success, loading, error,...props}) {
 	const [authenticated, setAuthenticated] = useState(false);
 	const [accountGot, setAccountGot] = useState(false);
 	useEffect(() => {
-		dispatch(initialize());
+		ReactGA.event({
+			category: "Authentication",
+			action: "User started authentication process"
+		});
+		dispatch(initialize(ReactGA));
 	}, [dispatch]);
 	
 	if (!accountGot && walletAccount) {
@@ -22,16 +28,37 @@ function Authenticate({near, account, dispatch, invalidAccessToken, signedIn, wa
 	}
 	
 	if (!authenticated && account !== null) {
-		// const RPC = new RpcConnector(window.nearConfig.nodeUrl, account.connection);
-		// RPC.sendRpc();
+		ReactGA.set({
+			userId: accountId
+		})
 		dispatch(getAuthStatus(walletAccount, props.match.params.accessToken, account));
 		setAuthenticated(true)
 	}
 
-	if (signedIn === false) return <NearLogin login={() => signIn(walletAccount)}/>
-	if (invalidAccessToken) return <EnterAccessToken account={account} accountId={walletAccount.getAccountId()}/>
+	const nearSignin = () => {
+		ReactGA.event({
+			category: "Onboarding",
+			action: "User clicked NEAR signin"
+		})
+		signIn(walletAccount)
+	}
+
+	if (signedIn === false) return <NearLogin login={nearSignin}/>
+	if (invalidAccessToken) {
+		ReactGA.event({
+			category: "Authentication",
+			action: "Unauthenticated user signin"
+		})
+		return <EnterAccessToken account={account} accountId={walletAccount.getAccountId()}/>
+	} 
 	if (error) return <div>{error}</div>
-	if (success) return <App />
+	if (success) {
+		ReactGA.event({
+			category: "Authenticated user signin",
+			action: "User clicked NEAR signin"
+		})
+		return <App ReactGA={ReactGA}/>
+	}
 	else {
 		return <Loader txLoading={true}/>;
 	}
@@ -42,6 +69,7 @@ const mapStateToProps = state => ({
 	near: state.near.near,
 	walletAccount: state.near.walletAccount,
 	account: state.account.account,
+	accountId: state.account.accountId,
 	success: state.auth.success,
 	loading: state.auth.loading,
 	error: state.auth.error,

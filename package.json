@@ -10,6 +10,7 @@
     "react-countdown-now": "^2.1.2",
     "react-datetime-picker": "^2.8.0",
     "react-dom": "^16.12.0",
+    "react-ga": "^2.7.0",
     "react-google-invisible-recaptcha": "^0.2.11",
     "react-moment": "^0.9.7",
     "react-redux": "^7.1.3",
