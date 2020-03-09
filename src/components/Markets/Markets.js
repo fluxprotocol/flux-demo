@@ -17,7 +17,6 @@ const MarketsContainer = styled.div`
 `
 
 const Markets = ({markets, loading, socket}) => {
-	console.log("loading");
 	return (
 		<MarketsContainer id="markets-container">
 				
