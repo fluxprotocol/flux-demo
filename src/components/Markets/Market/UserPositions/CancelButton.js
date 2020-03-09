@@ -52,7 +52,7 @@ export default ({order, label, selected, setSelected, cancelOrder}) => {
 				{selected ? <CancelText>cancel order</CancelText> : (
 					<>
 						<Label><BoldText>{label}</BoldText></Label>
-						<ButtonData>{order.price_per_share}¢</ButtonData>
+						<ButtonData>{order.price}¢</ButtonData>
 						<ButtonData><BoldText>${daiToDollars(order.spend)}</BoldText></ButtonData>
 						<ButtonData>{(order.filled / order.spend * 100).toFixed(2)}%</ButtonData>
 					</>
