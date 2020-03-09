@@ -17,7 +17,7 @@ const MarketsContainer = styled.div`
 `
 
 const Markets = ({markets, loading, socket}) => {
-
+	console.log("loading");
 	return (
 		<MarketsContainer id="markets-container">
 				
@@ -25,8 +25,8 @@ const Markets = ({markets, loading, socket}) => {
 				loading ? 
 				<Spinner /> 
 				:
-				markets.map((market, i) => (
-					<Market socket={socket} market={market} key={i}/>
+				markets.map((market) => (
+					<Market socket={socket} market={market} key={market.id}/>
 				))
 			}	
 		</MarketsContainer>
