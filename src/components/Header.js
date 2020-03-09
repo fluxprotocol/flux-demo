@@ -53,7 +53,7 @@ const AccountInfo = styled.span`
 	text-align: center;
 `
 
-function Header({allowance, daiBalance, walletAccount, accountId, isSignedIn}) {
+function Header({daiBalance, walletAccount, accountId, isSignedIn}) {
 	return (
 		<HeaderContainer>
 		  <Logo id="header-logo" src={fluxLogo} alt="our company logo"/>
@@ -80,7 +80,6 @@ const mapStateToProps = (state) => ({
 	walletAccount: state.near.walletAccount,
 	account: state.account.account,
 	accountId: state.account.accountId,
-	allowance: state.account.allowance,
 	accountState: state.account.accountState,
 	isSignedIn: state.account.isSignedIn
 });

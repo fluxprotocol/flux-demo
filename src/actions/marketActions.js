@@ -62,7 +62,7 @@ export const cancelOrder = (account, marketId, outcome, orderId, updateUserBalan
 	return dispatch => {
 		account.functionCall(
 			window.nearConfig.contractName, 
-			"cancel_order", 
+			"cancel_order",
 			{
 				market_id: marketId,
 				outcome,

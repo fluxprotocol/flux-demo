@@ -21,6 +21,7 @@ let buttons = orders.map((order, i) => {
 			<HeaderSection>
 				<StyledHeader>contract</StyledHeader>
 				<StyledHeader>price per share</StyledHeader>
+				<StyledHeader>order value</StyledHeader>
 				<StyledHeader>shares</StyledHeader>
 			</HeaderSection>
 			{buttons}

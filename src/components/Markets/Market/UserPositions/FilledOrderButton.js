@@ -30,8 +30,9 @@ export default ({order, label}) => {
 	return (
 		<ColoredButton>
 			<Label>{label}</Label>
-			<ButtonData><BoldText>{order.price_per_share}¢</BoldText></ButtonData>
-			<ButtonData>{daiToDollars(order.amt_of_shares * 100)}</ButtonData>
+			<ButtonData>{order.price}¢</ButtonData>
+			<ButtonData><BoldText>${daiToDollars(order.spend)}</BoldText></ButtonData>
+			<ButtonData>{daiToDollars(order.sharesFilled * 100)}</ButtonData>
 		</ColoredButton>
 	)
 }
