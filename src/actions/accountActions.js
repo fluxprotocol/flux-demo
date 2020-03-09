@@ -41,7 +41,8 @@ export const initializeAccount = (near, walletAccount) => {
 			accountState = await account.state();
 			const accountDetails = await account.getAccountDetails();
 			// TODO: query RPC for access key instead of arr.find
-			allowance = accountDetails.authorizedApps.find(app => app.contractId === window.nearConfig.contractName)
+			const app = accountDetails.authorizedApps.find(app => app.contractId === window.nearConfig.contractName)
+			allowance = app.amount;
 		}
 
 		dispatch(initializedAccount (

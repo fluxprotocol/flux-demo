@@ -12,7 +12,6 @@ import AllowanceModal from './AllowanceModal';
 const AppContainer = styled.div``;
 // TODO: send a notification if gas runs low, the user needs to login and out
 function App({allowance, contract, dispatch, owner, accountId}) {
-  console.log(allowance);
   useEffect(() => {
     if (contract) {
       dispatch(getMarkets(contract));
@@ -27,7 +26,7 @@ function App({allowance, contract, dispatch, owner, accountId}) {
           <Header />
           <Markets />
           <OrderModal emitOrderPlace={(marketId => {} )}/>
-          {allowance < MIN_ALLOWANCE && <AllowanceModal/>}
+          {allowance > MIN_ALLOWANCE && <AllowanceModal/>}
         </>
       }
     </AppContainer>
