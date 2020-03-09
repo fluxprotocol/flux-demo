@@ -42,9 +42,14 @@ const Title = styled.p`
 	font-size: 14px;
 `;
 
-const CancelButton = styled(ModalButton)`
+const ButtonContainer = styled.div`
 	position: absolute;
 	width: 90%!important;
+	bottom: 3%;
+	background-color:white;
+`;
+const CancelButton = styled(ModalButton)`
+	width: 100%!important;
 	bottom: 3%;
 `;
 
@@ -76,7 +81,9 @@ const UserPositions = ({closeModal, market, accountId, updateMarketOrders}) => {
 				</>
 			)
 		 }
-		<CancelButton color={DARK_BLUE} onClick={closeModal}>{orders === null ? "Cancel" : "Done"}</CancelButton>
+			<ButtonContainer>
+				<CancelButton color={DARK_BLUE} onClick={closeModal}>{orders === null ? "Cancel" : "Done"}</CancelButton>
+		 	</ButtonContainer>
 		</Container>
 	);
 };
