@@ -60,7 +60,7 @@ function NearLogin({login}) {
 		<LoginContainer>
 			<Logo src={fluxLogo} />
 			<Title>markets reimagined</Title>
-			<LoginButton onClick={login}> Login with <NearLogo src={nearLogo}/></LoginButton>
+			<LoginButton onClick={login}>Login with <NearLogo src={nearLogo}/></LoginButton>
 		</LoginContainer>
 	)
 }
