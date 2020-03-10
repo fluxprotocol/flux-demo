@@ -61,7 +61,7 @@ const ThirdHeader = styled(Header)`
 `;
 
 const MarketContent = ({socket, ...props}) => {
-	console.log("rendered", props.market.id)
+	// console.log("rendered", props.market.id)
 	const [marketOrders, setMarketOrders] = useState([]);
 	let [market, setMarket] = useState(props.market);
 	const [showPositions, setShowPositions] = useState(false);
