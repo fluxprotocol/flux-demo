@@ -54,8 +54,8 @@ function Authenticate({near, account, accountId, dispatch, invalidAccessToken, s
 	if (error) return <div>{error}</div>
 	if (success) {
 		ReactGA.event({
-			category: "Authenticated user signin",
-			action: "User clicked NEAR signin"
+			category: "Authentication",
+			action: "User signedin"
 		})
 		return <App ReactGA={ReactGA}/>
 	}

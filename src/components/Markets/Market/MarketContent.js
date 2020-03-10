@@ -61,6 +61,7 @@ const ThirdHeader = styled(Header)`
 `;
 
 const MarketContent = ({socket, ...props}) => {
+	console.log("rendered", props.market.id)
 	const [marketOrders, setMarketOrders] = useState([]);
 	let [market, setMarket] = useState(props.market);
 	const [showPositions, setShowPositions] = useState(false);
@@ -74,6 +75,7 @@ const MarketContent = ({socket, ...props}) => {
 		);
 	}
 
+	// TODO: No need to rerender entire component on market price update.
 	useEffect(() => {
 		let unmounted = false;
 		socket.on("order_placed", ({marketId}) => {
