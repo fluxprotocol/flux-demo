@@ -26,10 +26,10 @@ export const initializedAccount = (
 });
 
 // Break up and set states that load quicker earlier. 
-export const initializeAccount = (near, walletAccount) => {
+export const initializeAccount = (near, walletConnection) => {
 	return async dispatch => {
-		const isSignedIn = walletAccount.isSignedIn();
-		const accountId = walletAccount.getAccountId();
+		const isSignedIn = walletConnection.isSignedIn();
+		const accountId = walletConnection.getAccountId();
 		
 		dispatch(initializedAccountId (
 			accountId,
@@ -54,14 +54,14 @@ export const initializeAccount = (near, walletAccount) => {
 	}
 }
 
-export const signIn = (walletAccount) => {
-	walletAccount.requestSignIn(
+export const signIn = (walletConnection) => {
+	walletConnection.requestSignIn(
 		window.nearConfig.contractName,
 		window.nearConfig.contractName,
 	);
 }
 
-export const signOut = (walletAccount) => {
-	walletAccount.signOut();
+export const signOut = (walletConnection) => {
+	walletConnection.signOut();
 	window.location.replace(window.location.origin + window.location.pathname);
 }

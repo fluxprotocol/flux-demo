@@ -8,7 +8,7 @@ import {
 const initialState = {
 	near: null,
 	contract: null,
-	walletAccount: null,
+	walletConnection: null,
 	loading: true,
 	owner: null,
 	daiBalance: null,
@@ -20,7 +20,7 @@ export default function nearReducer(state = initialState, action) {
 			return {
 				...state,
 				near: action.payload.near,
-				walletAccount: action.payload.walletAccount,
+				walletConnection: action.payload.walletConnection,
 				contract: action.payload.contract,
 				loading: false,
 			}

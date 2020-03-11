@@ -39,15 +39,15 @@ export const authStatusFailure = err => ({
 	}
 });
 
-export const getAuthStatus = (walletAccount, accessToken, account) => {
+export const getAuthStatus = (walletConnection, accessToken, account) => {
 	return async dispatch => {
 		const socket = io(API_URL);
 		dispatch(getAuthStatusBegin(socket));
-		const isSignedIn = walletAccount.isSignedIn();
+		const isSignedIn = walletConnection.isSignedIn();
 		dispatch(signedIn(isSignedIn));
 		if (!account) return dispatch(authStatusSuccess(false));
 		
-		const accountId = walletAccount.getAccountId();
+		const accountId = walletConnection.getAccountId();
 		const signature = await signAuthMessage(accountId, account);
 		
 		if (isSignedIn) {

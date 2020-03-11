@@ -12,6 +12,7 @@ import AllowanceModal from './AllowanceModal';
 const AppContainer = styled.div``;
 // TODO: send a notification if gas runs low, the user needs to login and out
 function App({allowance, contract, dispatch, owner, accountId}) {
+  console.log(allowance)
   useEffect(() => {
     if (contract) {
       dispatch(getMarkets(contract));
