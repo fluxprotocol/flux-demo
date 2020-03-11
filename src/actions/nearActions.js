@@ -33,9 +33,9 @@ const updatedBalance = daiBalance => ({
 export const initialize = (ReactGA) => {
 	return async dispatch => {
 		const near = await window.nearlib.connect(Object.assign({ deps: { keyStore: new window.nearlib.keyStores.BrowserLocalStorageKeyStore() } }, window.nearConfig));
-		const walletConnection = new window.nearlib.WalletConnection(near);
+		const walletConnection = new window.nearlib.WalletConnection(near, window.nearConfig.contractName);
 		const accountId = walletConnection.getAccountId();
-		const contract = await near.loadContract(window.nearConfig.contractName, {
+		const contract = new window.nearlib.Contract(walletConnection.account(), window.nearConfig.contractName, {
 			viewMethods: ["get_all_markets","get_market", "get_fdai_balance", "get_market_order","get_market_prices", "get_owner", "get_claimable"],
 			changeMethods: ["create_market", "claim_fdai" ,"delete_market", "place_order", "claim_earnings", "resolute_market"],
 			sender: accountId,
