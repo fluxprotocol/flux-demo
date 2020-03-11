@@ -6,8 +6,6 @@ import Markets from './Markets/Markets';
 import OwnerPortal from './OwnerPortal/OwnerPortal';
 import styled from 'styled-components';
 import OrderModal from './Markets/Market/OrderModal';
-import { MIN_ALLOWANCE } from '../constants';
-import AllowanceModal from './AllowanceModal';
 
 const AppContainer = styled.div``;
 // TODO: send a notification if gas runs low, the user needs to login and out
@@ -27,7 +25,6 @@ function App({allowance, contract, dispatch, owner, accountId}) {
           <Header />
           <Markets />
           <OrderModal />
-          {allowance < MIN_ALLOWANCE && <AllowanceModal/>}
         </>
       }
     </AppContainer>
