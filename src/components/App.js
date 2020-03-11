@@ -9,8 +9,7 @@ import OrderModal from './Markets/Market/OrderModal';
 
 const AppContainer = styled.div``;
 // TODO: send a notification if gas runs low, the user needs to login and out
-function App({allowance, contract, dispatch, owner, accountId}) {
-  console.log(allowance)
+function App({contract, dispatch, owner, accountId}) {
   useEffect(() => {
     if (contract) {
       dispatch(getMarkets(contract));
@@ -35,7 +34,6 @@ const mapStateToProps = (state) => ({
   contract: state.near.contract,
   owner: state.near.owner,
   accountId: state.account.accountId,
-  allowance: state.account.allowance,
 });
 
 
