@@ -11,7 +11,7 @@ import ReactGA from 'react-ga';
 import { TRACKING_ID } from './../../constants';
 
 ReactGA.initialize(TRACKING_ID);
-function Authenticate({near, account, accountId, dispatch, invalidAccessToken, signedIn, walletAccount, success, loading, error,...props}) {
+function Authenticate({near, account, accountId, dispatch, invalidAccessToken, signedIn, walletConnection, success, loading, error,...props}) {
 	const [authenticated, setAuthenticated] = useState(false);
 	const [accountGot, setAccountGot] = useState(false);
 	useEffect(() => {
@@ -22,8 +22,8 @@ function Authenticate({near, account, accountId, dispatch, invalidAccessToken, s
 		dispatch(initialize(ReactGA));
 	}, [dispatch]);
 	
-	if (!accountGot && walletAccount) {
-		dispatch(initializeAccount(near, walletAccount));
+	if (!accountGot && walletConnection) {
+		dispatch(initializeAccount(near, walletConnection));
 		setAccountGot(true);
 	}
 	
@@ -31,7 +31,7 @@ function Authenticate({near, account, accountId, dispatch, invalidAccessToken, s
 		ReactGA.set({
 			userId: accountId
 		})
-		dispatch(getAuthStatus(walletAccount, props.match.params.accessToken, account));
+		dispatch(getAuthStatus(walletConnection, props.match.params.accessToken, account));
 		setAuthenticated(true)
 	}
 
@@ -40,7 +40,7 @@ function Authenticate({near, account, accountId, dispatch, invalidAccessToken, s
 			category: "Onboarding",
 			action: "User clicked NEAR signin"
 		})
-		signIn(walletAccount)
+		signIn(walletConnection)
 	}
 
 	if (signedIn === false) return <NearLogin login={nearSignin}/>
@@ -49,7 +49,7 @@ function Authenticate({near, account, accountId, dispatch, invalidAccessToken, s
 			category: "Authentication",
 			action: "Unauthenticated user signin"
 		})
-		return <EnterAccessToken account={account} accountId={walletAccount.getAccountId()}/>
+		return <EnterAccessToken account={account} accountId={walletConnection.getAccountId()}/>
 	} 
 	if (error) return <div>{error}</div>
 	if (success) {
@@ -67,7 +67,7 @@ function Authenticate({near, account, accountId, dispatch, invalidAccessToken, s
 
 const mapStateToProps = state => ({
 	near: state.near.near,
-	walletAccount: state.near.walletAccount,
+	walletConnection: state.near.walletConnection,
 	account: state.account.account,
 	accountId: state.account.accountId,
 	success: state.auth.success,

@@ -53,19 +53,19 @@ const AccountInfo = styled.span`
 	text-align: center;
 `
 
-function Header({daiBalance, walletAccount, accountId, isSignedIn}) {
+function Header({daiBalance, walletConnection, accountId, isSignedIn}) {
 	return (
 		<HeaderContainer>
 		  <Logo id="header-logo" src={fluxLogo} alt="our company logo"/>
 		  {
 				!isSignedIn
 				? 
-			  <LoginButton onClick={() => signIn(walletAccount)} >Login</LoginButton>
+			  <LoginButton onClick={() => signIn(walletConnection)} >Login</LoginButton>
 				: (
 					<>
 						<AccountInfo> {accountId} </AccountInfo>
 						<AccountInfo> {daiBalance ? `$${daiToDollars(daiBalance)}` : null}</AccountInfo>
-						<LoginButton onClick={() => signOut(walletAccount)}>Logout</LoginButton>
+						<LoginButton onClick={() => signOut(walletConnection)}>Logout</LoginButton>
 					</>
 				)
 		  }
@@ -77,7 +77,7 @@ function Header({daiBalance, walletAccount, accountId, isSignedIn}) {
 const mapStateToProps = (state) => ({
 	near: state.near.near,
 	daiBalance: state.near.daiBalance,
-	walletAccount: state.near.walletAccount,
+	walletConnection: state.near.walletConnection,
 	account: state.account.account,
 	accountId: state.account.accountId,
 	accountState: state.account.accountState,

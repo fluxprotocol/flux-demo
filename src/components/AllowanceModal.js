@@ -28,19 +28,19 @@ const StyledModalButton = styled(ModalButton)`
 	background-color: ${DARK_BLUE};
 `;
 
-function AllowanceModal({walletAccount}) {
+function AllowanceModal({walletConnection}) {
 	return ( 
 		<Modal blackground={true} onBlackgroundClick={() => {}}>
 			<WarningIcon>!</WarningIcon>
 			<WarningText>Out of gas, please sign in again to top up.</WarningText>
-			<StyledModalButton onClick={() => signOut(walletAccount)}>Sign out</StyledModalButton>
+			<StyledModalButton onClick={() => signOut(walletConnection)}>Sign out</StyledModalButton>
 		</Modal>
 	);
 
 }
 
 const mapStateToProps = state => ({
-	walletAccount: state.near.walletAccount
+	walletConnection: state.near.walletConnection
 })
 
 export default connect(mapStateToProps)(AllowanceModal);
