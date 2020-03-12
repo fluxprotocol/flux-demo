@@ -13,7 +13,6 @@ function Order(order) {
 	}
 }
 export const filterUserOrders = (market, accountId) => {
-	console.log(market.description)
 	const filledOrderPrices = {};
 	const openOrders= [];
 	const filledOrders= [];
@@ -33,8 +32,6 @@ export const filterUserOrders = (market, accountId) => {
 				}
 			}
 		}
-
-		console.log(filledOrders)
 
 		for (const orderId in orderbook.open_orders) {
 			const order = orderbook.open_orders[orderId];
