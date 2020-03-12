@@ -30,11 +30,11 @@ export const initializeAccount = (near, walletConnection) => {
 	return async dispatch => {
 		const isSignedIn = walletConnection.isSignedIn();
 		const accountId = walletConnection.getAccountId();
-		
+
 		dispatch(initializedAccountId (
 			accountId,
 			isSignedIn,
-			));
+		));
 		let account, accountState, allowance = null;
 		if (isSignedIn) {
 			account = await near.account(accountId); 
