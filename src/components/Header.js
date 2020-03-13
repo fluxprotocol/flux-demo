@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { signIn, signOut } from './../actions/accountActions';
 import { daiToDollars } from '../utils/unitConvertion';
 import { DARK_GRAY, WHITE, DARK_BLUE } from '../constants';
+import { useHistory } from 'react-router-dom';
 
 const Logo = styled.img`
 	width: 12%;
@@ -54,9 +55,13 @@ const AccountInfo = styled.span`
 `
 
 function Header({daiBalance, walletConnection, accountId, isSignedIn}) {
+	
+	const reloadApp = () => {
+		window.location.reload();
+	}
 	return (
 		<HeaderContainer>
-		  <Logo id="header-logo" src={fluxLogo} alt="our company logo"/>
+		  <Logo onClick={reloadApp} id="header-logo" src={fluxLogo} alt="our company logo"/>
 		  {
 				!isSignedIn
 				? 

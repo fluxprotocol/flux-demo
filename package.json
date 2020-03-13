@@ -6,6 +6,7 @@
     "@material/react-text-field": "^0.15.0",
     "bn.js": "^5.0.0",
     "moment": "^2.24.0",
+    "nearlib": "^0.22.0",
     "react": "^16.12.0",
     "react-countdown-now": "^2.1.2",
     "react-datetime-picker": "^2.8.0",
