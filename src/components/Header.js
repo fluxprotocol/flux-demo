@@ -68,8 +68,8 @@ function Header({daiBalance, walletConnection, accountId, isSignedIn}) {
 			  <LoginButton onClick={() => signIn(walletConnection)} >Login</LoginButton>
 				: (
 					<>
-						<AccountInfo> {accountId} </AccountInfo>
-						<AccountInfo> {daiBalance ? `$${daiToDollars(daiBalance)}` : null}</AccountInfo>
+						<AccountInfo> User: {accountId} </AccountInfo>
+						<AccountInfo> Balance: {daiBalance ? `$${daiToDollars(daiBalance)}` : null}</AccountInfo>
 						<LoginButton onClick={() => signOut(walletConnection)}>Logout</LoginButton>
 					</>
 				)
