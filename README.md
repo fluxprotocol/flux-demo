@@ -1,5 +1,7 @@
 Welcome to the flux-demo repostory! Flux is a highly scalable open market protocol. Read our [Medium article](https://medium.com/@fluxmarket/flux-derivatives-on-startups-69fdc683cfe2) to learn what Flux is [all about](https://medium.com/@fluxmarket/flux-derivatives-on-startups-69fdc683cfe2).
 
+![flux-demo](https://flux.market/static/media/mobile-demo.68e1a565.png?__WB_REVISION__=68e1a565f6f7d632b2b5638c270b377c)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 # Table of Contents
