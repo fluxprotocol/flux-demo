@@ -72,7 +72,6 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
 
-If something is missing in the documentation or if you found some part confusing, please file an [issue report](https://github.com/fluxprotocol/flux-demo/issues/new) with your suggestions for improvement, or join our discord server: [https://discordapp.com/invite/eg23nNx](https://discordapp.com/invite/eg23nNx) We love to hear from you!
 ## Something missing?
 If something is missing in the documentation or if you found some part confusing, please file an [issue report](https://github.com/fluxprotocol/flux-demo/issues/new) with your suggestions for improvement, or join our discord server: [https://discordapp.com/invite/eg23nNx](https://discordapp.com/invite/eg23nNx) We love to hear from you!
 
