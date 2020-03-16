@@ -1,12 +1,12 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 Welcome to the flux-demo wiki! Flux is a highly scalable open market protocol. Read our [Medium article](https://medium.com/@fluxmarket/flux-derivatives-on-startups-69fdc683cfe2) to learn what Flux is [all about](https://medium.com/@fluxmarket/flux-derivatives-on-startups-69fdc683cfe2).
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 # Table of Contents
 - [Home](#Home)
 - [Table of Contents](#Table-of-Contents)
-- [Getting Started](Getting-started)
-- [Missing something](Missing-something%3F)
+- [Getting Started](#Getting-started)
+- [Missing something](#Missing-something%3F)
 
 # Getting started
 
