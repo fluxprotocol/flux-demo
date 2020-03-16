@@ -37,6 +37,17 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+## Endless loading screen
+
+If you are running this flux-demo locally and are getting an endless loading screen you should modify the authentication.js found under [../src/components/Auth/authentication.js](https://github.com/Hugo22O/flux-demo/blob/master/src/components/Auth/Authenticate.js) to make it look like this: 
+
+`Code here`
+
+Instead of 
+
+`code here`
+
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
