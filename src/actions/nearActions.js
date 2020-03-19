@@ -32,7 +32,7 @@ const updatedBalance = daiBalance => ({
 
 export const initialize = (ReactGA) => {
 	return async dispatch => {
-		const near = await window.nearlib.connect(Object.assign({ deps: { keyStore: new window.nearlib.keyStores.BrowserLocalStorageKeyStore() } }, window.nearConfig));
+		const near = await new window.nearlib(window.nearConfig).connect(Object.assign({ deps: { keyStore: new window.nearlib.keyStores.BrowserLocalStorageKeyStore() } }));
 		const walletConnection = new window.nearlib.WalletConnection(near, window.nearConfig.contractName);
 		const accountId = walletConnection.getAccountId();
 		const contract = new window.nearlib.Contract(walletConnection.account(), window.nearConfig.contractName, {
@@ -53,10 +53,10 @@ export const initialize = (ReactGA) => {
 				daiBalance = await contract.get_fdai_balance({from: accountId});
 			} 
 			catch (err) {
-				ReactGA.event({
-					category: "Onboarding",
-					action: "User claimed fdai which means this is the accounts first signup",
-				})
+				// ReactGA.event({
+				// 	category: "Onboarding",
+				// 	action: "User claimed fdai which means this is the accounts first signup",
+				// })
 				await contract.claim_fdai({}, 1000000000000000);
 				daiBalance = await contract.get_fdai_balance({from: accountId});
 			}

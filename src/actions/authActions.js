@@ -47,7 +47,7 @@ export const getAuthStatus = (walletConnection, accessToken, account) => {
 		dispatch(signedIn(isSignedIn));
 		if (!account) return dispatch(authStatusSuccess(false));
 		
-		const accountId = walletConnection.getAccountId();
+		const accountId = account.getAccountId();
 		const signature = await signAuthMessage(accountId, account);
 		
 		if (isSignedIn) {

@@ -2,79 +2,34 @@ import React, { useEffect, useState } from 'react';
 import App from '../App';
 import { connect } from 'react-redux';
 import { getAuthStatus } from '../../actions/authActions';
-import { initialize } from '../../actions/nearActions';
+import { connectFlux } from '../../actions/fluxActions';
 import NearLogin from './NearLogin';
-import { signIn, initializeAccount } from '../../actions/accountActions';
 import EnterAccessToken from './EnterAccessToken';
 import Loader from './../Loader';
-import ReactGA from 'react-ga';
-import { TRACKING_ID } from './../../constants';
+import { AUTH, ONBOARDING, setAccountId } from '../../GAEvents';
+import { initialize } from 'react-ga';
 
-ReactGA.initialize(TRACKING_ID);
-function Authenticate({near, account, accountId, dispatch, invalidAccessToken, signedIn, walletConnection, success, loading, error,...props}) {
-	const [authenticated, setAuthenticated] = useState(false);
-	const [accountGot, setAccountGot] = useState(false);
+// TODO: refactor google analytics events
+
+function Authenticate({flux, dispatch, loading}) {
 	useEffect(() => {
-		ReactGA.event({
-			category: "Authentication",
-			action: "User started authentication process"
-		});
-		dispatch(initialize(ReactGA));
+		dispatch(connectFlux(window));
 	}, [dispatch]);
-	
-	if (!accountGot && walletConnection) {
-		dispatch(initializeAccount(near, walletConnection));
-		setAccountGot(true);
-	}
-	
-	if (!authenticated && account !== null) {
-		ReactGA.set({
-			userId: accountId
-		})
-		dispatch(getAuthStatus(walletConnection, props.match.params.accessToken, account));
-		setAuthenticated(true)
-	}
 
-	const nearSignin = () => {
-		ReactGA.event({
-			category: "Onboarding",
-			action: "User clicked NEAR signin"
-		})
-		signIn(walletConnection)
+	if (flux) {
+		return <App />
 	}
-
-	if (signedIn === false) return <NearLogin login={nearSignin}/>
-	if (invalidAccessToken) {
-		ReactGA.event({
-			category: "Authentication",
-			action: "Unauthenticated user signin"
-		})
-		return <EnterAccessToken account={account} accountId={walletConnection.getAccountId()}/>
-	} 
-	if (error) return <div>{error}</div>
-	if (success) {
-		ReactGA.event({
-			category: "Authentication",
-			action: "User signedin"
-		})
-		return <App ReactGA={ReactGA}/>
-	}
-	else {
+	else if (loading) {
 		return <Loader txLoading={true}/>;
+	} else {
+		return <div>Something went wrong..</div>
 	}
 
 }
 
 const mapStateToProps = state => ({
-	near: state.near.near,
-	walletConnection: state.near.walletConnection,
-	account: state.account.account,
-	accountId: state.account.accountId,
-	success: state.auth.success,
-	loading: state.auth.loading,
-	error: state.auth.error,
-	signedIn: state.auth.signedIn,
-	invalidAccessToken: state.auth.invalidAccessToken,
+	flux: state.flux.flux,
+	loading: state.flux.loading
 })
 
 
