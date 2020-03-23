@@ -5,10 +5,13 @@ import * as serviceWorker from './serviceWorker';
 import GlobalStyles from  "./global-styles";
 import App from './components/App';
 import { FluxProvider } from './components/FluxProvider';
+import { WSProvider } from './components/WSProvider';
 
 const FluxApp = () => (
 	<FluxProvider>
-		<App/>	
+		<WSProvider>
+			<App/>
+		</WSProvider>
 	</FluxProvider>
 )
 

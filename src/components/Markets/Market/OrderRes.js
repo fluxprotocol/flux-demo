@@ -45,14 +45,13 @@ const LinkText = styled(Text)`
 `;
 
 export default function OrderRes({amountOfShares, res, closeModal}) {
-
 	return (
 		<Container>
 			<Title>{!res.error ? "Success" : "Something went wrong"}</Title>
 			<ResIcon src={!res.error ? SuccessIcon : ErrorIcon} alt="logo reflecting if the order faield or was successful"/>
 			<Text>{!res.error ? "order placed for" : "couldn't place order for"} <BoldText>{amountOfShares.toFixed(2)} shares</BoldText></Text>
-			<LinkText onClick = {() => window.open(`https://explorer.nearprotocol.com/transactions/${res.tx}`)}>view tx</LinkText>
-			<ModalButton onClick={closeModal} color={res ? DARK_BLUE : PINK}>{res.error ? "Done" : "Close"}</ModalButton>
+			{!res.error && <LinkText onClick = {() => window.open(`https://explorer.nearprotocol.com/transactions/${res.tx}`)}>view tx</LinkText>}
+			<ModalButton onClick={closeModal} color={!res.error ? DARK_BLUE : PINK}>{!res.error ? "Done" : "Close"}</ModalButton>
 		</Container>
 	)
 };

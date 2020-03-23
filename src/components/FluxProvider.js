@@ -1,18 +1,44 @@
 import React, {useReducer} from 'react';
+import Flux from 'flux-sdk';
 
-const initialState = null;
+const initialState = {
+	flux: null,
+	balance: null,
+};
 const reducer = (state, action) => {
 	switch(action.type) {
 		case 'connected': {
-			return state = action.payload.fluxInstance;
+			return state = {
+				...state,
+				flux: action.payload.flux
+			}
 		}
 		case 'balanceUpdate': {
-			return state = {...state, balance: action.payload.balance};
+			return state = {
+				...state, 
+				balance: action.payload.balance
+			};
+		}
+		default : {
+			return state;
 		}
 	}
 }
 
-export const FluxContext = React.createContext([{}, function() {}])
+export const connect = async () => {
+  const fluxInstance = new Flux();
+  await fluxInstance.connect("flux_protocol_alpha");
+  if (fluxInstance.walletConnection.isSignedIn()) {
+    try {
+      await fluxInstance.getFDaiBalance();
+    } catch {
+      await fluxInstance.claimFDai();
+    }
+  }
+  return fluxInstance;
+}
+
+export const FluxContext = React.createContext(initialState)
 
 export const FluxProvider = ({children}) => {
 	const [flux, dispatch] = useReducer(reducer, initialState)

@@ -54,8 +54,8 @@ const OrderForm = ({market, outcome, closeModal, marketPrice, placeOrder}) => {
 				</Value>
 			</Row>
 			<Row>
-			<Key>total cost:</Key>
-			<OrderInput value={spend} denomination={"$"} changeValue={setSpend}/>
+				<Key>total cost:</Key>
+				<OrderInput value={spend} denomination={"$"} changeValue={setSpend}/>
 			</Row>
 
 			<Button onClick={() => placeOrder(price, spend)} color={DARK_BLUE}>BUY CONTRACT</Button>

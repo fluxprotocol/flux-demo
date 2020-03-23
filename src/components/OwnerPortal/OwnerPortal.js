@@ -15,7 +15,7 @@ const ShowHideButton = styled.button`
 `;
 
 const OwnerPortal = ({markets = []}) => {
-	const [flux, dispatch] = useContext(FluxContext);
+	const [{flux}, dispatch] = useContext(FluxContext);
 	const [isOwner, setIsOwner] = useState(false);
 	const [description, setDescription] = useState('new market');
 	const [extraInfo, setExtraInfo] = useState('');

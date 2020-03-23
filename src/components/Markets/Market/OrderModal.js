@@ -5,41 +5,42 @@ import OrderRes from './OrderRes';
 import OrderLoader from './OrderLoader';
 import { OrderContext } from '../../OrderProvider';
 import { FluxContext } from '../../FluxProvider';
-import { dollarsToDai, daiToDollars } from '../../../utils/unitConvertion';
+import { dollarsToDai } from '../../../utils/unitConvertion';
+import { WebSocketContext } from '../../WSProvider';
 
 function OrderModal() {
-	const [ orderContext, dispatch ] = useContext(OrderContext);
-	const [ flux, dispatchFlux ] = useContext(FluxContext);
+	const [ socket, dispatchSocket ] = useContext(WebSocketContext);
+	const [ orderContext, dispatchOrderContext ] = useContext(OrderContext);
+	const [ {flux}, dispatchFlux ] = useContext(FluxContext);
 	const [ loading, setLoading ] = useState(false);
 	const [ orderRes, setOrderRes ] = useState(null);
 	const [ amountOfShares, setAmountOfShares ] = useState(0);
-
+	const market = orderContext.market;
 	const closeModal = () => {
 		setOrderRes(null);
-		dispatch({type: 'stopOrderPlacement'})
+		dispatchOrderContext({type: 'stopOrderPlacement'})
 	};
 
 	const placeOrder = async (price, spend) => {
-		// const emitUpdateMarket = () => { 
-		// 	socket.emit('order_placed', { marketId: market.id })
-		// };
-
 		const shares = spend / price * 100
 		setAmountOfShares(shares);
 		setLoading(true);
-		let res;
+
 		try {
-			res = await flux.placeOrder(orderContext.market.id, orderContext.outcome, parseInt(dollarsToDai(spend)), price);
-			setOrderRes({err: false, tx: res.transaction.hash});
-		} catch {
-			setOrderRes({err: true, tx: res.transaction.hash})
+			const res = await flux.placeOrder(market.id, orderContext.outcome, dollarsToDai(spend), parseInt(price)).catch(err => console.error(err));
+			socket.emit('order_placed', { marketId: market.id })
+			const updatedBalance = await flux.getFDaiBalance().catch(err => console.error(err));
+			dispatchFlux({type: "balanceUpdate", payload: {balance: updatedBalance}});
+			setOrderRes({error: false, tx: res.transaction.hash});
+		} catch (err){
+			setOrderRes({error: true})
 		}
 		setLoading(false);
 		
 	};
 
 	return (
-		orderContext.market && <Modal blackground={true} onBlackgroundClick={closeModal}>
+		market && <Modal blackground={true} onBlackgroundClick={closeModal}>
 			{
 				!loading && orderRes !== null ?
 				<OrderRes closeModal={closeModal} res={orderRes} amountOfShares={amountOfShares}/>
@@ -48,7 +49,7 @@ function OrderModal() {
 				?
 				<OrderLoader amountOfShares={amountOfShares}/>
 				:
-				<OrderForm closeModal={closeModal} market={orderContext.market} placeOrder={placeOrder} marketPrice={orderContext.price} outcome={orderContext.outcome} />
+				<OrderForm closeModal={closeModal} market={market} placeOrder={placeOrder} marketPrice={orderContext.price} outcome={orderContext.outcome} />
 			}
 		</Modal>
 	);

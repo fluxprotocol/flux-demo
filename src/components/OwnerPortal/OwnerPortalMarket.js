@@ -2,17 +2,26 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import BN from 'bn.js';
 import { FluxContext } from '../FluxProvider';
+import { PRE_PAID_GAS } from './../../constants';
 
 const Market = styled.div`
 
 `;
 
 const OwnerPortalMarket = ({market}) => {
-	const [flux, dispatch] = useContext(FluxContext);
+	const [{flux}, dispatch] = useContext(FluxContext);
 
 	const deleteMarket = async () => {
 		console.log("deleting...");
-		await flux.deleteMarket(market.id);
+		await flux.account.functionCall(
+			flux.contract.contractId,
+			"delete_market",
+			{
+				market_id: market.id
+			},
+			new BN(PRE_PAID_GAS.toString()),
+			new BN("0"),
+		).catch(err => {console.error(err)})
 	}
 	
 	const resolute = async (winningOutcome) => {

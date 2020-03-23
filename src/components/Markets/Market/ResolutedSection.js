@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { DARK_BLUE } from '../../../constants';
-import { updateBalance } from '../../../actions/nearActions';
-import { claimEarnings } from '../../../actions/marketActions';
 import ResolutionDate from './ResolutionDate';
 import { Description } from './MarketContent';
 import { capitalize } from '../../../utils/stringManipulation';
 import { daiToDollars } from '../../../utils/unitConvertion';
+import { FluxContext } from '../../FluxProvider';
 
 const ResolutedContainer = styled.div`
 	display: block;
@@ -40,10 +39,21 @@ const ClaimButton = styled.button`
 `;
 
 
-const ResolutedSection = ({market, dispatch, account, contract, accountId}) => {
-	const callUpdateBalance = () => dispatch(updateBalance(contract, accountId));
+const ResolutedSection = ({market}) => {
+	const [{flux}, dispatch] = useContext(FluxContext);
+
+	const updateBalance = async () => {
+		const updatedBalance = await flux.getFDaiBalance(flux.getAccountId());
+		dispatch({type: "balanceUpdate", payload: {balance: updatedBalance}});
+	}
 	const [claimable, setClaimable] = useState(null);
-	const updateClaimable = () => contract.get_claimable({market_id: market.id, from: accountId}).then(res => setClaimable(res));
+	const updateClaimable = () => flux.getClaimable(market.id, flux.getAccountId()).then(res => setClaimable(res));
+
+	const onClaimClick = async () => {
+		await flux.claimEarnings(market.id);
+		updateClaimable();
+		updateBalance();
+	}
 
 	useEffect(() => {
 		let mounted = false;
@@ -70,10 +80,8 @@ const ResolutedSection = ({market, dispatch, account, contract, accountId}) => {
 				Resolution: <Resolution>{resolution}</Resolution>
 			</ResolutionTitle>
 
-			<ClaimButton onClick={() => {
-				dispatch(claimEarnings(account, market.id, callUpdateBalance, updateClaimable))
-			}}>Claim ${daiToDollars(claimable)}</ClaimButton> 
-		</ResolutedContainer>
+			<ClaimButton onClick={onClaimClick}>Claim ${daiToDollars(claimable)}</ClaimButton> 
+ 	</ResolutedContainer>
 	);
 };
 

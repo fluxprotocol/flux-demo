@@ -17,10 +17,13 @@ const reducer = (state, action) => {
 		case 'stopOrderPlacement': {
 			return state = initialState;
 		} 
+		default : {
+			return state;
+		}
 	}
 }
 
-export const OrderContext = React.createContext([{}, function() {}])
+export const OrderContext = React.createContext(initialState)
 
 export const OrderProvider = ({children}) => {
 	const [order, dispatch] = useReducer(reducer, initialState)

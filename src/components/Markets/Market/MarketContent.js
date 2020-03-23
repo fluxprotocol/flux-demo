@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { capitalize } from '../../../utils/stringManipulation';
 import { DARK_BLUE, LIGHT_GRAY} from '../../../constants';
@@ -6,6 +6,7 @@ import ExtraInfo from './ExtraInfo.js';
 import OutcomeButton from './OutcomeButton.js';
 import UserPositions from './UserPositions/UserPositions.js';
 import ResolutionDate from './ResolutionDate.js';
+import { WebSocketContext } from '../../WSProvider';
 
 const ButtonSection = styled.div`
   width: 100%;
@@ -66,6 +67,7 @@ const MarketContent = ({...props}) => {
 	let [market, setMarket] = useState(props.market);
 	const [showPositions, setShowPositions] = useState(false);
 	const { end_time, description, outcomes, outcome_tags, extra_info } = market;
+	const [ socket, _ ] = useContext(WebSocketContext);
 
 	const getAndSetMarketPrices = async () => {
 		const marketOrders = await market.getMarketPrices()
@@ -75,12 +77,11 @@ const MarketContent = ({...props}) => {
 	// TODO: No need to rerender entire component on market price update.
 	useEffect(() => {
 		let unmounted = false;
-		// socket.on("order_placed", ({marketId}) => {
-		// 	if (marketId === market.id) getAndSetMarketPrices();
-		// });
+		socket.on("order_placed", ({marketId}) => {
+			if (marketId === market.id) getAndSetMarketPrices();
+		});
 		if (!unmounted) getAndSetMarketPrices();
 		return () => {
-
       unmounted = true; 
     };
 	}, [])

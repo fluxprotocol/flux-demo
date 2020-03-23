@@ -41,7 +41,7 @@ export default ({value, changeValue, denomination, focus}) => {
 	return (
 		<Container>
 			<Demonination>{denomination}</Demonination>
-			<Input type="text" value={value} ref={ref => input = ref} onChange={e => changeValue(e.target.value)}/>
+			<Input type="number" value={value} ref={ref => input = ref} onChange={e => changeValue(e.target.value)}/>
 		</Container>
 	);
 }

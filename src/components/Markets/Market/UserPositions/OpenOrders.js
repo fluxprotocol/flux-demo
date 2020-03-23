@@ -6,14 +6,18 @@ import { FluxContext } from './../../../FluxProvider';
 
 const OpenOrders = ({orders, market}) => {
 	const [selectedOrder, setSelectedOrder] = useState(null)
-	const [flux, dispatch] = useContext(FluxContext);
+	const [{flux}, dispatch] = useContext(FluxContext);
 	const StyledHeader = styled(Header)`
 		text-align: center;
 		width: 25%;
 	`
 
 	const buttons = orders.map((order, i) => {
-		const cancelOrder = () => flux.cancelOrder(market.id, order.outcome, order.id);
+		const cancelOrder = async () => {
+			await flux.cancelOrder(market.id, order.outcome, order.id)
+			const updatedBalance = await flux.getFDaiBalance().catch(err => console.error(err));
+			dispatch({type: "balanceUpdate", payload: {balance: updatedBalance}});
+		};
 		let selected = i === selectedOrder;
 		let label = market.outcome_tags[order.outcome];
 		if (market.outcomes === 2) {

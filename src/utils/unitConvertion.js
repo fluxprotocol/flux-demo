@@ -5,7 +5,7 @@ export const daiToDollars = (num) => {
 }
 
 export const dollarsToDai = (num) => {
-	return (num * 10 ** 17).toFixed(2)
+	return parseInt((num * 10 ** 17).toFixed(2))
 }
 
 export const yoctoToNear = (num) => {
