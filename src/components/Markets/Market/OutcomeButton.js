@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { DARK_BLUE, PINK, BLUE } from '../../../constants';
-import { getOrderModal } from '../../../actions/marketActions';
-import { connect } from 'react-redux';
+import { OrderContext } from '../../OrderProvider';
 
 export const Button = styled.button`
 	width: 100%;
@@ -45,7 +44,8 @@ font-size: 20px;
 font-weight: bold;
 `;
 
-const OutcomeButton = ({label, binary, index, market, dispatch, price, updateMarketOrders}) => {
+const OutcomeButton = ({label, binary, index, market, price}) => {
+	const [orderModal, dispatch] = useContext(OrderContext)
 	const color = binary ? index === 0 ? PINK : BLUE : DARK_BLUE;
 	const lastTradedPrice = market.last_price_for_outcomes[index];
 	const hasLastTradedPrice = !!lastTradedPrice;
@@ -56,7 +56,7 @@ const OutcomeButton = ({label, binary, index, market, dispatch, price, updateMar
 	return (
 
 		<ColoredButton 
-			onClick={() => dispatch(getOrderModal(market, index, price, updateMarketOrders))} 
+			onClick={() => dispatch({type: 'startOrderPlacement', payload: {market, outcome: index, price}})} 
 		>
 			<Label>{label}</Label>
 			<LastTradedPrice>{hasLastTradedPrice ? lastTradedPrice + "¢" : "--"}</LastTradedPrice>
@@ -65,6 +65,5 @@ const OutcomeButton = ({label, binary, index, market, dispatch, price, updateMar
 
 	)
 }
-const mapDispatchToProps = (dispatch) => ({dispatch});
 
-export default connect(null, mapDispatchToProps)(OutcomeButton);
+export default OutcomeButton;

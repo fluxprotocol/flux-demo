@@ -1,11 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import fluxLogo from '../assets/flux-logo.png';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
-import { signIn, signOut } from './../actions/accountActions';
 import { daiToDollars } from '../utils/unitConvertion';
 import { DARK_GRAY, WHITE, DARK_BLUE } from '../constants';
-import { useHistory } from 'react-router-dom';
+import { FluxContext } from './FluxProvider';
 
 const Logo = styled.img`
 	width: 12%;
@@ -51,26 +49,50 @@ const LoginButton = styled.button`
 `
 const AccountInfo = styled.span`
 	display: block;
+	position: relative;
 	text-align: center;
 `
 
-function Header({daiBalance, walletConnection, accountId, isSignedIn}) {
-	
+/* TODO: Finish allowance warning */
+const AllowanceWarning = styled.div`
+	display: none; 
+	color: red;
+	border: 1px solid red;
+	border-radius: 50%;
+	position: absolute;
+	width: 12px;
+	font-size: 10px;
+	right: -18px;
+	top: 1px;
+
+`
+
+function Header() {
+	const [flux, dispatch] = useContext(FluxContext);
+	const [daiBalance, setDaiBalance] = useState(null);
+	const isSignedIn = flux.walletConnection.isSignedIn();
 	const reloadApp = () => {
 		window.location.reload();
 	}
+
+	useEffect(() => {
+		if (isSignedIn) {
+			flux.getFDaiBalance().then(res => setDaiBalance(res));
+		}
+	}, [daiBalance])
+
 	return (
 		<HeaderContainer>
 		  <Logo onClick={reloadApp} id="header-logo" src={fluxLogo} alt="our company logo"/>
 		  {
 				!isSignedIn
 				? 
-			  <LoginButton onClick={() => signIn(walletConnection)} >Login</LoginButton>
+			  <LoginButton onClick={() => {flux.signIn()}} >Login</LoginButton>
 				: (
 					<>
-						<AccountInfo> {accountId} </AccountInfo>
+						<AccountInfo> {flux.getAccountId()} <AllowanceWarning>!</AllowanceWarning> </AccountInfo>
 						<AccountInfo> {daiBalance ? `$${daiToDollars(daiBalance)}` : null}</AccountInfo>
-						<LoginButton onClick={() => signOut(walletConnection)}>Logout</LoginButton>
+						<LoginButton onClick={() => flux.signOut()}>Logout</LoginButton>
 					</>
 				)
 		  }
@@ -79,14 +101,4 @@ function Header({daiBalance, walletConnection, accountId, isSignedIn}) {
 
 }
 
-const mapStateToProps = (state) => ({
-	near: state.near.near,
-	daiBalance: state.near.daiBalance,
-	walletConnection: state.near.walletConnection,
-	account: state.account.account,
-	accountId: state.account.accountId,
-	accountState: state.account.accountState,
-	isSignedIn: state.account.isSignedIn
-});
-
-export default connect(mapStateToProps)(Header);
+export default Header;

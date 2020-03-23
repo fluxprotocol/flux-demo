@@ -26,11 +26,11 @@ const MarketContainer = styled.div`
 
 `;
 
-function Market({market, socket}) {
+function Market({market}) {
 	return (
 		<MarketContainer >
 			{
-				!market.resoluted ? <MarketContent socket={socket} market={market}/> : <ResolutedSection market={market}/>
+				!market.resoluted ? <MarketContent market={market}/> : <ResolutedSection market={market}/>
 			}
 		</MarketContainer>
 	)

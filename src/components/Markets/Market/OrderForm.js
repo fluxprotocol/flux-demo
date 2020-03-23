@@ -31,7 +31,7 @@ const Value = styled.span`
 	font-weight: bold;
 `
 
-const PlaceOrder = ({market, outcome, closeModal, marketPrice, placeOrder}) => {
+const OrderForm = ({market, outcome, closeModal, marketPrice, placeOrder}) => {
 	const [price, setPrice] = useState(marketPrice);
 	const [spend, setSpend] = useState(1);
 	let label;
@@ -64,4 +64,4 @@ const PlaceOrder = ({market, outcome, closeModal, marketPrice, placeOrder}) => {
 	)
 }
 
-export default PlaceOrder;
+export default OrderForm;

@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import OwnerPortalMarket from './OwnerPortalMarket';
 import DateTimePicker from 'react-datetime-picker';
-import { connect } from 'react-redux';
-import { updateMarkets } from '../../actions/marketsActions';
 import BN from 'bn.js';
+import { FluxContext } from '../FluxProvider';
 
 const OwnerPortalContainer = styled.div`
 	padding-top: 250px;
@@ -15,55 +14,50 @@ const ShowHideButton = styled.button`
 	position: absolute;
 `;
 
-const OwnerPortal = ({markets, contract, dispatch, account}) => {
+const OwnerPortal = ({markets = []}) => {
+	const [flux, dispatch] = useContext(FluxContext);
+	const [isOwner, setIsOwner] = useState(false);
 	const [description, setDescription] = useState('new market');
 	const [extraInfo, setExtraInfo] = useState('');
 	const [outcomes, setOutcomes] = useState(2);
 	const [endTime, setEndtime] = useState(new Date(new Date().setDate(new Date().getDate() + 1)));
 	const [show, toggleShow] = useState(false);
-	let outcomeTags = [];
-	let outcomeTagInputs = [];
+	const [outcomeTags, setOutcomeTags] = useState([]);
+	const outcomeInputs = [];
+
+	const getIsOwner = async () => {
+    if (!flux.walletConnection.isSignedIn()) return false;
+    const owner = await flux.contract.get_owner();
+    return owner === flux.getAccountId();
+	}
+	
+	const setOutcomeTag = (value, i) => {
+		const updatedTags = outcomeTags;
+		updatedTags[i] = value;
+		setOutcomeTags(updatedTags);
+	}
 
 	if (outcomes > 2) {
-		for (let i = 0; i < outcomes; i++ ) {	
-			outcomeTagInputs.push(
-				<input
-					key={i}
-					type="text"
-					placeholder={`outcome tag: ${i}`}
-					onChange={event => {
-						outcomeTags[i] = event.target.value;
-					}} 
-				/>
+		for (let i = 0; i < outcomes; i++) {
+			outcomeInputs.push(
+				<input type="text" key={i} value={outcomeTags[i]} onChange={e => setOutcomeTag(e.target.value, i)}/>
 			)
 		}
-	}
+	} 
 
+  useEffect(() => {
+    getIsOwner().then(res => setIsOwner(res));
+  }, []);
 
-	const getMarkets = () => {
-		dispatch(updateMarkets(contract));
-	}
+	
 	const createMarket = async (e) => {
 		console.log("creating market...");
 		e.preventDefault();
-		account.functionCall(
-			window.nearConfig.contractName,
-			"create_market",
-			{
-				description,
-				extra_info: extraInfo,
-				outcomes: parseInt(outcomes),
-				outcome_tags: outcomeTags,
-				end_time: endTime.getTime()
-			},
-			new BN("1000000000000000"),
-			new BN("0")
-		).then(() => {
-			getMarkets()
-		})
+		await flux.createMarket(description, extraInfo, outcomes, outcomeTags, ["test"], endTime.getTime())
 	}
 
 	return (
+		isOwner ?
 		<>
 			<ShowHideButton onClick={e => toggleShow(!show)}>{show ? "-" : "+"}</ShowHideButton>
 			{show && <OwnerPortalContainer>
@@ -86,7 +80,7 @@ const OwnerPortal = ({markets, contract, dispatch, account}) => {
 						onChange={event => setOutcomes(event.target.value)} 
 					/>
 
-					{outcomeTagInputs}
+					{outcomeInputs}
 
 					<label>end time:</label>
 					<DateTimePicker
@@ -99,21 +93,16 @@ const OwnerPortal = ({markets, contract, dispatch, account}) => {
 					markets.map((market, i) => {
 						return <OwnerPortalMarket 
 											key={i}
-											updateMarkets={getMarkets}
+											// updateMarkets={getMarkets}
 											market={market} 
 										/>
 					})
 				}
 			</OwnerPortalContainer>}
 		</>
+		:
+		<div></div>
 	);
 };
 
-const mapStateToProps = (state) => ({
-	contract: state.near.contract,
-	markets: state.markets.markets,
-	account: state.account.account
-	
-})
-
-export default connect(mapStateToProps)(OwnerPortal);
+export default OwnerPortal;

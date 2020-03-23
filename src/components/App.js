@@ -1,40 +1,57 @@
-import React, {useEffect} from 'react';
-import { connect } from 'react-redux';
-import { getMarkets } from '../actions/marketsActions';
+import React, { useEffect, useContext, useState} from 'react';
+
 import Header from './Header';
 import Markets from './Markets/Markets';
 import OwnerPortal from './OwnerPortal/OwnerPortal';
-import styled from 'styled-components';
 import OrderModal from './Markets/Market/OrderModal';
+import Loader from './Loader';
+import Flux from 'flux-sdk';
+import { FluxContext } from './FluxProvider';
+import { OrderProvider } from './OrderProvider';
 
-const AppContainer = styled.div``;
-// TODO: send a notification if gas runs low, the user needs to login and out
-function App({contract, dispatch, owner, accountId}) {
+
+const connect = async () => {
+  const fluxInstance = new Flux();
+  await fluxInstance.connect("flux_protocol_alpha");
+  if (fluxInstance.walletConnection.isSignedIn()) {
+    try {
+      await fluxInstance.getFDaiBalance();
+    } catch {
+      await fluxInstance.claimFDai();
+    }
+  }
+  return fluxInstance;
+}
+
+function App() {
+  const [flux, dispatch] = useContext(FluxContext);
+  const [markets, setMarkets] = useState([]);
+
   useEffect(() => {
-    if (contract) {
-      dispatch(getMarkets(contract));
-    } 
-  });
+    connect().then(fluxInstance => {
+			dispatch({type: 'connected', payload: {fluxInstance}})
+      fluxInstance.getAllMarkets().then(res => {
+        setMarkets(fluxInstance.formatMarkets(res));
+      })
+    })
+  }, []);
+
 
   return (
-    <AppContainer >
-      {
-        <>
-          {(owner && accountId) && owner === accountId && <OwnerPortal/> }
-          <Header />
-          <Markets />
-          <OrderModal />
-        </>
-      }
-    </AppContainer>
+    flux ?
+    <>
+      <OwnerPortal markets={markets}/>
+      <Header/>
+      <OrderProvider>
+        <Markets markets={markets}/>
+        <OrderModal/>
+      </OrderProvider>
+    </>
+    :
+    <Loader txLoading={true}/>
   );
 }
 
-const mapStateToProps = (state) => ({
-  contract: state.near.contract,
-  owner: state.near.owner,
-  accountId: state.account.accountId,
-});
 
 
-export default connect(mapStateToProps)(App);
+export default App;

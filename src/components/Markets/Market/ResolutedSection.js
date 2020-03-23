@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { DARK_BLUE } from '../../../constants';
-import { connect } from 'react-redux';
 import { updateBalance } from '../../../actions/nearActions';
 import { claimEarnings } from '../../../actions/marketActions';
 import ResolutionDate from './ResolutionDate';
@@ -78,10 +77,4 @@ const ResolutedSection = ({market, dispatch, account, contract, accountId}) => {
 	);
 };
 
-const mapStateToProps = state => ({ 
-	account: state.account.account,
-	accountId: state.account.accountId,
-	contract: state.near.contract
-});
-
-export default connect(mapStateToProps)(ResolutedSection);
+export default ResolutedSection;

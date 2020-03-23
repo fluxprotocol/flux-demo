@@ -27,6 +27,7 @@ const PositionsButton = styled.p`
 	font-size: 14px;
 	padding: 14px 0;
 	text-align: center;
+	cursor: pointer;
 `;
 
 export const HeaderSection = styled.div`
@@ -60,27 +61,23 @@ const ThirdHeader = styled(Header)`
 	text-align: right;
 `;
 
-const MarketContent = ({socket, ...props}) => {
-	// console.log("rendered", props.market.id)
+const MarketContent = ({...props}) => {
 	const [marketOrders, setMarketOrders] = useState([]);
 	let [market, setMarket] = useState(props.market);
 	const [showPositions, setShowPositions] = useState(false);
 	const { end_time, description, outcomes, outcome_tags, extra_info } = market;
 
-	const updateMarket = () => market.updateMarket().then(updatedMarket => setMarket(updatedMarket));
-
-	const getAndSetMarketPrices = () => {
-		market.getMarketPrices().then(marketOrders => {
-			setMarketOrders(marketOrders)}
-		);
+	const getAndSetMarketPrices = async () => {
+		const marketOrders = await market.getMarketPrices()
+		setMarketOrders(marketOrders)
 	}
 
 	// TODO: No need to rerender entire component on market price update.
 	useEffect(() => {
 		let unmounted = false;
-		socket.on("order_placed", ({marketId}) => {
-			if (marketId === market.id) updateMarket();
-		});
+		// socket.on("order_placed", ({marketId}) => {
+		// 	if (marketId === market.id) getAndSetMarketPrices();
+		// });
 		if (!unmounted) getAndSetMarketPrices();
 		return () => {
 
