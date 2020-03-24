@@ -1,33 +1,39 @@
 import ReactGA from 'react-ga';
 import { TRACKING_ID } from './constants';
 
-ReactGA.initialize(TRACKING_ID);
+export default class GAEvents {
+	constructor() {
+		ReactGA.initialize(TRACKING_ID);
+	}
 
-export const setAccountId = (accountId) => {
-	ReactGA.set({
-		userId: accountId
-	})
-}
-
-export const AUTH = {
-	START: () => ReactGA.event({
+	setAccountId = (accountId) => {
+		ReactGA.set({
+			userId: accountId
+		})
+	}
+	
+	entryWithNearSession = () => ReactGA.event({
 		category: "Authentication",
-		action: "User started authentication process"
-	}),
-	SIGN_IN_UNAUTHENTICATED: () => ReactGA.event({
+		action: "User entered the app"
+	});
+	entryNoNearSession = () => ReactGA.event({
 		category: "Authentication",
-		action: "Unauthenticated user signin"
-	}),
-	SIGN_IN: () => ReactGA.event({
-		category: "Authentication",
-		action: "User signedin"
-	})
-
-}
-export const ONBOARDING = {
-	NEAR_LOGIN_CLICK: () => ReactGA.event({
+		action: "User without near account entered the application"
+	});
+	
+	signInClicked = () => ReactGA.event({
 		category: "Onboarding",
-		action: "User clicked NEAR signin"
-	}),
+		action: "User clicked the near sign in button"
+	})
+	signOutClicked =  () => ReactGA.event({
+		category: "Onboarding",
+		action: "User clicked the near sign out button"
+	})
 
+	placeOrderClickedNoSignin = () => ReactGA.event({
+		category: "Actions",
+		action: "User clicked place order without being signed in"
+	});
 }
+
+

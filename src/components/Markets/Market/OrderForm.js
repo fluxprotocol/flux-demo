@@ -31,7 +31,7 @@ const Value = styled.span`
 	font-weight: bold;
 `
 
-const OrderForm = ({market, outcome, closeModal, marketPrice, placeOrder}) => {
+const OrderForm = ({market, signedIn, outcome, closeModal, marketPrice, placeOrder}) => {
 	const [price, setPrice] = useState(marketPrice);
 	const [spend, setSpend] = useState(1);
 	let label;
@@ -58,7 +58,7 @@ const OrderForm = ({market, outcome, closeModal, marketPrice, placeOrder}) => {
 				<OrderInput value={spend} denomination={"$"} changeValue={setSpend}/>
 			</Row>
 
-			<Button onClick={() => placeOrder(price, spend)} color={DARK_BLUE}>BUY CONTRACT</Button>
+			<Button onClick={() => signedIn && placeOrder(price, spend)} color={signedIn ? DARK_BLUE : "grey"}>{signedIn ? "BUY CONTRACT" : "PLEASE SIGN IN"}</Button>
 		</>
 
 	)

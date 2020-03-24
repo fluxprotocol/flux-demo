@@ -10,6 +10,7 @@ import { OrderProvider } from './OrderProvider';
 import { API_URL } from '../constants';
 import socketIOClient from "socket.io-client";
 import { WebSocketContext } from './WSProvider';
+import GAEvents from '../GAEvents';
 
 const ws = socketIOClient(API_URL);
 
@@ -17,10 +18,17 @@ function App() {
   const [{flux}, dispatch] = useContext(FluxContext);
   const [socket, dispatchSocket] = useContext(WebSocketContext);
   const [markets, setMarkets] = useState([]);
+  const ga = new GAEvents();
 
   useEffect(() => {
     dispatchSocket({type: "webSocketConnected", payload: ws});
     connect().then(fluxInstance => {
+      if (fluxInstance.isSignedIn()) {
+        ga.setAccountId(fluxInstance.getAccountId())
+        ga.entryWithNearSession()
+      } else {
+        ga.entryNoNearSession()
+      }
 			dispatch({type: 'connected', payload: {flux: fluxInstance}})
       fluxInstance.getAllMarkets().then(res => {
         setMarkets(fluxInstance.formatMarkets(res));
@@ -32,10 +40,10 @@ function App() {
     flux ?
     <>
       <OwnerPortal markets={markets}/>
-      <Header/>
+      <Header ga={ga}/>
       <OrderProvider>
         <Markets markets={markets}/>
-        <OrderModal/>
+        <OrderModal ga={ga}/>
       </OrderProvider>
     </>
     :

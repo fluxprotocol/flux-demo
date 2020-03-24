@@ -8,7 +8,7 @@ import { FluxContext } from '../../FluxProvider';
 import { dollarsToDai } from '../../../utils/unitConvertion';
 import { WebSocketContext } from '../../WSProvider';
 
-function OrderModal() {
+function OrderModal({ga}) {
 	const [ socket, dispatchSocket ] = useContext(WebSocketContext);
 	const [ orderContext, dispatchOrderContext ] = useContext(OrderContext);
 	const [ {flux}, dispatchFlux ] = useContext(FluxContext);
@@ -16,6 +16,9 @@ function OrderModal() {
 	const [ orderRes, setOrderRes ] = useState(null);
 	const [ amountOfShares, setAmountOfShares ] = useState(0);
 	const market = orderContext.market;
+	const signedIn = flux.isSignedIn();
+	if (!signedIn) ga.placeOrderClickedNoSignin();
+	
 	const closeModal = () => {
 		setOrderRes(null);
 		dispatchOrderContext({type: 'stopOrderPlacement'})
@@ -49,7 +52,7 @@ function OrderModal() {
 				?
 				<OrderLoader amountOfShares={amountOfShares}/>
 				:
-				<OrderForm closeModal={closeModal} market={market} placeOrder={placeOrder} marketPrice={orderContext.price} outcome={orderContext.outcome} />
+				<OrderForm closeModal={closeModal} signedIn={signedIn} market={market} placeOrder={placeOrder} marketPrice={orderContext.price} outcome={orderContext.outcome} />
 			}
 		</Modal>
 	);
