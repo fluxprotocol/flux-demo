@@ -1,9 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { DARK_BLUE } from '../../../constants';
+import { DARK_BLUE, PINK } from '../../../constants';
 import ResolutedSection from './ResolutedSection';
 import MarketContent from './MarketContent.js';
-import { FluxContext } from '../../FluxProvider';
+import { Link } from 'react-router-dom';
 
 const MarketContainer = styled.div`
   width: 90%;
@@ -27,8 +27,18 @@ const MarketContainer = styled.div`
 
 `;
 
+const AllMarketsButton = styled(Link)`
+	padding-top: 14px;
+	color: ${PINK};
+	border: none;
+	font-size: 18px;
+	text-align: center;
+	display: block;
+`
+
 function Market({market, specificId}) {
 	return (
+		<>
 		<MarketContainer >
 			{
 				market 
@@ -38,6 +48,8 @@ function Market({market, specificId}) {
 				null
 			}
 		</MarketContainer>
+		{specificId &&<AllMarketsButton to="/"> all markets</AllMarketsButton>}
+		</>
 	)
 }
 
