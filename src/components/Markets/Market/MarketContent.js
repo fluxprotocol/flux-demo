@@ -8,6 +8,7 @@ import UserPositions from './UserPositions/UserPositions.js';
 import ResolutionDate from './ResolutionDate.js';
 import { WebSocketContext } from '../../WSProvider';
 import { Link } from 'react-router-dom';
+import { FluxContext } from '../../FluxProvider';
 
 const ButtonSection = styled.div`
   width: 100%;
@@ -78,9 +79,9 @@ const TopSection = styled.div`
 `
 
 const MarketContent = ({specificId, ...props}) => {
-
+	const [{flux}, dispatch] = useContext(FluxContext);
 	const [marketOrders, setMarketOrders] = useState([]);
-	let [market, setMarket] = useState(props.market);
+	const [market, setMarket] = useState(props.market);
 	const [showPositions, setShowPositions] = useState(false);
 	const { end_time, description, outcomes, outcome_tags, extra_info } = market;
 	const [ socket, _ ] = useContext(WebSocketContext);
@@ -90,11 +91,20 @@ const MarketContent = ({specificId, ...props}) => {
 		setMarketOrders(marketOrders)
 	}
 
-	// TODO: No need to rerender entire component on market price update.
+	const getAndSetOrderbook = async () => {
+		market.orderbooks = await market.getOrderbooks();
+		setMarket(market);
+	}
+
 	useEffect(() => {
 		let unmounted = false;
-		socket.on("order_placed", ({marketId}) => {
-			if (marketId === market.id) getAndSetMarketPrices();
+		socket.on("order_placed", ({marketId, accountId}) => {
+			if (marketId === market.id) {
+				getAndSetMarketPrices();
+				if (accountId === flux.getAccountId()) {
+					getAndSetOrderbook();
+				}
+			}
 		});
 		if (!unmounted) getAndSetMarketPrices();
 		return () => {
@@ -105,11 +115,11 @@ const MarketContent = ({specificId, ...props}) => {
 	let buttons = [];
 	if (outcomes > 2) {
 		buttons = outcome_tags.map((tag, i) => (
-			<OutcomeButton updateMarketOrders={getAndSetMarketPrices} market={market} label={tag} price={marketOrders[i]} index={i} key={i} />
+			<OutcomeButton market={market} label={tag} price={marketOrders[i]} index={i} key={i} />
 		));
 	} else {
 		for (let i = 0; i < 2; i++) {
-			buttons.push(<OutcomeButton updateMarketOrders={getAndSetMarketPrices} market={market} price={marketOrders[i]} label={i === 0 ? "NO" : "YES" } binary index={i} key={i} />)
+			buttons.push(<OutcomeButton market={market} price={marketOrders[i]} label={i === 0 ? "NO" : "YES" } binary index={i} key={i} />)
 		}
 	}
 

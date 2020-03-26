@@ -56,7 +56,7 @@ const CancelButton = styled(ModalButton)`
 const UserPositions = ({closeModal, market, accountId}) => {
 	const [{flux}, dispatch] = useContext(FluxContext)
 	const [orders, setOrders] = useState(null);
-	
+
 	useEffect(() => {
 		let mounted = false;
 		document.body.style.overflow = 'hidden';

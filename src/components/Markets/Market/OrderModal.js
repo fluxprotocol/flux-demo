@@ -31,7 +31,7 @@ function OrderModal({ga}) {
 
 		try {
 			const res = await flux.placeOrder(market.id, orderContext.outcome, dollarsToDai(spend), parseInt(price)).catch(err => console.error(err));
-			socket.emit('order_placed', { marketId: market.id })
+			socket.emit('order_placed', { marketId: market.id, accountId: flux.getAccountId() })
 			const updatedBalance = await flux.getFDaiBalance().catch(err => console.error(err));
 			dispatchFlux({type: "balanceUpdate", payload: {balance: updatedBalance}});
 			setOrderRes({error: false, tx: res.transaction.hash});

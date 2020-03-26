@@ -35,8 +35,6 @@ const OwnerPortalMarket = ({market}) => {
 		console.log("resoluting...");
 		try {
 			await flux.resolute(market.id, winningOutcome);
-			// TODO
-			// updateMarkets()
 		} 
 		catch (err){
 			console.error(err)
