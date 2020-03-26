@@ -22,7 +22,7 @@ const Text = styled.p`
 	text-align: center;
 	padding: 10px 0;
 	margin: 0;
-color: ${DARK_BLUE};
+	color: ${DARK_BLUE};
 `;
 
 const Title = styled.div`
@@ -38,14 +38,20 @@ const BoldText = styled.span`
 	font-weight: bold;
 `;
 
-export default function OrderRes({amountOfShares, res, closeModal}) {
+const LinkText = styled(Text)`
+	text-decoration: underline;
+	font-size: 14px;
+	cursor: pointer;
+`;
 
+export default function OrderRes({amountOfShares, res, closeModal}) {
 	return (
 		<Container>
-			<Title>{res ? "Success" : "Something went wrong"}</Title>
-			<ResIcon src={res ? SuccessIcon : ErrorIcon} alt="logo reflecting if the order faield or was successful"/>
-			<Text>{res ? "order placed for" : "couldn't place order for"} <BoldText>{amountOfShares.toFixed(2)} shares</BoldText></Text>
-			<ModalButton onClick={closeModal} color={res ? DARK_BLUE : PINK}>{res ? "Done" : "Close"}</ModalButton>
+			<Title>{!res.error ? "Success" : "Something went wrong"}</Title>
+			<ResIcon src={!res.error ? SuccessIcon : ErrorIcon} alt="logo reflecting if the order faield or was successful"/>
+			<Text>{!res.error ? "order placed for" : "couldn't place order for"} <BoldText>{amountOfShares.toFixed(2)} shares</BoldText></Text>
+			{!res.error && <LinkText onClick = {() => window.open(`https://explorer.nearprotocol.com/transactions/${res.tx}`)}>view tx</LinkText>}
+			<ModalButton onClick={closeModal} color={!res.error ? DARK_BLUE : PINK}>{!res.error ? "Done" : "Close"}</ModalButton>
 		</Container>
 	)
 };

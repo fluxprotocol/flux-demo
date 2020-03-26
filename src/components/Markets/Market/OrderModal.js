@@ -1,53 +1,61 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import Modal from './../../Modal';
-import { connect } from 'react-redux';
-import { getOrderModal, placeOrder } from '../../../actions/marketActions';
-import PlaceOrder from './PlaceOrder';
-import { updateBalance } from '../../../actions/nearActions';
+import OrderForm from './OrderForm';
 import OrderRes from './OrderRes';
 import OrderLoader from './OrderLoader';
+import { OrderContext } from '../../OrderProvider';
+import { FluxContext } from '../../FluxProvider';
+import { dollarsToDai } from '../../../utils/unitConvertion';
+import { WebSocketContext } from '../../WSProvider';
 
-function OrderModal({market, outcome, marketPrice, dispatch, account, accountId, contract, loading, amountOfShares, orderRes, socket }) {
-	const closeModal = () => dispatch(getOrderModal(null, null, null));
-	const callUpdateBalance = () => dispatch(updateBalance(contract, accountId));
-	const dispatchPlaceOrder = (price, spend) => {
-		const emitUpdateMarket = () => { 
-			socket.emit('order_placed', { marketId: market.id })
-		};
-		dispatch(placeOrder(account, market.id, outcome, price, spend, callUpdateBalance, emitUpdateMarket));
+function OrderModal({ga}) {
+	const [ socket, dispatchSocket ] = useContext(WebSocketContext);
+	const [ orderContext, dispatchOrderContext ] = useContext(OrderContext);
+	const [ {flux}, dispatchFlux ] = useContext(FluxContext);
+	const [ loading, setLoading ] = useState(false);
+	const [ orderRes, setOrderRes ] = useState(null);
+	const [ amountOfShares, setAmountOfShares ] = useState(0);
+	const market = orderContext.market;
+	const signedIn = flux.isSignedIn();
+	if (!signedIn) ga.placeOrderClickedNoSignin();
+	
+	const closeModal = () => {
+		setOrderRes(null);
+		dispatchOrderContext({type: 'stopOrderPlacement'})
 	};
-	return (
-		 
-	 	market && (
-		 	<Modal blackground={true} onBlackgroundClick={loading ? () => {} : closeModal}>
-				{
-					!loading && orderRes !== null ?
-					<OrderRes closeModal={closeModal} res={orderRes} amountOfShares={amountOfShares}/>
-					:
-					loading 
-					?
-					<OrderLoader amountOfShares={amountOfShares}/>
-					:
-					<PlaceOrder closeModal={closeModal} market={market} placeOrder={dispatchPlaceOrder} marketPrice={marketPrice} outcome={outcome} />
-				}
-			</Modal>
-		)
-	);
 
+	const placeOrder = async (price, spend) => {
+		const shares = spend / price * 100
+		setAmountOfShares(shares);
+		setLoading(true);
+
+		try {
+			const res = await flux.placeOrder(market.id, orderContext.outcome, dollarsToDai(spend), parseInt(price)).catch(err => console.error(err));
+			socket.emit('order_placed', { marketId: market.id, accountId: flux.getAccountId() })
+			const updatedBalance = await flux.getFDaiBalance().catch(err => console.error(err));
+			dispatchFlux({type: "balanceUpdate", payload: {balance: updatedBalance}});
+			setOrderRes({error: false, tx: res.transaction.hash});
+		} catch (err){
+			setOrderRes({error: true})
+		}
+		setLoading(false);
+		
+	};
+
+	return (
+		market && <Modal blackground={true} onBlackgroundClick={closeModal}>
+			{
+				!loading && orderRes !== null ?
+				<OrderRes closeModal={closeModal} res={orderRes} amountOfShares={amountOfShares}/>
+				:
+				loading 
+				?
+				<OrderLoader amountOfShares={amountOfShares}/>
+				:
+				<OrderForm closeModal={closeModal} signedIn={signedIn} market={market} placeOrder={placeOrder} marketPrice={orderContext.price} outcome={orderContext.outcome} />
+			}
+		</Modal>
+	);
 }
 
-
-const mapStateToProps = (state) => ({
-	socket: state.auth.socket,
-	market: state.market.selectedMarket,
-	outcome: state.market.selectedOutcome,
-	updateMarketOrders: state.market.updateMarketOrders,
-	loading: state.market.loading,
-	orderRes: state.market.res,
-	amountOfShares: state.market.amountOfShares,
-	marketPrice: state.market.marketPrice,
-	account: state.account.account,
-	accountId: state.account.accountId,
-	contract: state.near.contract,
-});
-export default connect(mapStateToProps)(OrderModal);
+export default OrderModal;

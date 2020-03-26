@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import ModalButton from '../../../ModalButton';
 import { DARK_BLUE } from '../../../../constants';
 import Loader from '../../../Loader';
-import { filterUserOrders } from '../../../../utils/orderUtils';
 import OpenOrders from './OpenOrders';
 import FilledOrders from './FilledOrders';
 import { Description } from './../MarketContent';
 import ResolutionDate from '../ResolutionDate';
+import { FluxContext } from "./../../../FluxProvider";
 
 const Container = styled.div`
 	background-color: white;
@@ -19,6 +18,7 @@ const Container = styled.div`
 	left: 0;
 	top: 0;
 	padding: 0 5%;
+	z-index: 2;
 	padding-top: 71px;
 
 	@keyframes fadein {
@@ -53,13 +53,14 @@ const CancelButton = styled(ModalButton)`
 	bottom: 3%;
 `;
 
-const UserPositions = ({closeModal, market, accountId, updateMarketOrders}) => {
+const UserPositions = ({closeModal, market, accountId}) => {
+	const [{flux}, dispatch] = useContext(FluxContext)
 	const [orders, setOrders] = useState(null);
 
 	useEffect(() => {
 		let mounted = false;
 		document.body.style.overflow = 'hidden';
-		if (mounted === false) setOrders(filterUserOrders(market, accountId));
+		if (mounted === false) setOrders(flux.filterUserOrders(market, flux.getAccountId()));
 		return () => {
 			document.body.style.overflow = 'scroll';
 			mounted = true;
@@ -74,7 +75,7 @@ const UserPositions = ({closeModal, market, accountId, updateMarketOrders}) => {
 					<Description>{market.description}</Description>
 					<OrderSection>
 						<Title>my open orders</Title>
-						<OpenOrders updateMarketOrders={updateMarketOrders} market={market} orders={orders.openOrders} />
+						<OpenOrders market={market} orders={orders.openOrders} />
 						<Title>my filled orders</Title>
 						<FilledOrders market={market} orders={orders.filledOrders}/>
 					</OrderSection>
@@ -88,8 +89,4 @@ const UserPositions = ({closeModal, market, accountId, updateMarketOrders}) => {
 	);
 };
 
-const mapStateToProps = (state) => ({
-	accountId: state.account.accountId,
-});
-
-export default connect(mapStateToProps)(UserPositions);
+export default UserPositions;

@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
 import Market from './Market/Market';
 import Spinner from '../Spinner';
 
@@ -16,25 +15,20 @@ const MarketsContainer = styled.div`
 	}
 `
 
-const Markets = ({markets, loading, socket}) => {
+const Markets = ({markets, specificId}) => {
 	return (
 		<MarketsContainer id="markets-container">
 				
 			{
-				loading ? 
+				markets === null ? 
 				<Spinner /> 
 				:
 				markets.map((market) => (
-					<Market socket={socket} market={market} key={market.id}/>
+					<Market market={market} specificId={specificId} key={market.id}/>
 				))
 			}	
 		</MarketsContainer>
 	);
 }
 
-const mapStateToProps = (state) => ({
-	markets: state.markets.markets,
-	socket: state.auth.socket,
-	loading: state.markets.loading
-})
-export default connect(mapStateToProps)(Markets);
+export default (Markets);

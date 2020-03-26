@@ -21,7 +21,7 @@ export default function ResolutionDate({endTime}) {
 	return (
 		<TimeIndicator>
 			{
-				moreThanWeekFromNow(endTime) || ended ? <EndDate endTime={endTime}/> : 	<Countdown zeroPadTime={2} date={endTime} renderer={CountdownTimer} />
+				moreThanWeekFromNow(endTime) || ended ? <EndDate ended={ended} endTime={endTime}/> : 	<Countdown zeroPadTime={2} date={endTime} renderer={CountdownTimer} />
 			}
 		</TimeIndicator>
 	)

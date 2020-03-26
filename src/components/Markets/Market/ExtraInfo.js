@@ -32,7 +32,7 @@ const Info = styled.p`
 	font-size: 12px;
 `
 
-export default function ExtraInfo({data}) {
+export default function ExtraInfo({data, market}) {
 	let [showInfo, toggleShowInfo] = useState(false);
 
 	return (
@@ -43,6 +43,7 @@ export default function ExtraInfo({data}) {
 					<div>
 						<Title>extra info:</Title> 
 						<Info>{data}</Info>
+						<Info>Market id: {market.id}</Info>
 					</div>
 				)
 			}

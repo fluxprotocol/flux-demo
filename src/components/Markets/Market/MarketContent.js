@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { capitalize } from '../../../utils/stringManipulation';
-import { DARK_BLUE, LIGHT_GRAY} from '../../../constants';
+import { DARK_BLUE, LIGHT_GRAY } from '../../../constants';
 import ExtraInfo from './ExtraInfo.js';
 import OutcomeButton from './OutcomeButton.js';
 import UserPositions from './UserPositions/UserPositions.js';
 import ResolutionDate from './ResolutionDate.js';
+import { WebSocketContext } from '../../WSProvider';
+import { FluxContext } from '../../FluxProvider';
 
 const ButtonSection = styled.div`
   width: 100%;
@@ -27,6 +29,7 @@ const PositionsButton = styled.p`
 	font-size: 14px;
 	padding: 14px 0;
 	text-align: center;
+	cursor: pointer;
 `;
 
 export const HeaderSection = styled.div`
@@ -60,30 +63,41 @@ const ThirdHeader = styled(Header)`
 	text-align: right;
 `;
 
-const MarketContent = ({socket, ...props}) => {
-	// console.log("rendered", props.market.id)
+const TopSection = styled.div`
+	position: relative;
+	z-index: 1;
+`
+
+const MarketContent = ({...props}) => {
+	const [{flux}, dispatch] = useContext(FluxContext);
 	const [marketOrders, setMarketOrders] = useState([]);
-	let [market, setMarket] = useState(props.market);
+	const [market, setMarket] = useState(props.market);
 	const [showPositions, setShowPositions] = useState(false);
 	const { end_time, description, outcomes, outcome_tags, extra_info } = market;
+	const [ socket, _ ] = useContext(WebSocketContext);
 
-	const updateMarket = () => market.updateMarket().then(updatedMarket => setMarket(updatedMarket));
-
-	const getAndSetMarketPrices = () => {
-		market.getMarketPrices().then(marketOrders => {
-			setMarketOrders(marketOrders)}
-		);
+	const getAndSetMarketPrices = async () => {
+		const marketOrders = await market.getMarketPrices()
+		setMarketOrders(marketOrders)
 	}
 
-	// TODO: No need to rerender entire component on market price update.
+	const getAndSetOrderbook = async () => {
+		market.orderbooks = await market.getOrderbooks();
+		setMarket(market);
+	}
+
 	useEffect(() => {
 		let unmounted = false;
-		socket.on("order_placed", ({marketId}) => {
-			if (marketId === market.id) updateMarket();
+		socket.on("order_placed", ({marketId, accountId}) => {
+			if (marketId === market.id) {
+				getAndSetMarketPrices();
+				if (accountId === flux.getAccountId()) {
+					getAndSetOrderbook();
+				}
+			}
 		});
 		if (!unmounted) getAndSetMarketPrices();
 		return () => {
-
       unmounted = true; 
     };
 	}, [])
@@ -91,20 +105,22 @@ const MarketContent = ({socket, ...props}) => {
 	let buttons = [];
 	if (outcomes > 2) {
 		buttons = outcome_tags.map((tag, i) => (
-			<OutcomeButton updateMarketOrders={getAndSetMarketPrices} market={market} label={tag} price={marketOrders[i]} index={i} key={i} />
+			<OutcomeButton market={market} label={tag} price={marketOrders[i]} index={i} key={i} />
 		));
 	} else {
 		for (let i = 0; i < 2; i++) {
-			buttons.push(<OutcomeButton updateMarketOrders={getAndSetMarketPrices} market={market} price={marketOrders[i]} label={i === 0 ? "NO" : "YES" } binary index={i} key={i} />)
+			buttons.push(<OutcomeButton market={market} price={marketOrders[i]} label={i === 0 ? "NO" : "YES" } binary index={i} key={i} />)
 		}
 	}
 
 	return (
 		<div>
-			<ResolutionDate endTime={end_time} />
+			<TopSection>
+				<ResolutionDate endTime={end_time} />
+			</TopSection>
 			<Description>
 				{ capitalize(description) }
-				<ExtraInfo data={extra_info}/>
+				<ExtraInfo data={extra_info} market={market}/>
 			</Description>
 			
 			<HeaderSection>
@@ -118,6 +134,7 @@ const MarketContent = ({socket, ...props}) => {
 			{showPositions && <UserPositions updateMarketOrders={getAndSetMarketPrices} market={market} closeModal={() => setShowPositions(false)}/>}
 			<PositionsButton onClick={() => setShowPositions(true)}>my positions</PositionsButton>
 		</div>
+
 	);
 };
 
