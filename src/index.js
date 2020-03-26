@@ -7,10 +7,10 @@ import App from './components/App';
 import { FluxProvider } from './components/FluxProvider';
 import { WSProvider } from './components/WSProvider';
 
-const FluxApp = () => (
+const FluxApp = ({...props}) => (
 	<FluxProvider>
 		<WSProvider>
-			<App/>
+			<App props={props}/>
 		</WSProvider>
 	</FluxProvider>
 )
@@ -19,7 +19,7 @@ ReactDOM.render(
 	<>
 		<GlobalStyles/>
 		<Router>
-			<Route exact path="/" component={FluxApp}/>
+			<Route exact path="/:marketId?" component={FluxApp}/>
 		</Router>
 	</>
 	, 

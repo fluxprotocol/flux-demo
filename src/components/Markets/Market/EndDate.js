@@ -6,7 +6,7 @@ const TimeValue = styled(Moment)`
 	font-weight: bold;
 `;
 
-export default function EndDate({endTime}) {
+export default function EndDate({endTime, ended}) {
 
-	return <div>resolution date: <TimeValue format="DD/MM/YYYY">{new Date(endTime)}</TimeValue></div>
+	return <div>{!ended ? "resolution date" : "ended"}: <TimeValue format="DD/MM/YYYY">{new Date(endTime)}</TimeValue></div>
 };

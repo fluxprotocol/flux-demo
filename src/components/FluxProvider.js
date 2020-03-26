@@ -27,7 +27,7 @@ const reducer = (state, action) => {
 
 export const connect = async () => {
   const fluxInstance = new Flux();
-  await fluxInstance.connect("flux_protocol_alpha");
+  await fluxInstance.connect("flux-protocol-dev");
   if (fluxInstance.walletConnection.isSignedIn()) {
     try {
       await fluxInstance.getFDaiBalance();

@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { capitalize } from '../../../utils/stringManipulation';
-import { DARK_BLUE, LIGHT_GRAY} from '../../../constants';
+import { DARK_BLUE, LIGHT_GRAY, PINK} from '../../../constants';
 import ExtraInfo from './ExtraInfo.js';
 import OutcomeButton from './OutcomeButton.js';
 import UserPositions from './UserPositions/UserPositions.js';
 import ResolutionDate from './ResolutionDate.js';
 import { WebSocketContext } from '../../WSProvider';
+import { Link } from 'react-router-dom';
 
 const ButtonSection = styled.div`
   width: 100%;
@@ -62,7 +63,22 @@ const ThirdHeader = styled(Header)`
 	text-align: right;
 `;
 
-const MarketContent = ({...props}) => {
+const AllMarketsButton = styled(Link)`
+	color: ${PINK};
+	border: none;
+	font-size: 18px;
+	position: absolute;
+	top: 0;
+	left: 0;
+`
+
+const TopSection = styled.div`
+	position: relative;
+	z-index: 1;
+`
+
+const MarketContent = ({specificId, ...props}) => {
+
 	const [marketOrders, setMarketOrders] = useState([]);
 	let [market, setMarket] = useState(props.market);
 	const [showPositions, setShowPositions] = useState(false);
@@ -99,10 +115,13 @@ const MarketContent = ({...props}) => {
 
 	return (
 		<div>
-			<ResolutionDate endTime={end_time} />
+			<TopSection>
+				{specificId && <AllMarketsButton to="/">all markets</AllMarketsButton>}
+				<ResolutionDate endTime={end_time} />
+			</TopSection>
 			<Description>
 				{ capitalize(description) }
-				<ExtraInfo data={extra_info}/>
+				<ExtraInfo data={extra_info} market={market}/>
 			</Description>
 			
 			<HeaderSection>

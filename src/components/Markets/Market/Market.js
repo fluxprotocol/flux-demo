@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { DARK_BLUE } from '../../../constants';
 import ResolutedSection from './ResolutedSection';
 import MarketContent from './MarketContent.js';
+import { FluxContext } from '../../FluxProvider';
 
 const MarketContainer = styled.div`
   width: 90%;
@@ -26,11 +27,15 @@ const MarketContainer = styled.div`
 
 `;
 
-function Market({market}) {
+function Market({market, specificId}) {
 	return (
 		<MarketContainer >
 			{
-				!market.resoluted ? <MarketContent market={market}/> : <ResolutedSection market={market}/>
+				market 
+				?
+					!market.resoluted ? <MarketContent specificId={specificId} market={market}/> : <ResolutedSection market={market}/>
+				:
+				null
 			}
 		</MarketContainer>
 	)

@@ -18,6 +18,7 @@ const Container = styled.div`
 	left: 0;
 	top: 0;
 	padding: 0 5%;
+	z-index: 2;
 	padding-top: 71px;
 
 	@keyframes fadein {

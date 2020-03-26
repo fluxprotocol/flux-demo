@@ -15,7 +15,7 @@ const MarketsContainer = styled.div`
 	}
 `
 
-const Markets = ({markets}) => {
+const Markets = ({markets, specificId}) => {
 	return (
 		<MarketsContainer id="markets-container">
 				
@@ -24,7 +24,7 @@ const Markets = ({markets}) => {
 				<Spinner /> 
 				:
 				markets.map((market) => (
-					<Market market={market} key={market.id}/>
+					<Market market={market} specificId={specificId} key={market.id}/>
 				))
 			}	
 		</MarketsContainer>

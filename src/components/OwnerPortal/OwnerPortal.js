@@ -4,6 +4,7 @@ import OwnerPortalMarket from './OwnerPortalMarket';
 import DateTimePicker from 'react-datetime-picker';
 import BN from 'bn.js';
 import { FluxContext } from '../FluxProvider';
+import {addMarket} from '../../utils/marketsUtils';
 
 const OwnerPortalContainer = styled.div`
 	padding-top: 250px;
@@ -18,6 +19,7 @@ const OwnerPortal = ({markets = []}) => {
 	const [{flux}, dispatch] = useContext(FluxContext);
 	const [isOwner, setIsOwner] = useState(false);
 	const [description, setDescription] = useState('new market');
+	const [categories, setCategories] = useState();
 	const [extraInfo, setExtraInfo] = useState('');
 	const [outcomes, setOutcomes] = useState(2);
 	const [endTime, setEndtime] = useState(new Date(new Date().setDate(new Date().getDate() + 1)));
@@ -49,11 +51,18 @@ const OwnerPortal = ({markets = []}) => {
     getIsOwner().then(res => setIsOwner(res));
   }, []);
 
-	
+
 	const createMarket = async (e) => {
 		console.log("creating market...");
 		e.preventDefault();
-		await flux.createMarket(description, extraInfo, outcomes, outcomeTags, ["test"], endTime.getTime())
+		const categoryArray = categories && categories.length > 0 ? categories.split(",") : [];
+		const signedMessage = await flux.account.connection.signer.signMessage("market_creation", flux.getAccountId(), "default")
+		const txRes = await flux.createMarket(description, extraInfo, outcomes, outcomeTags, ["test"], endTime.getTime());
+		const marketId = parseInt(atob(txRes.status.SuccessValue));
+		const res = await addMarket(marketId, description, flux.getAccountId(), categoryArray, signedMessage);
+		const { success } = await res.json()
+		if (success) window.location.reload();
+		else throw new Error("Market wasn't successfully added to server");
 	}
 
 	return (
@@ -67,6 +76,12 @@ const OwnerPortal = ({markets = []}) => {
 						type="text"
 						value={description}
 						onChange={event => setDescription(event.target.value)} 
+					/>
+					<input
+						type="text"
+						value={categories}
+						placeholder="categories"
+						onChange={event => setCategories(event.target.value)} 
 					/>
 					<input
 						type="text"

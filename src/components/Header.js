@@ -91,7 +91,7 @@ function Header({ga}) {
 			  <LoginButton onClick={() => {
 					ga.signInClicked();
 					flux.signIn()
-				}} >Login</LoginButton>
+				}} >Sign in</LoginButton>
 				: (
 					<>
 						<AccountInfo> {flux.getAccountId()} <AllowanceWarning>!</AllowanceWarning> </AccountInfo>
@@ -100,7 +100,7 @@ function Header({ga}) {
 							ga.signOutClicked();
 							flux.signOut()
 							reloadApp()
-						}}>Logout</LoginButton>
+						}}>Sign out</LoginButton>
 					</>
 				)
 		  }
