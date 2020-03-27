@@ -57,7 +57,7 @@ const OwnerPortal = ({markets = []}) => {
 		e.preventDefault();
 		const categoryArray = categories && categories.length > 0 ? categories.split(",") : [];
 		const signedMessage = await flux.account.connection.signer.signMessage("market_creation", flux.getAccountId(), "default")
-		const txRes = await flux.createMarket(description, extraInfo, outcomes, outcomeTags, ["test"], endTime.getTime());
+		const txRes = await flux.createMarket(description, extraInfo, parseInt(outcomes), outcomeTags, ["test"], endTime.getTime());
 		const marketId = parseInt(atob(txRes.status.SuccessValue));
 		const res = await addMarket(marketId, description, flux.getAccountId(), categoryArray, signedMessage);
 		const { success } = await res.json()
