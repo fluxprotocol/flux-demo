@@ -24,8 +24,7 @@ function Dashboard() {
 	}
 
 	const formatToolTip = (value, name, outcomeTags) => {
-		console.log()
-		console.log(outcomeTags)
+
 		if (outcomeTags.length > 0) {
 			name = outcomeTags[name];
 		} else {
@@ -56,7 +55,6 @@ function Dashboard() {
 						const keys = Object.keys(entry);
 						for (let i = 0; i < keys.length -1; i++) {
 							const outcome = keys[i];
-							console.log(outcome);
 							if (!lines[outcome]) lines[outcome] = <Line type="monotone" dataKey={outcome} key={i} stroke={colors[i]}/>
 						}
 					})

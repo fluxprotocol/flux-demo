@@ -21,7 +21,7 @@ export default data => {
 
 		orderData.forEach(order => {
 			const date = new Date(order.timestamp);
-			const dateString = date.getDate() + "/" + parseInt(date.getMonth()) + 1 + "/" + date.getFullYear();
+			const dateString = date.getDate() + "/" + (parseInt(date.getMonth()) + 1) + "/" + date.getFullYear();
 			if (!dates[dateString]) dates[dateString] = [];
 			if (!dates[dateString][order.outcome]) dates[dateString][order.outcome] = [];
 			dates[dateString][order.outcome].push(order.price_per_share)
