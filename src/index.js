@@ -6,21 +6,20 @@ import GlobalStyles from  "./global-styles";
 import App from './components/App';
 import { FluxProvider } from './components/FluxProvider';
 import { WSProvider } from './components/WSProvider';
-
-const FluxApp = ({...props}) => (
-	<FluxProvider>
-		<WSProvider>
-			<App props={props}/>
-		</WSProvider>
-	</FluxProvider>
-)
+import Dashboard from './components/Dashboard';
 
 ReactDOM.render(
 	<>
 		<GlobalStyles/>
-		<Router>
-			<Route exact path="/:marketId?" component={FluxApp}/>
-		</Router>
+		<FluxProvider>
+			<WSProvider>
+				<Router>
+					<Route exact path="/" component={App}/>
+					<Route exact path="/dashboard" component={Dashboard}/>
+					<Route path="/market/:marketId?" component={App}/>
+				</Router>
+			</WSProvider>
+		</FluxProvider>
 	</>
 	, 
 	document.getElementById('root')
