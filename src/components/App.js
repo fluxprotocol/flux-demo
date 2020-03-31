@@ -1,5 +1,4 @@
 import React, { useEffect, useContext, useState} from 'react';
-
 import Header from './Header';
 import Markets from './Markets/Markets';
 import OwnerPortal from './OwnerPortal/OwnerPortal';
@@ -15,10 +14,11 @@ import {getMarkets} from '../utils/marketsUtils';
 
 const ws = socketIOClient(API_URL);
 
-function App({props}) {
+function App({...props}) {
   const [{flux}, dispatch] = useContext(FluxContext);
   const [socket, dispatchSocket] = useContext(WebSocketContext);
   const [markets, setMarkets] = useState([]);
+
   const ga = new GAEvents();
   const specificId = props.match.params.marketId;
   
