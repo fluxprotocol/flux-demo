@@ -50,7 +50,7 @@ const ResolutedSection = ({market}) => {
 	const updateClaimable = () => flux.getClaimable(market.id, flux.getAccountId()).then(res => setClaimable(res));
 
 	const onClaimClick = async () => {
-		await flux.claimEarnings(market.id);
+		await flux.claimEarnings(market.id, flux.getAccountId());
 		updateClaimable();
 		updateBalance();
 	}
