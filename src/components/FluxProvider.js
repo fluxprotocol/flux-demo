@@ -30,10 +30,14 @@ export const connect = async () => {
 	const fluxInstance = new Flux();
   await fluxInstance.connect(CONTRACT_ID);
   if (fluxInstance.walletConnection.isSignedIn()) {
-    try {
-      await fluxInstance.claimFDai();
-    } catch {
-    }
+		const balance = await fluxInstance.getFDaiBalance(fluxInstance.account.accountId);
+		if (parseInt(balance) === 0) {
+			try {
+				await fluxInstance.claimFDai();
+			} catch {
+				console.log("user just has no balance")
+			}
+		}
   }
   return fluxInstance;
 }

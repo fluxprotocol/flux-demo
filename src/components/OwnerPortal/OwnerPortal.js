@@ -5,7 +5,6 @@ import DateTimePicker from 'react-datetime-picker';
 import BN from 'bn.js';
 import { FluxContext } from '../FluxProvider';
 import {addMarket} from '../../utils/marketsUtils';
-import { CONTRACT_ID, PRE_PAID_GAS, ZERO } from '../../constants';
 
 const OwnerPortalContainer = styled.div`
 	padding-top: 250px;
