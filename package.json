@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "bn.js": "^5.0.0",
-    "flux-sdk": "0.0.26",
     "moment": "^2.24.0",
     "nearlib": "^0.22.0",
     "react": "^16.12.0",

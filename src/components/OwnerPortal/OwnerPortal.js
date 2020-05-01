@@ -5,6 +5,7 @@ import DateTimePicker from 'react-datetime-picker';
 import BN from 'bn.js';
 import { FluxContext } from '../FluxProvider';
 import {addMarket} from '../../utils/marketsUtils';
+import { CONTRACT_ID, PRE_PAID_GAS, ZERO } from '../../constants';
 
 const OwnerPortalContainer = styled.div`
 	padding-top: 250px;
@@ -45,7 +46,7 @@ const OwnerPortal = ({markets = []}) => {
 				<input type="text" key={i} value={outcomeTags[i]} onChange={e => setOutcomeTag(e.target.value, i)}/>
 			)
 		}
-	} 
+	}
 
   useEffect(() => {
     getIsOwner().then(res => setIsOwner(res));
@@ -57,7 +58,7 @@ const OwnerPortal = ({markets = []}) => {
 		e.preventDefault();
 		const categoryArray = categories && categories.length > 0 ? categories.split(",") : [];
 		const signedMessage = await flux.account.connection.signer.signMessage("market_creation", flux.getAccountId(), "default")
-		const txRes = await flux.createMarket(description, extraInfo, parseInt(outcomes), outcomeTags, ["test"], endTime.getTime());
+		const txRes = await flux.createMarket(description, extraInfo, parseInt(outcomes), outcomeTags, ["test"], endTime.getTime(), 0);
 		const marketId = parseInt(atob(txRes.status.SuccessValue));
 		const res = await addMarket(marketId, description, flux.getAccountId(), categoryArray, signedMessage);
 		const { success } = await res.json()

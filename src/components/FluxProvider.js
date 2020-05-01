@@ -1,5 +1,6 @@
 import React, {useReducer} from 'react';
 import Flux from 'flux-sdk';
+import { CONTRACT_ID } from '../constants';
 
 const initialState = {
 	flux: null,
@@ -27,12 +28,11 @@ const reducer = (state, action) => {
 
 export const connect = async () => {
 	const fluxInstance = new Flux();
-  await fluxInstance.connect("flux-protocol-dev");
+  await fluxInstance.connect(CONTRACT_ID);
   if (fluxInstance.walletConnection.isSignedIn()) {
     try {
-      await fluxInstance.getFDaiBalance();
-    } catch {
       await fluxInstance.claimFDai();
+    } catch {
     }
   }
   return fluxInstance;

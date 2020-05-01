@@ -1,3 +1,5 @@
+import BN from 'bn.js';
+
 export const PINK = "#FF009C";
 export const O_PINK = "rgba(255,0,156, 0.4)";
 export const BLUE = "#5400FF";
@@ -11,4 +13,6 @@ export const RED = "#f03434"
 export const WHITE = "#FFFFFF"
 export const TRACKING_ID = "UA-159992242-1";
 export const NEAR_RPC_URL = "https://rpc.nearprotocol.com"
-export const PRE_PAID_GAS = 10000000000000000;
+export const PRE_PAID_GAS = new BN("10000000000000000");
+export const ZERO = new BN("0");
+export const CONTRACT_ID = "fluxprotocol-phase-point-two";

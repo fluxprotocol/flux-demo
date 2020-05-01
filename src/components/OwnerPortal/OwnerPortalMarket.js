@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import BN from 'bn.js';
 import { FluxContext } from '../FluxProvider';
-import { PRE_PAID_GAS } from './../../constants';
+import { CONTRACT_ID, PRE_PAID_GAS, ZERO } from './../../constants';
 import { removeMarket } from './../../utils/marketsUtils';
 
 const Market = styled.div`
@@ -34,11 +34,27 @@ const OwnerPortalMarket = ({market}) => {
 	const resolute = async (winningOutcome) => {
 		console.log("resoluting...");
 		try {
-			await flux.resolute(market.id, winningOutcome);
+			await flux.resolute(market.id, winningOutcome, market.resolute_bond);
 		} 
 		catch (err){
 			console.error(err)
 		}
+	}
+
+	const disputeOutcome = async (marketId, winningOutcome, stake) => {
+		
+		flux.account.callFunction(
+			CONTRACT_ID,
+			"dispute_outcome",
+			{
+				market_id: marketId,
+				winning_outcome: winningOutcome,
+				stake: stake
+
+			},
+			PRE_PAID_GAS,
+			ZERO
+		);
 	}
 
 	let resoluteButtons = [];

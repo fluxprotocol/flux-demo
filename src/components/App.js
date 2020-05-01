@@ -41,13 +41,12 @@ function App({...props}) {
         const res = await getMarkets([])
         marketIds = res.markets.length > 0 ? res.markets.map(market => parseInt(market.marketId)) : [];
       }
-      const promArr = Promise.all(marketIds.map(id => fluxInstance.getMarketsById([id])));
-      
-      promArr.then(markets => {
+
+      fluxInstance.getMarketsById(marketIds).then(markets => {
         console.log(markets);
-        let flatArr = markets.map(market => market[Object.keys(market)[0]]);
-        setMarkets(fluxInstance.formatMarkets(flatArr));
-      })
+        setMarkets(fluxInstance.formatMarkets(markets));
+      });
+
     })
   }, [specificId]);
 
