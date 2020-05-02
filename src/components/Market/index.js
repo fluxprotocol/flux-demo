@@ -1,14 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { DARK_BLUE, PINK } from '../../../constants';
+import { DARK_BLUE, PINK } from '../../constants';
 import ResolutedSection from './ResolutedSection';
 import MarketContent from './MarketContent.js';
-import { Link } from 'react-router-dom';
 
 const MarketContainer = styled.div`
   width: 90%;
   padding: 0 5%;
-	margin-top: 25px;
+	margin-top: ${({single}) => single ? "105px" : "25px"};
   position: static;
 	color: ${DARK_BLUE};
   display: block;
@@ -27,29 +26,17 @@ const MarketContainer = styled.div`
 
 `;
 
-const AllMarketsButton = styled(Link)`
-	padding-top: 14px;
-	color: ${PINK};
-	border: none;
-	font-size: 18px;
-	text-align: center;
-	display: block;
-`
-
-function Market({market, specificId}) {
+function Market({market, single}) {
 	return (
-		<>
-		<MarketContainer >
+		<MarketContainer single>
 			{
 				market 
 				?
-					!market.resoluted ? <MarketContent specificId={specificId} market={market}/> : <ResolutedSection market={market}/>
+					!market.resoluted ? <MarketContent market={market}/> : <ResolutedSection market={market}/>
 				:
 				null
 			}
 		</MarketContainer>
-		{specificId &&<AllMarketsButton to="/"> all markets</AllMarketsButton>}
-		</>
 	)
 }
 

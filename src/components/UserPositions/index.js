@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
-import ModalButton from '../../../ModalButton';
-import { DARK_BLUE } from '../../../../constants';
-import Loader from '../../../Loader';
+import ModalButton from '../ModalButton';
+import { DARK_BLUE } from '../../constants';
+import Loader from '../Loader';
 import OpenOrders from './OpenOrders';
 import FilledOrders from './FilledOrders';
-import { Description } from './../MarketContent';
-import ResolutionDate from '../ResolutionDate';
-import { FluxContext } from "./../../../FluxProvider";
+import { Description } from '../Market/MarketContent';
+import ResolutionDate from '../Market/ResolutionDate';
+import { FluxContext } from "./../FluxProvider";
 
 const Container = styled.div`
 	background-color: white;

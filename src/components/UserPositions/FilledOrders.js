@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Header, HeaderSection } from '../MarketContent';
+import { Header, HeaderSection } from '../Market/MarketContent';
 import FilledOrderButton from './FilledOrderButton';
 
 export default ({orders, market}) => {

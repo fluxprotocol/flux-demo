@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
-import { capitalize } from '../../../utils/stringManipulation';
-import { DARK_BLUE, LIGHT_GRAY } from '../../../constants';
+import { capitalize } from '../../utils/stringManipulation';
+import { DARK_BLUE, LIGHT_GRAY } from '../../constants';
 import ExtraInfo from './ExtraInfo.js';
 import OutcomeButton from './OutcomeButton.js';
-import UserPositions from './UserPositions/UserPositions.js';
+import UserPositions from '../UserPositions';
 import ResolutionDate from './ResolutionDate.js';
-import { WebSocketContext } from '../../WSProvider';
-import { FluxContext } from '../../FluxProvider';
+import { WebSocketContext } from '../WSProvider';
+import { FluxContext } from '../FluxProvider';
 
 const ButtonSection = styled.div`
   width: 100%;

@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { getTransactions } from './explorer-api';
 import { FluxContext, connect } from '../FluxProvider';
 import formatData from './formatData';
-import allTxLatest from './allTxLatest';
 import { LineChart, Line, YAxis, XAxis, Tooltip } from 'recharts';
 import styled from 'styled-components';
 

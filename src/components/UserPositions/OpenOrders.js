@@ -1,8 +1,8 @@
 import React, {useState, useContext} from 'react';
 import styled from 'styled-components';
-import { Header, HeaderSection } from '../MarketContent';
+import { Header, HeaderSection } from '../Market/MarketContent';
 import CancelButton from './CancelButton';
-import { FluxContext } from './../../../FluxProvider';
+import { FluxContext } from './../FluxProvider';
 
 const OpenOrders = ({orders, market}) => {
 	const [selectedOrder, setSelectedOrder] = useState(null)

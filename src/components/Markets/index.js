@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import Market from './Market/Market';
+import Market from '../Market';
 import Spinner from '../Spinner';
 
 const MarketsContainer = styled.div`
@@ -15,7 +15,7 @@ const MarketsContainer = styled.div`
 	}
 `
 
-const Markets = ({markets, specificId}) => {
+const Markets = ({markets}) => {
 	return (
 		<MarketsContainer id="markets-container">
 				
@@ -24,7 +24,7 @@ const Markets = ({markets, specificId}) => {
 				<Spinner /> 
 				:
 				markets.map((market) => (
-					<Market market={market} specificId={specificId} key={market.id}/>
+					<Market market={market} key={market.id}/>
 				))
 			}	
 		</MarketsContainer>

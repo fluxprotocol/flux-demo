@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { DARK_BLUE, PINK, BLUE } from '../../../constants';
-import { OrderContext } from '../../OrderProvider';
+import { DARK_BLUE, PINK, BLUE } from '../../constants';
+import { OrderContext } from '../OrderProvider';
 
 export const Button = styled.button`
 	width: 100%;

@@ -1,17 +1,16 @@
 import React, { useEffect, useContext, useState} from 'react';
-import Header from './Header';
-import Markets from './Markets/Markets';
-import OwnerPortal from './OwnerPortal/OwnerPortal';
-import OrderModal from './Markets/Market/OrderModal';
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import Markets from './Markets';
 import Loader from './Loader';
 import { FluxContext, connect } from './FluxProvider';
-import { OrderProvider } from './OrderProvider';
 import { API_URL } from '../constants';
 import socketIOClient from "socket.io-client";
 import { WebSocketContext } from './WSProvider';
 import GAEvents from '../GAEvents';
 import {getMarkets} from '../utils/marketsUtils';
-
+import Header from './Header';
+import Dashboard from './Dashboard';
+import Market from './Market';
 const ws = socketIOClient(API_URL);
 
 function App({...props}) {
@@ -20,7 +19,6 @@ function App({...props}) {
   const [markets, setMarkets] = useState([]);
 
   const ga = new GAEvents();
-  const specificId = props.match.params.marketId;
   
   useEffect(() => {
     dispatchSocket({type: "webSocketConnected", payload: ws});
@@ -33,14 +31,8 @@ function App({...props}) {
       }
       dispatch({type: 'connected', payload: {flux: fluxInstance}});
       
-
-      let marketIds = [];
-      if (specificId) {
-        marketIds = [parseInt(specificId)];
-      } else {
-        const res = await getMarkets([])
-        marketIds = res.markets.length > 0 ? res.markets.map(market => parseInt(market.marketId)) : [];
-      }
+      const res = await getMarkets([])
+      const marketIds = res.markets.length > 0 ? res.markets.map(market => parseInt(market.marketId)) : [];
 
       fluxInstance.getMarketsById(marketIds).then(markets => {
         console.log(markets);
@@ -48,20 +40,20 @@ function App({...props}) {
       });
 
     })
-  }, [specificId]);
-
-
+  }, []);
 
   return (
     flux ?
-    <>
-      <OwnerPortal markets={markets}/>
-      <Header ga={ga}/>
-      <OrderProvider>
-        <Markets specificId={specificId} markets={markets}/>
-        <OrderModal ga={ga}/>
-      </OrderProvider>
-    </>
+    <Router>
+      <Route path="/" component={() => <Header ga={ga}/>}/>
+      <Route exact path="/" component={() => <Markets markets={markets}/>}/>
+      <Route exact path="/dashboard" component={Dashboard}/>
+      <Route path="/market/:marketId?" component={ 
+        ({match}) => <Market single market={
+          markets.find(market => market.id == match.params.marketId)}
+        />}
+      />
+    </Router>
     :
     <Loader txLoading={true}/>
   );

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { DARK_BLUE } from '../../../constants';
+import { DARK_BLUE } from '../../constants';
 
 const Input = styled.input`
 	border: 1px solid ${DARK_BLUE};

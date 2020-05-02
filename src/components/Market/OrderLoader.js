@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { DARK_BLUE } from '../../../constants';
+import { DARK_BLUE } from '../../constants';
 import fluxLogo from './../../../assets/flux-logo.png'
 const Container = styled.div`
 

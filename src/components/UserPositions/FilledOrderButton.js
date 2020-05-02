@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button } from './../OutcomeButton';
-import { DARK_BLUE } from '../../../../constants';
-import { daiToDollars } from '../../../../utils/unitConvertion';
+import { Button } from '../Market/OutcomeButton';
+import { DARK_BLUE } from '../../constants';
+import { daiToDollars } from '../../utils/unitConvertion';
 
 const ButtonData = styled.span`
 	width: 25%;

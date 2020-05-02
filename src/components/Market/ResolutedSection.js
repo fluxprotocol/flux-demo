@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
-import { DARK_BLUE } from '../../../constants';
+import { DARK_BLUE } from '../../constants';
 import ResolutionDate from './ResolutionDate';
 import { Description } from './MarketContent';
-import { capitalize } from '../../../utils/stringManipulation';
-import { daiToDollars } from '../../../utils/unitConvertion';
-import { FluxContext } from '../../FluxProvider';
+import { capitalize } from '../../utils/stringManipulation';
+import { daiToDollars } from '../../utils/unitConvertion';
+import { FluxContext } from '../FluxProvider';
 
 const ResolutedContainer = styled.div`
 	display: block;

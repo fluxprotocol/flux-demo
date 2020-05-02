@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import ChangeablePrice from './ChangeablePrice';
 import OrderInput from './OrderInput';
-import { PINK, DARK_BLUE } from '../../../constants';
+import { PINK, DARK_BLUE } from '../../constants';
 import Button from '../../ModalButton';
 
 const CancelButton = styled.p`

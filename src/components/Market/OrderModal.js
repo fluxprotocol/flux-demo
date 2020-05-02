@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react';
-import Modal from './../../Modal';
+import Modal from './../Modal';
 import OrderForm from './OrderForm';
 import OrderRes from './OrderRes';
 import OrderLoader from './OrderLoader';
-import { OrderContext } from '../../OrderProvider';
-import { FluxContext } from '../../FluxProvider';
-import { dollarsToDai } from '../../../utils/unitConvertion';
-import { WebSocketContext } from '../../WSProvider';
+import { OrderContext } from '../OrderProvider';
+import { FluxContext } from '../FluxProvider';
+import { dollarsToDai } from '../../utils/unitConvertion';
+import { WebSocketContext } from '../WSProvider';
 
 function OrderModal({ga}) {
 	const [ socket, dispatchSocket ] = useContext(WebSocketContext);

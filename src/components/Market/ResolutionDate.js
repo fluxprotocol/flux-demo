@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { moreThanWeekFromNow } from '../../../utils/dateUtils.js';
+import { moreThanWeekFromNow } from '../../utils/dateUtils.js';
 import Countdown from 'react-countdown-now';
 import CountdownTimer from './CountdownTimer.js';
 import EndDate from './EndDate.js';
-import { DARK_BLUE } from '../../../constants.js';
+import { DARK_BLUE } from '../../constants.js';
 
 const TimeIndicator = styled.span`
 	font-size: 12px;
