@@ -4,6 +4,8 @@ import Market from '../Market';
 import Spinner from '../Spinner';
 import MarketFilter from './MarketFilter';
 import { FluxContext } from '../FluxProvider';
+import { DARK_BLUE } from '../../constants';
+
 
 const MarketsContainer = styled.div`
   width: 100%;
@@ -15,6 +17,19 @@ const MarketsContainer = styled.div`
 	@media (min-width: 560px) {
 		margin-top: 115px;
 	}
+`
+const Button = styled.button`
+	display: inline-block;
+	width: calc(20% - 30px);
+	background: ${DARK_BLUE};
+	color: white;
+	font-size: 18px;
+	border-style: outset;
+	border-color: #0066A2;
+	padding: 8px 15px;
+	text-shadow:none;
+	border-radius: 6px;
+	margin-top: 15px;
 `
 
 const Markets = () => {

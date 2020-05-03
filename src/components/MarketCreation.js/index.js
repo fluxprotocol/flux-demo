@@ -6,8 +6,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import InputGroup from './InputGroup';
 import MarketDummy from './MarketDummy';
 import { DARK_BLUE } from '../../constants';
-import { Button } from '../Market/OutcomeButton';
-
+import Spinner from './../Spinner';
+import { useHistory } from 'react-router-dom';
 
 const Container = styled.div`
 	padding: 0 5%;
@@ -24,12 +24,28 @@ const CreationForm = styled.form`
 	}
 `
 
-const SubmitButton = styled.input`
+const Error = styled.p`
+	color: red;
+	font-size: 12px;
+	text-align: center;
+`
+
+const StyledSpinner = styled(Spinner)`
+	position: relative;
+	display: block;
+	margin: auto;
+	transform: scale(0.4);
+	left: auto;
+	top: 0;
+	height: 60px;
+`
+
+const SubmitButton = styled.button`
 	width: 90%;
 	margin-top: 40px;
-	background-color: ${DARK_BLUE};
+	background-color: ${(props) => props.isLoading ? 'grey' : DARK_BLUE};
 	border-radius: 6px;
-	padding: 10px 15px;
+	padding: ${(props) => props.isLoading ? '0' : "10px 15px"};
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	-webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	-moz-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -38,7 +54,7 @@ const SubmitButton = styled.input`
 	font-size: 18px;
 	font-weight: 600;
 	@media (min-width: 560px) {
-		padding: 15px 25px;
+		padding: ${(props) => props.isLoading ? '0' : "15px 25px}"};
 	}
 	&:active {
 		box-shadow: none;
@@ -66,6 +82,7 @@ const Radio = styled.input`
 
 // TODO: Add loader
 function MarketCreation () {
+	const history = useHistory();
 	const [{flux}, dispatch] = useContext(FluxContext);
 	const [description, setDescription] = useState("");
 	const [extraInfo, setExtraInfo] = useState("");
@@ -75,12 +92,29 @@ function MarketCreation () {
 	const [outcomeTags, setOutcomeTags] = useState([]);
 	const [categories, setCategories] = useState("");
 	const [error, setError] = useState("")
+	const [loading, setLoading] = useState(false);
+
 	const handleSubmit = async e => {
 		e.preventDefault();
-		let categoryCopy = categories; 
+		if (description.length === 0) return setError("Please enter a description")
+		if (outcomes < 2 || outcomes > 20) return setError("Please enter a valid amount of outcomes")
+		if (outcomes != 2 && outcomes > outcomeTags.length) return setError("Please enter a tag for each outcome")
+		if (endTime.length === 0) return setError("Please enter an end time")
+		if (endTime.getTime() <= new Date().getTime()) return setError("Please a end time that's in the future")
+		let outcomeTagCopy = outcomeTags;
+		if (outcomes == 2) outcomeTagCopy = [];
+		let categoryCopy = categories;
 		categoryCopy.replace(",", '');
 		const categoryArr = categoryCopy.split(" ");
-		const txRes = await flux.createMarket(description, extraInfo, parseInt(outcomes), outcomeTags, categoryArr, endTime.getTime(), 0);
+
+		setLoading(true);
+		try {
+			const txRes = await flux.createMarket(description, extraInfo, parseInt(outcomes), outcomeTags, categoryArr, endTime.getTime(), 0);
+			history.push(`/market/${atob(txRes.status.SuccessValue)}`)
+		} catch (err) {
+			setError(err)
+		}
+		setLoading(false);
 	}
 
 	const setOutcomeTag = (value, i) => {
@@ -130,6 +164,7 @@ function MarketCreation () {
 					value="binary"
 					checked={marketType === "binary"}
 					onChange={e => {
+						setOutcomes(2)
 						setMarketType("binary")
 					}}
 				/> binary (Yes | No)
@@ -144,7 +179,7 @@ function MarketCreation () {
 				/> Categorical
 	
 				{marketType === "categorical" && <InputGroup 
-					label="Number possible outcomes:"
+					label="Number of possible outcomes (max. 20):"
 					value={outcomes}
 					placeholder="number between 3 - 20"
 					setValue={setOutcomes}
@@ -166,7 +201,9 @@ function MarketCreation () {
 						/>
 					</>
 				}
-				<SubmitButton type="submit" value="create market"/>
+
+				<SubmitButton isLoading={loading} disabled={loading} type="submit">{ !loading ? "create market" : <StyledSpinner/> }</SubmitButton>
+				<Error>{error}</Error>
 			</CreationForm>
 			<MarketDummy 
 				description={description}

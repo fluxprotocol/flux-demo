@@ -3,13 +3,14 @@ import styled from 'styled-components';
 import {getMarketIds} from '../../utils/marketsUtils';
 import filterIcon from '../../assets/filter-icon.svg'
 import CheckBox from './CheckBox';
-import { BLUE, DARK_BLUE } from '../../constants';
+import { DARK_BLUE } from '../../constants';
+import { useHistory } from 'react-router-dom';
 
 const MarketFilterContainer = styled.div`
 	padding: 0 5%;
-  display: block;
-  margin: 0 auto;
-	margin-top: 80px;
+  display: inline-block;
+	width: 60%;
+	margin-top: 10px;
 	margin-bottom: 30px;
 
 `
@@ -21,10 +22,27 @@ const FilterIcon = styled.img`
 	padding: 5px;
 	border-radius: 6px;
 	cursor: pointer;
+	display: inline-block;
+	vertical-align: middle;
+
+`
+
+const AddMarketButton = styled.button`
+	border: 1px solid ${DARK_BLUE};
+	opacity: 1;
+	color: white;
+	font-weight: 600;
+	background-color: ${DARK_BLUE};
+	padding: 5px;
+	border-radius: 6px;
+	margin-left: 15px;
+	cursor: pointer;
+	vertical-align: middle;
+	display: inline-block;
 `
 
 const FilterSection = styled.form`
-
+	margin-top: 15px;
 `
 
 const SubmitButton = styled.input`
@@ -41,6 +59,7 @@ const SubmitButton = styled.input`
 `
 
 const MarketFilter = ({setMarkets, markets}) => {
+	const history = useHistory();
 	const [showFilter, setShowFilter] = useState(false);
 	const [filterOptions, setFilterOptions] = useState({
 		verified: true,
@@ -87,9 +106,14 @@ const MarketFilter = ({setMarkets, markets}) => {
 		filter();
 	}
 
+	const toCreate = () => {
+		history.push("/create")
+	}
+
 	return (
 		<MarketFilterContainer >
 			<FilterIcon onClick={toggleShowMarketFilter} src={filterIcon}/>
+			<AddMarketButton onClick={toCreate}>Add market</AddMarketButton>
 			{showFilter && <FilterSection onSubmit={handleSubmit}>
 				<CheckBox
 					checked={filterOptions.verified}
@@ -104,7 +128,7 @@ const MarketFilter = ({setMarkets, markets}) => {
 					label="markets with liquidity"
 				/>
 
-				<SubmitButton type="submit" value="filter"/>
+				<SubmitButton type="submit" value="apply"/>
 				
 			</FilterSection>}
 		</MarketFilterContainer>
