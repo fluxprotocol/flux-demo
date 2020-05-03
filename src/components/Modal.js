@@ -24,6 +24,7 @@ const ModalContainer = styled.div`
 	background-color: white;
 	position: fixed;
 	bottom: 0;
+	left: 0;
 	width: 90%;
 	z-index: 102;
 	animation: ${MoveUp} 500ms linear;

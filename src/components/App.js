@@ -7,16 +7,14 @@ import { API_URL } from '../constants';
 import socketIOClient from "socket.io-client";
 import { WebSocketContext } from './WSProvider';
 import GAEvents from '../GAEvents';
-import {getMarkets} from '../utils/marketsUtils';
 import Header from './Header';
-import Dashboard from './Dashboard';
 import Market from './Market';
+import MarketCreation from './MarketCreation.js';
 const ws = socketIOClient(API_URL);
 
 function App({...props}) {
   const [{flux}, dispatch] = useContext(FluxContext);
-  const [socket, dispatchSocket] = useContext(WebSocketContext);
-  const [markets, setMarkets] = useState([]);
+  const [, dispatchSocket] = useContext(WebSocketContext);
 
   const ga = new GAEvents();
   
@@ -30,15 +28,6 @@ function App({...props}) {
         ga.entryNoNearSession()
       }
       dispatch({type: 'connected', payload: {flux: fluxInstance}});
-      
-      const res = await getMarkets([])
-      const marketIds = res.markets.length > 0 ? res.markets.map(market => parseInt(market.marketId)) : [];
-
-      fluxInstance.getMarketsById(marketIds).then(markets => {
-        console.log(markets);
-        setMarkets(fluxInstance.formatMarkets(markets));
-      });
-
     })
   }, []);
 
@@ -46,13 +35,9 @@ function App({...props}) {
     flux ?
     <Router>
       <Route path="/" component={() => <Header ga={ga}/>}/>
-      <Route exact path="/" component={() => <Markets markets={markets}/>}/>
-      <Route exact path="/dashboard" component={Dashboard}/>
-      <Route path="/market/:marketId?" component={ 
-        ({match}) => <Market single market={
-          markets.find(market => market.id == match.params.marketId)}
-        />}
-      />
+      <Route exact path="/" component={Markets}/>
+      <Route path="/create" component={MarketCreation}/>
+      <Route path="/market/:marketId?" component={Market}/>
     </Router>
     :
     <Loader txLoading={true}/>

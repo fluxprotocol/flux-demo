@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { DARK_BLUE, PINK } from '../../constants';
 import ResolutedSection from './ResolutedSection';
 import MarketContent from './MarketContent.js';
+import { FluxContext } from '../FluxProvider';
+import { withRouter } from 'react-router-dom';
 
-const MarketContainer = styled.div`
+export const MarketContainer = styled.div`
   width: 90%;
   padding: 0 5%;
 	margin-top: ${({single}) => single ? "105px" : "25px"};
-  position: static;
 	color: ${DARK_BLUE};
   display: block;
   background-color: white;
@@ -26,13 +27,29 @@ const MarketContainer = styled.div`
 
 `;
 
-function Market({market, single}) {
+function Market({market, match}) {
+	let [marketData, setMarketData] = useState(market);
+	const [{flux}, ] = useContext(FluxContext);
+
+	useEffect(()=>{
+		let unmounted = false;
+		if (match.params.marketId != undefined) {
+			flux.getMarketsById([parseInt(match.params.marketId)]).then(res => {
+				const formattedMarket = flux.formatMarkets(res)
+				if (!unmounted) setMarketData(formattedMarket[0])
+			})
+		}
+		return () => {
+			unmounted = true;
+		}
+	}, [])
+
 	return (
-		<MarketContainer single>
+		<MarketContainer single={match.params.marketId != undefined}>
 			{
-				market 
+				marketData 
 				?
-					!market.resoluted ? <MarketContent market={market}/> : <ResolutedSection market={market}/>
+					!marketData.resoluted ? <MarketContent market={marketData}/> : <ResolutedSection market={marketData}/>
 				:
 				null
 			}
@@ -40,4 +57,4 @@ function Market({market, single}) {
 	)
 }
 
-export default Market;
+export default withRouter(Market);

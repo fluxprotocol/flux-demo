@@ -45,6 +45,7 @@ const LinkText = styled(Text)`
 `;
 
 export default function OrderRes({amountOfShares, res, closeModal}) {
+	console.log("res: ", res);
 	return (
 		<Container>
 			<Title>{!res.error ? "Success" : "Something went wrong"}</Title>

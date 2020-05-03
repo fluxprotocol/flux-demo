@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import Market from '../Market';
 import Spinner from '../Spinner';
+import MarketFilter from './MarketFilter';
+import { FluxContext } from '../FluxProvider';
 
 const MarketsContainer = styled.div`
   width: 100%;
@@ -15,15 +17,26 @@ const MarketsContainer = styled.div`
 	}
 `
 
-const Markets = ({markets}) => {
+const Markets = () => {
+	const [markets, setMarkets] = useState(null)
+	const [filteredMarkets, setFilteredMarkets] = useState(markets);
+	const [{flux}] = useContext(FluxContext);
+
+	useEffect(() => {
+		flux.contract.get_all_markets().then(marketsObj => {
+			const formattedMarkets = flux.formatMarkets(marketsObj);
+			setMarkets(formattedMarkets);
+		})
+	},[])
+
 	return (
-		<MarketsContainer id="markets-container">
-				
+		<MarketsContainer>
+			{markets && <MarketFilter markets={markets} setMarkets={setFilteredMarkets} />}
 			{
-				markets === null ? 
+				filteredMarkets === null ? 
 				<Spinner /> 
 				:
-				markets.map((market) => (
+				filteredMarkets.map((market) => (
 					<Market market={market} key={market.id}/>
 				))
 			}	
@@ -31,4 +44,4 @@ const Markets = ({markets}) => {
 	);
 }
 
-export default (Markets);
+export default Markets;

@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { DARK_BLUE, PINK, BLUE } from '../../constants';
-import { OrderContext } from '../OrderProvider';
 
 export const Button = styled.button`
 	width: 100%;
@@ -26,26 +25,25 @@ export const Button = styled.button`
 	}
 `;
 
-const Label = styled.span`
+export const Label = styled.span`
 font-size: 12px;
 width: 50%;
 font-weight: bold;
 text-align: left;
 `;
-const LastTradedPrice = styled.span`
+export const LastTradedPrice = styled.span`
 width: 25%;
 font-size: 20px;
 text-align: center;
 `;
-const MarketPrice = styled.span`
+export const MarketPrice = styled.span`
 text-align: right;
 width: 25%;
 font-size: 20px;
 font-weight: bold;
 `;
 
-const OutcomeButton = ({label, binary, index, market, price}) => {
-	const [orderModal, dispatch] = useContext(OrderContext)
+const OutcomeButton = ({label, binary, index, market, price, showOrderModal}) => {
 	const color = binary ? index === 0 ? PINK : BLUE : DARK_BLUE;
 	const lastTradedPrice = market.last_price_for_outcomes[index];
 	const hasLastTradedPrice = !!lastTradedPrice;
@@ -56,7 +54,7 @@ const OutcomeButton = ({label, binary, index, market, price}) => {
 	return (
 
 		<ColoredButton 
-			onClick={() => dispatch({type: 'startOrderPlacement', payload: {market, outcome: index, price}})} 
+			onClick={showOrderModal} 
 		>
 			<Label>{label}</Label>
 			<LastTradedPrice>{hasLastTradedPrice ? lastTradedPrice + "¢" : "--"}</LastTradedPrice>
