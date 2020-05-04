@@ -5,7 +5,7 @@ export const daiToDollars = (num) => {
 }
 
 export const dollarsToDai = (num) => {
-	return (num * 10 ** 17).toFixed(2)
+	return parseInt((num * 10 ** 17).toFixed(2))
 }
 
 export const yoctoToNear = (num) => {
@@ -23,24 +23,6 @@ export const toEarnings = (order) => {
 	} 
 	return 0;
 } 
-
-export const fromPayoutDistribution = (payoutDistribution) => {
-	let result;
-	switch(payoutDistribution[0]) {
-		case 0:
-			result = "yes";
-			break;
-		case 10000:
-			result = "no"
-			break;
-		case 5000:
-			result = "invalid";
-			break;
-		default:
-			result = null
-	}
-	return result;
-}
 
 export const allowanceToColor = (yocto) => {
 	if (yocto === null) {

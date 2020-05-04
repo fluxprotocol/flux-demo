@@ -1,28 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import thunk from 'redux-thunk';
 import * as serviceWorker from './serviceWorker';
 import GlobalStyles from  "./global-styles";
-
-import Authenticate from './components/Auth/Authenticate';
-import rootReducer from './reducers/rootReducer';
-
-const store = createStore(
-	rootReducer, 
-	applyMiddleware(thunk)
-);
+import App from './components/App';
+import { FluxProvider } from './components/FluxProvider';
+import { WSProvider } from './components/WSProvider';
+import Dashboard from './components/Dashboard';
 
 ReactDOM.render(
-	<Provider store={store}>
+	<>
 		<GlobalStyles/>
-		<Router>
-			<Route exact path="/:accessToken?" component={Authenticate}/>
-		</Router>
-	</Provider>
-	, document.getElementById('root')
+		<FluxProvider>
+			<WSProvider>
+				<Router>
+					<Route exact path="/" component={App}/>
+					<Route exact path="/dashboard" component={Dashboard}/>
+					<Route path="/market/:marketId?" component={App}/>
+				</Router>
+			</WSProvider>
+		</FluxProvider>
+	</>
+	, 
+	document.getElementById('root')
 );
 
 serviceWorker.unregister();

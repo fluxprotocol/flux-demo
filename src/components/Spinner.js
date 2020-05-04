@@ -1,42 +1,97 @@
 import React from 'react';
 import styled from 'styled-components';
+import { PINK } from '../constants';
 
 const Spinner = styled.div `
 	display: inline-block;
 	position: absolute;
-	width: 64px;
-	height: 64px;
+	width: 80px;
+	height: 80px;
+	left: calc(50% - 40px);
+	top: calc(50% - 40px);
 
-  & div {
-	position: absolute;
-	border: 4px solid #FF009C;
-	opacity: 1;
-	border-radius: 50%;
-	animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
-  }
-  & div:nth-child(2) {
-	animation-delay: -0.5s;
-  }
-  @keyframes lds-ripple {
-	0% {
-	  top: 28px;
-	  left: 28px;
-	  width: 0;
-	  height: 0;
-	  opacity: 1;
+	& div {
+		animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+		transform-origin: 40px 40px;
 	}
-	100% {
-	  top: -1px;
-	  left: -1px;
-	  width: 58px;
-	  height: 58px;
-	  opacity: 0;
+	& div:after {
+		content: " ";
+		display: block;
+		position: absolute;
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: ${PINK};
+		margin: -4px 0 0 -4px;
 	}
-  }
-  
+	& div:nth-child(1) {
+		animation-delay: -0.036s;
+	}
+	& div:nth-child(1):after {
+		top: 63px;
+		left: 63px;
+	}
+	& div:nth-child(2) {
+		animation-delay: -0.072s;
+	}
+	& div:nth-child(2):after {
+		top: 68px;
+		left: 56px;
+	}
+	& div:nth-child(3) {
+		animation-delay: -0.108s;
+	}
+	& div:nth-child(3):after {
+		top: 71px;
+		left: 48px;
+	}
+	& div:nth-child(4) {
+		animation-delay: -0.144s;
+	}
+	& div:nth-child(4):after {
+		top: 72px;
+		left: 40px;
+	}
+	& div:nth-child(5) {
+		animation-delay: -0.18s;
+	}
+	& div:nth-child(5):after {
+		top: 71px;
+		left: 32px;
+	}
+	& div:nth-child(6) {
+		animation-delay: -0.216s;
+	}
+	& div:nth-child(6):after {
+		top: 68px;
+		left: 24px;
+	}
+	& div:nth-child(7) {
+		animation-delay: -0.252s;
+	}
+	& div:nth-child(7):after {
+		top: 63px;
+		left: 17px;
+	}
+	& div:nth-child(8) {
+		animation-delay: -0.288s;
+	}
+	& div:nth-child(8):after {
+		top: 56px;
+		left: 12px;
+	}
+	@keyframes lds-roller {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+
 `
   
 
-const spinner = ({className, children}) => <Spinner  className={className}><div></div>{children}<div></div></Spinner>
+const spinner = () => <Spinner ><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></Spinner>
 
 export default spinner;
