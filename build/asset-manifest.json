@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.js": "/static/js/main.d696faa7.chunk.js",
+    "main.js.map": "/static/js/main.d696faa7.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.607127d9.js",
+    "runtime-main.js.map": "/static/js/runtime-main.607127d9.js.map",
+    "static/css/2.b90ce945.chunk.css": "/static/css/2.b90ce945.chunk.css",
+    "static/js/2.ce9eeeeb.chunk.js": "/static/js/2.ce9eeeeb.chunk.js",
+    "static/js/2.ce9eeeeb.chunk.js.map": "/static/js/2.ce9eeeeb.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.266aaaf13fe07512ec5f0baf144c1aab.js": "/precache-manifest.266aaaf13fe07512ec5f0baf144c1aab.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.b90ce945.chunk.css.map": "/static/css/2.b90ce945.chunk.css.map",
+    "static/media/error.png": "/static/media/error.636d6b5f.png",
+    "static/media/filter-icon.svg": "/static/media/filter-icon.fdcc1cfc.svg",
+    "static/media/flux-logo.png": "/static/media/flux-logo.0f9f85b8.png",
+    "static/media/iphone.png": "/static/media/iphone.a3f4e3fd.png",
+    "static/media/success.png": "/static/media/success.ca1d9d6c.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.607127d9.js",
+    "static/css/2.b90ce945.chunk.css",
+    "static/js/2.ce9eeeeb.chunk.js",
+    "static/js/main.d696faa7.chunk.js"
+  ]
+}
