@@ -76,7 +76,7 @@ const MarketFilter = ({setMarkets, markets}) => {
 
 	useEffect(() => {
 		let unmounted = false;
-		if (!unmounted) filter();
+		filter();
 		return () => {
 			unmounted = true
 		}
@@ -87,13 +87,13 @@ const MarketFilter = ({setMarkets, markets}) => {
 		if (filterOptions.verified) {
 			const res = await getMarketIds([]);
 			filteredMarkets = filteredMarkets
-												.filter(market => {
-													return res.markets.findIndex(verifiedMarket => {
-														return market.id == verifiedMarket.marketId
-													}) > -1
-												})
+			.filter(market => {
+				return res.markets.findIndex(verifiedMarket => {
+					return market.id == verifiedMarket.marketId
+				}) > -1
+			})
 		}
-
+		
 		if (filterOptions.liquidity) {
 			filteredMarkets = filteredMarkets.filter(market => market.liquidity > 0);
 		}
