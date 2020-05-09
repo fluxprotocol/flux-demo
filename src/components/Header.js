@@ -69,7 +69,7 @@ const AllowanceWarning = styled.div`
 
 `
 
-function Header({ga}) {
+function Header() {
 	const [{flux, balance}, dispatch] = useContext(FluxContext);
 	const isSignedIn = flux.walletConnection.isSignedIn();
 	const history = useHistory();
@@ -95,7 +95,6 @@ function Header({ga}) {
 				!isSignedIn
 				? 
 			  <LoginButton onClick={() => {
-					ga.signInClicked();
 					flux.signIn()
 				}} >Sign in</LoginButton>
 				: (
@@ -103,7 +102,6 @@ function Header({ga}) {
 						<AccountInfo> {flux.getAccountId()} <AllowanceWarning>!</AllowanceWarning> </AccountInfo>
 						<AccountInfo> {balance !== undefined ? `$${daiToDollars(balance)}` : null}</AccountInfo>
 						<LoginButton onClick={() => {
-							ga.signOutClicked();
 							flux.signOut()
 							reloadApp()
 						}}>Sign out</LoginButton>

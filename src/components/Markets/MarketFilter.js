@@ -62,7 +62,6 @@ const MarketFilter = ({setMarkets, markets}) => {
 	const history = useHistory();
 	const [showFilter, setShowFilter] = useState(false);
 	const [filterOptions, setFilterOptions] = useState({
-		verified: true,
 		liquidity: false
 	})
 
@@ -84,15 +83,6 @@ const MarketFilter = ({setMarkets, markets}) => {
 
 	const filter = async () => {
 		let filteredMarkets = [...markets]
-		if (filterOptions.verified) {
-			const res = await getMarketIds([]);
-			filteredMarkets = filteredMarkets
-			.filter(market => {
-				return res.markets.findIndex(verifiedMarket => {
-					return market.id == verifiedMarket.marketId
-				}) > -1
-			})
-		}
 		
 		if (filterOptions.liquidity) {
 			filteredMarkets = filteredMarkets.filter(market => market.liquidity > 0);
@@ -115,12 +105,6 @@ const MarketFilter = ({setMarkets, markets}) => {
 			<FilterIcon onClick={toggleShowMarketFilter} src={filterIcon}/>
 			<AddMarketButton onClick={toCreate}>+ Add market</AddMarketButton>
 			{showFilter && <FilterSection onSubmit={handleSubmit}>
-				<CheckBox
-					checked={filterOptions.verified}
-					toggleFilterOption={toggleFilterOption}
-					value="verified"
-					label="only verified markets"
-				/>
 				<CheckBox
 					checked={filterOptions.liquidity}
 					toggleFilterOption={toggleFilterOption}

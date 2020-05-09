@@ -33,8 +33,6 @@ function Resolute({ data }) {
 		setIsLoading(DEFAULT_STATE)
 	}
 
-	console.log(isloading.loading)
-
 	return (
 		<Container>
 			<Title>RESOLUTABLE: {data.description}</Title>

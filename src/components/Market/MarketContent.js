@@ -90,14 +90,6 @@ const MarketContent = ({...props}) => {
 
 	useEffect(() => {
 		let unmounted = false;
-		socket.on("order_placed", ({marketId, accountId}) => {
-			if (marketId === market.id) {
-				if(!unmounted) getAndSetMarketPrices();
-				if (accountId === flux.getAccountId()) {
-					if(!unmounted) getAndSetOrderbook();
-				}
-			}
-		});
 		if (!unmounted) getAndSetMarketPrices();
 		return () => {
       unmounted = true; 

@@ -38,8 +38,6 @@ function Finalize({ data }) {
 			console.error(err)
 			setIsLoading({loading: false, err: false, res: "oops, something went wrong"})
 		})
-
-		console.log("get here")
 	
 	};
 
@@ -56,7 +54,6 @@ function Finalize({ data }) {
 	}
 
 	const actionSection = () => {
-		console.log(data.disputed);
 		if (!data.disputed) {
 			return <button onClick={finalizeNonDisputedMarket}>Finalize</button>
 		} else if (data.disputed && isOwner) {
