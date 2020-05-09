@@ -38,7 +38,7 @@ const Markets = () => {
 	const [{flux}] = useContext(FluxContext);
 
 	useEffect(() => {
-		flux.contract.get_all_markets().then(marketsObj => {
+		flux.getAllMarkets().then(marketsObj => {
 			const formattedMarkets = flux.formatMarkets(marketsObj);
 			setMarkets(formattedMarkets);
 		})

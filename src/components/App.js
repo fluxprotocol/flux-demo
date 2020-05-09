@@ -10,6 +10,7 @@ import GAEvents from '../GAEvents';
 import Header from './Header';
 import Market from './Market';
 import MarketCreation from './MarketCreation.js';
+import Governance from './Governance';
 const ws = socketIOClient(API_URL);
 
 function App({...props}) {
@@ -37,6 +38,7 @@ function App({...props}) {
       <Route path="/" component={() => <Header ga={ga}/>}/>
       <Route exact path="/" component={Markets}/>
       <Route path="/create" component={MarketCreation}/>
+      <Route path="/govern" component={Governance}/>
       <Route path="/market/:marketId?" component={Market}/>
     </Router>
     :

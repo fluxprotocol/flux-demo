@@ -113,7 +113,7 @@ const MarketFilter = ({setMarkets, markets}) => {
 	return (
 		<MarketFilterContainer >
 			<FilterIcon onClick={toggleShowMarketFilter} src={filterIcon}/>
-			<AddMarketButton onClick={toCreate}>Add market</AddMarketButton>
+			<AddMarketButton onClick={toCreate}>+ Add market</AddMarketButton>
 			{showFilter && <FilterSection onSubmit={handleSubmit}>
 				<CheckBox
 					checked={filterOptions.verified}

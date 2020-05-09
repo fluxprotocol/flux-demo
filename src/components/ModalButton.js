@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default ({color, onClick ,children, className}) => {
 	const StyledButton = styled.button`
-		background-color: ${color};
+		background-color: ${props => props.color};
 		color: white;
 		border-radius: 10px;
 		font-size: 20px;
@@ -12,5 +11,6 @@ export default ({color, onClick ,children, className}) => {
 		margin-top: 18px;
 		padding: 18px;
 	`;
-	return <StyledButton className={className} onClick={onClick}>{children}</StyledButton>
+export default ({color, onClick ,children, className}) => {
+	return <StyledButton color={color} className={className} onClick={onClick}>{children}</StyledButton>
 }

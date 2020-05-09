@@ -32,7 +32,7 @@ const ModalContainer = styled.div`
 	padding-bottom: 18px;
 `
 
-const Blackground = styled.div`
+export const Blackground = styled.div`
 	position: fixed;
 	width: 100vw;
 	height: 100vh;

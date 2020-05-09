@@ -139,7 +139,7 @@ function MarketCreation () {
 				<InputGroup 
 					label="Market description:"
 					value={description}
-					placeholder="description"
+					placeholder="Will x happen by ?"
 					type="textarea"
 					setValue={setDescription}
 				/>
