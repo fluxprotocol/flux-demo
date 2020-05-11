@@ -11,14 +11,19 @@ const GovernanceContainer = styled.div`
 function Governance() {
 	const [{flux}, ] = useContext(FluxContext);
 	const [markets, setMarkets] = useState([]);
+	
+	const getAndSetMarkets = () => {
+		flux.getAllMarkets().then(marketsObj => {
+			const marketsArr = flux.formatMarkets(marketsObj).filter(market => market.end_time <= new Date().getTime() && market.finalized == false);
+			setMarkets(marketsArr)
+		})
+	}
+
 	useEffect(() => {
 		let unmounted = false; 
 		//get and set markets
-		flux.getAllMarkets().then(marketsObj => {
-			const marketsArr = flux.formatMarkets(marketsObj).filter(market => market.end_time <= new Date().getTime() && market.finalized == false);
-			if (!unmounted) setMarkets(marketsArr)
-		})
-
+		
+		if (!unmounted) getAndSetMarkets();
 		return () => {
 			unmounted = true
 		}
@@ -26,7 +31,7 @@ function Governance() {
 
 	return (
 		<GovernanceContainer>
-			{markets.map((market, i) => <MarketGovernance key={i} data={market} />)}
+			{markets.map((market, i) => <MarketGovernance getAndSetMarkets={getAndSetMarkets} key={i} data={market} />)}
 		</GovernanceContainer>
 	)
 }

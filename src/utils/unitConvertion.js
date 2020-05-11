@@ -41,5 +41,5 @@ export const allowanceToColor = (yocto) => {
 
 export const outcomeToTag = (outcome, outcomeTags) => {
 	if (outcomeTags.length === 0) return outcome == 0 ? "NO" : outcome == 1 ? "YES" : "INVALID"
-	else return outcomeTags[outcome];
+	else return outcomeTags[outcome] ? outcomeTags[outcome] : "INVALID" ;
 }

@@ -29,6 +29,8 @@ function GovernanceAction({ data, actionName, onSubmit, setNewWinningOutcome, ne
 		}
 	}
 
+	const stakeMessage = actionName === "resolute" ? "(stake $5)" : actionName === "dispute" ? "(stake $10)" : ""
+
 	return (
 		<Container>
 			<ExtraInfo>Extra info: {data.extra_info}</ExtraInfo>
@@ -37,7 +39,7 @@ function GovernanceAction({ data, actionName, onSubmit, setNewWinningOutcome, ne
 				<>
 					{outcomeButtons}
 					<ActionSection onSubmit={onSubmit}>
-						<Submit type="submit">{actionName}</Submit>
+						<Submit type="submit">{actionName} {stakeMessage}</Submit>
 					</ActionSection>
 				</>
 			)}
