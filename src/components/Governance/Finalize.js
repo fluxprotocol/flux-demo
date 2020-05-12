@@ -39,10 +39,6 @@ function Finalize({ data, getAndSetMarkets }) {
 			console.error(err)
 			setIsLoading({loading: false, err: false, res: "oops, something went wrong"})
 		})
-<<<<<<< HEAD
-	
-=======
->>>>>>> 6d970bc18af1d9a0633accee6ce73616ea54a980
 	};
 
 	const finalizeNonDisputedMarket = async () => {

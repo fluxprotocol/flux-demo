@@ -69,13 +69,9 @@ const MarketFilter = ({setMarkets, markets, match}) => {
 	const [showFilter, setShowFilter] = useState(false);
 
 	const [filterOptions, setFilterOptions] = useState({
-<<<<<<< HEAD
-		liquidity: false
-=======
 		verified: presetFilterOptions ? presetFilterOptions.verified : true,
 		liquidity: presetFilterOptions ? presetFilterOptions.liquidity : false,
 		active: presetFilterOptions ? presetFilterOptions.active : false
->>>>>>> 6d970bc18af1d9a0633accee6ce73616ea54a980
 	})
 
 	const toggleShowMarketFilter = () => setShowFilter(!showFilter);
