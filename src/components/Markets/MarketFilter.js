@@ -4,7 +4,8 @@ import {getMarketIds} from '../../utils/marketsUtils';
 import filterIcon from '../../assets/filter-icon.svg'
 import CheckBox from './CheckBox';
 import { DARK_BLUE } from '../../constants';
-import { useHistory } from 'react-router-dom';
+import { useHistory, withRouter } from 'react-router-dom';
+import gavel from './../../assets/gavel.png';
 
 const MarketFilterContainer = styled.div`
 	padding: 0 5%;
@@ -12,7 +13,6 @@ const MarketFilterContainer = styled.div`
 	width: 60%;
 	margin-top: 10px;
 	margin-bottom: 30px;
-
 `
 
 const FilterIcon = styled.img`
@@ -28,11 +28,11 @@ const FilterIcon = styled.img`
 `
 
 const AddMarketButton = styled.button`
-	border: 1px solid ${DARK_BLUE};
+	border: 1px solid ${props => props.bgColor};
 	opacity: 1;
 	color: white;
 	font-weight: 600;
-	background-color: ${DARK_BLUE};
+	background-color: ${props => props.bgColor};
 	padding: 5px;
 	border-radius: 6px;
 	margin-left: 15px;
@@ -57,12 +57,25 @@ const SubmitButton = styled.input`
 	display: block;
 	margin-top: 15px;
 `
+const Icon = styled.img`
+	height: 11px;
+	filter: invert(100%);
+	transform: scaleX(-1);
+`
 
-const MarketFilter = ({setMarkets, markets}) => {
+const MarketFilter = ({setMarkets, markets, match}) => {
 	const history = useHistory();
+	const presetFilterOptions = match.params.filterOptions ? JSON.parse(match.params.filterOptions) : null;
 	const [showFilter, setShowFilter] = useState(false);
+
 	const [filterOptions, setFilterOptions] = useState({
+<<<<<<< HEAD
 		liquidity: false
+=======
+		verified: presetFilterOptions ? presetFilterOptions.verified : true,
+		liquidity: presetFilterOptions ? presetFilterOptions.liquidity : false,
+		active: presetFilterOptions ? presetFilterOptions.active : false
+>>>>>>> 6d970bc18af1d9a0633accee6ce73616ea54a980
 	})
 
 	const toggleShowMarketFilter = () => setShowFilter(!showFilter);
@@ -79,7 +92,11 @@ const MarketFilter = ({setMarkets, markets}) => {
 		return () => {
 			unmounted = true
 		}
-	}, [])
+	}, [match.params.filterOptions])
+
+	const setParams = () => {
+		history.push(`/filter/${JSON.stringify(filterOptions)}`);
+	}
 
 	const filter = async () => {
 		let filteredMarkets = [...markets]
@@ -88,28 +105,44 @@ const MarketFilter = ({setMarkets, markets}) => {
 			filteredMarkets = filteredMarkets.filter(market => market.liquidity > 0);
 		}
 
+		if (filterOptions.active) {
+			const now = new Date().getTime();
+			filteredMarkets = filteredMarkets.filter(market => market.end_time > now)
+		}
 		setMarkets(filteredMarkets)
 	}
 
 	const handleSubmit = e => {
 		e.preventDefault();
-		filter();
+		setParams();
 	}
 
 	const toCreate = () => {
 		history.push("/create")
 	}
+	const toGovern = () => {
+		history.push("/govern")
+	}
+
+
 
 	return (
 		<MarketFilterContainer >
 			<FilterIcon onClick={toggleShowMarketFilter} src={filterIcon}/>
-			<AddMarketButton onClick={toCreate}>+ Add market</AddMarketButton>
+			<AddMarketButton bgColor={DARK_BLUE} onClick={toCreate}>+ Add market</AddMarketButton>
+			<AddMarketButton bgColor={"#FFA800"} onClick={toGovern}><Icon src={gavel}/> Govern outcomes</AddMarketButton>
 			{showFilter && <FilterSection onSubmit={handleSubmit}>
 				<CheckBox
 					checked={filterOptions.liquidity}
 					toggleFilterOption={toggleFilterOption}
 					value="liquidity"
 					label="markets with liquidity"
+				/>
+				<CheckBox
+					checked={filterOptions.active}
+					toggleFilterOption={toggleFilterOption}
+					value="active"
+					label="only display active markets"
 				/>
 
 				<SubmitButton type="submit" value="apply"/>
@@ -119,4 +152,4 @@ const MarketFilter = ({setMarkets, markets}) => {
 	);
 }
 
-export default MarketFilter;
+export default withRouter(MarketFilter);

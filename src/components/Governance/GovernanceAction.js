@@ -1,16 +1,34 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { outcomeToTag} from '../../utils/unitConvertion';
 import OutcomeButton from './OutcomeButton';
+import { DARK_BLUE, PINK } from '../../constants';
 
 const Container = styled.div``
 const ExtraInfo = styled.h3``
 const ActionButton = styled.button``
 const ActionSection = styled.form``
-const Submit = styled.button``
+const Submit = styled.button`
+	display: block;
+	margin: auto;
+	margin-top: 16px;
+	padding: 15px;
+	background-color: ${PINK};
+	border: 2px solid ${PINK};
+	border-radius: 6px;
+	font-size: 14px;
+	font-weight: 600;
+	color: white;
+`
+
+const OutcomeButtonContainer = styled.div`
+	display: flex;
+
+	justify-content: center;
+	flex-wrap: wrap;
+`
 
 function GovernanceAction({ data, actionName, onSubmit, setNewWinningOutcome, newWinningOutcome }) {
-	const [actionActive, setactionActive] = useState(false);
+	const [actionActive, setActionActive] = useState(true);
 
 	let outcomeButtons = [];
 	if (data.outcomes === 2) {
@@ -29,15 +47,19 @@ function GovernanceAction({ data, actionName, onSubmit, setNewWinningOutcome, ne
 		}
 	}
 
+	const stakeMessage = actionName === "resolute" ? "(stake $5)" : actionName === "dispute" ? "(stake $10)" : ""
+
 	return (
 		<Container>
-			<ExtraInfo>Extra info: {data.extra_info}</ExtraInfo>
-			{!actionActive && <ActionButton onClick={() => setactionActive(true)}>{actionName}</ActionButton>}
+			<ExtraInfo>Extra info: market id: {data.id} {data.extra_info}</ExtraInfo>
+			{!actionActive && <ActionButton onClick={() => setActionActive(true)}>{actionName}</ActionButton>}
 			{actionActive && (
 				<>
-					{outcomeButtons}
+					<OutcomeButtonContainer>
+						{outcomeButtons}
+					</OutcomeButtonContainer>
 					<ActionSection onSubmit={onSubmit}>
-						<Submit type="submit">{actionName}</Submit>
+						<Submit type="submit">{actionName} {stakeMessage}</Submit>
 					</ActionSection>
 				</>
 			)}

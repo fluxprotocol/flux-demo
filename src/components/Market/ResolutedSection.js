@@ -6,6 +6,8 @@ import { Description } from './MarketContent';
 import { capitalize } from '../../utils/stringManipulation';
 import { daiToDollars } from '../../utils/unitConvertion';
 import { FluxContext } from '../FluxProvider';
+import StandardTXLoader, { DEFAULT_STATE } from '../StandardTxLoader';
+import { useHistory } from 'react-router-dom';
 
 const ResolutedContainer = styled.div`
 	display: block;
@@ -41,7 +43,8 @@ const ClaimButton = styled.button`
 
 const ResolutedSection = ({market}) => {
 	const [{flux}, dispatch] = useContext(FluxContext);
-
+	const [isLoading, setIsLoading] = useState(DEFAULT_STATE)
+	const history = useHistory();
 	const updateBalance = async () => {
 		const updatedBalance = await flux.getFDaiBalance(flux.getAccountId());
 		dispatch({type: "balanceUpdate", payload: {balance: updatedBalance}});
@@ -50,10 +53,16 @@ const ResolutedSection = ({market}) => {
 	const updateClaimable = () => flux.getClaimable(market.id, flux.getAccountId()).then(res => setClaimable(res));
 
 	const onClaimClick = async () => {
-		await flux.claimEarnings(market.id, flux.getAccountId());
+		setIsLoading({res: null, err: false, loading: true})
+		await flux.claimEarnings(market.id, flux.getAccountId()).catch(err => {
+			return setIsLoading({loading: false, res: "oops, something went wrong", err: true})
+		})
 		updateClaimable();
 		updateBalance();
+		setIsLoading({loading: false, res: "success", err: false})
 	}
+
+	const closeLoader = () => setIsLoading(DEFAULT_STATE);
 
 	useEffect(() => {
 		let mounted = false;
@@ -72,15 +81,28 @@ const ResolutedSection = ({market}) => {
 		resolution = market.outcome_tags[market.winning_outcome] ? market.outcome_tags[market.winning_outcome] : "invalid"
 	}
 
+	const toGovernMarket = () => {
+		history.push(`/govern/${market.id}`)
+	}
+
 	return (
 		<ResolutedContainer>
 			<ResolutionDate endTime={market.end_time}/>
 			<Description>{capitalize(market.description)}</Description>
-			<ResolutionTitle>
-				Resolution: <Resolution>{resolution}</Resolution>
-			</ResolutionTitle>
 
-			<ClaimButton onClick={onClaimClick}>Claim ${daiToDollars(claimable)}</ClaimButton> 
+			{ market.finalized ? <>
+				<ResolutionTitle>
+				Resolution: <Resolution>{resolution}</Resolution>
+				</ResolutionTitle>
+				{(isLoading.loading || isLoading.res) && <StandardTXLoader res={isLoading.res} err={isLoading.err} closeLoader={closeLoader} />}
+				<ClaimButton onClick={onClaimClick}>Claim ${daiToDollars(claimable)}</ClaimButton> 
+			</>
+			: <>
+				<h3>Outcome governance process not yet completed</h3>
+				<ClaimButton onClick={toGovernMarket}>Participate</ClaimButton>
+			</>
+			}
+			
  	</ResolutedContainer>
 	);
 };

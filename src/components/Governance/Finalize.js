@@ -9,7 +9,7 @@ const Container = styled.div``
 const CurrentOutcome = styled.h3``
 const Title = styled.h1``
 
-function Finalize({ data }) {
+function Finalize({ data, getAndSetMarkets }) {
 	const [{flux}, ] = useContext(FluxContext)
 	const [newWinningOutcome, setNewWinningOutcome] = useState(false);
 	const [isOwner, setIsOwner] = useState(false);
@@ -33,12 +33,16 @@ function Finalize({ data }) {
 		flux.finalize(data.id, newWinningOutcome)
 		.then(res => {
 			setIsLoading({loading: false, err: false, res: "success"})
+			getAndSetMarkets();
 		})
 		.catch(err => {
 			console.error(err)
 			setIsLoading({loading: false, err: false, res: "oops, something went wrong"})
 		})
+<<<<<<< HEAD
 	
+=======
+>>>>>>> 6d970bc18af1d9a0633accee6ce73616ea54a980
 	};
 
 	const finalizeNonDisputedMarket = async () => {
@@ -46,6 +50,7 @@ function Finalize({ data }) {
 		flux.finalize(data.id, null)
 		.then(res => {
 			setIsLoading({loading: false, err: false, res: "success"})
+			getAndSetMarkets();
 		})
 		.catch(err => {
 			console.error(err)

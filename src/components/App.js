@@ -20,11 +20,12 @@ function App({...props}) {
   return (
     flux ?
     <Router>
-      <Route path="/" component={() => <Header />}/>
-      <Route exact path="/" component={Markets}/>
+      <Route path="/" component={() => <Header ga={ga}/>}/>
       <Route path="/create" component={MarketCreation}/>
-      <Route path="/govern" component={Governance}/>
+      <Route path="/govern/:marketId?" component={Governance}/>
       <Route path="/market/:marketId?" component={Market}/>
+      <Route path="/filter/:filterOptions?" component={Markets}/>
+      <Route exact path="/" component={Markets}/>
     </Router>
     :
     <Loader txLoading={true}/>
