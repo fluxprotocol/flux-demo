@@ -13,7 +13,7 @@ import MarketCreation from './MarketCreation.js';
 import Governance from './Governance';
 const ws = socketIOClient(API_URL);
 
-function App({...props}) {
+function App() {
   const [{flux}, dispatch] = useContext(FluxContext);
   const [, dispatchSocket] = useContext(WebSocketContext);
 

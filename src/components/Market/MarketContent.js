@@ -9,6 +9,7 @@ import ResolutionDate from './ResolutionDate.js';
 import { WebSocketContext } from '../WSProvider';
 import { FluxContext } from '../FluxProvider';
 import OrderModal from './OrderModal';
+import { TwitterShareButton, TwitterIcon } from 'react-share';
 
 const ButtonSection = styled.div`
   width: 100%;
@@ -17,7 +18,7 @@ const ButtonSection = styled.div`
 export const Description = styled.h1`
 	font-size: 24px;
 	color: ${DARK_BLUE};
-	padding-top: 55px;
+	padding-top: 30px;
 	display: block;
 	font-weight: 500;
 	margin: 0 auto;
@@ -67,6 +68,13 @@ export const ThirdHeader = styled(Header)`
 const TopSection = styled.div`
 	position: relative;
 	z-index: 1;
+	display: flex;
+	justify-content: space-between;
+`
+
+const StyledTwitterShareButton = styled(TwitterShareButton)`
+	display: inline-block;
+	margin-top: 4px;
 `
 
 const MarketContent = ({...props}) => {
@@ -135,6 +143,19 @@ const MarketContent = ({...props}) => {
 	return (
 		<div>
 			<TopSection>
+				<StyledTwitterShareButton
+					url={`https://app.flux.market/market/${market.id}`}
+					title={`Checkout this @fluxprotocol market: ${market.description}`}
+				>
+					<TwitterIcon
+						size={40}
+						round
+						iconFillColor={DARK_BLUE}
+						bgStyle={
+							{fill: "white"}
+						}
+					/>
+				</StyledTwitterShareButton>
 				<ResolutionDate endTime={end_time} />
 			</TopSection>
 			<Description>

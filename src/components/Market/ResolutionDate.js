@@ -9,17 +9,14 @@ import { DARK_BLUE } from '../../constants.js';
 const TimeIndicator = styled.span`
 	font-size: 12px;
   color: ${DARK_BLUE};
-	display: block;
-	width: 100%;
-	text-align: right;
 	padding-top: 18px;
 `;
 
-export default function ResolutionDate({endTime}) {
+export default function ResolutionDate({endTime, className}) {
 	const ended = endTime <= new Date().getTime();
 	
 	return (
-		<TimeIndicator>
+		<TimeIndicator className={className}>
 			{
 				moreThanWeekFromNow(endTime) || ended ? <EndDate ended={ended} endTime={endTime}/> : 	<Countdown zeroPadTime={2} date={endTime} renderer={CountdownTimer} />
 			}

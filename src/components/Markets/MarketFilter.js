@@ -10,7 +10,7 @@ import gavel from './../../assets/gavel.png';
 const MarketFilterContainer = styled.div`
 	padding: 0 5%;
   display: inline-block;
-	width: 60%;
+	width: 90%;
 	margin-top: 10px;
 	margin-bottom: 30px;
 `
@@ -62,6 +62,13 @@ const Icon = styled.img`
 	filter: invert(100%);
 	transform: scaleX(-1);
 `
+
+const FAQ = styled.a`
+	color: ${DARK_BLUE};
+	vertical-align: middle;
+	margin-left: 15px;
+	font-weight: 600px;
+` 
 
 const MarketFilter = ({setMarkets, markets, match}) => {
 	const history = useHistory();
@@ -136,6 +143,7 @@ const MarketFilter = ({setMarkets, markets, match}) => {
 			<FilterIcon onClick={toggleShowMarketFilter} src={filterIcon}/>
 			<AddMarketButton bgColor={DARK_BLUE} onClick={toCreate}>+ Add market</AddMarketButton>
 			<AddMarketButton bgColor={"#FFA800"} onClick={toGovern}><Icon src={gavel}/> Govern outcomes</AddMarketButton>
+			<FAQ target="_blank" href="https://medium.com/@fluxmarket/flux-app-faq-b4ffe81532b6?source=friends_link&sk=fc9dfbe360a3767c553e49d2f849d3f7">FAQ</FAQ>
 			{showFilter && <FilterSection onSubmit={handleSubmit}>
 				<CheckBox
 					checked={filterOptions.verified}

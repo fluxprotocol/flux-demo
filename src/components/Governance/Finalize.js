@@ -76,7 +76,7 @@ function Finalize({ data, getAndSetMarkets }) {
 
 	return (
 		<Container>
-			<Title>FINALIZABLE: {data.description}</Title>
+			<Title>Finalization: {data.description}</Title>
 			<CurrentOutcome>Last outcome: {outcomeToTag(data.winning_outcome, data.outcome_tags)}</CurrentOutcome>
 			{ actionSection() }
 			{(isLoading.loading || isLoading.res) && <StandardTXLoader res={isLoading.res} err={isLoading.err} closeLoader={closeLoader} />}

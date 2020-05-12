@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import OutcomeButton from './OutcomeButton';
-import { DARK_BLUE, PINK } from '../../constants';
+import { PINK } from '../../constants';
 
 const Container = styled.div``
 const ExtraInfo = styled.h3``
@@ -18,6 +18,9 @@ const Submit = styled.button`
 	font-size: 14px;
 	font-weight: 600;
 	color: white;
+	-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+	box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
 `
 
 const OutcomeButtonContainer = styled.div`

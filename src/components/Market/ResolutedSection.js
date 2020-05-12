@@ -40,6 +40,12 @@ const ClaimButton = styled.button`
 	margin: 25px 0;
 `;
 
+const StyledResolutionDate = styled(ResolutionDate)`
+	width: 100%;
+	text-align: right;
+	padding-top: 18px;
+	display: block;
+`
 
 const ResolutedSection = ({market}) => {
 	const [{flux}, dispatch] = useContext(FluxContext);
@@ -87,7 +93,7 @@ const ResolutedSection = ({market}) => {
 
 	return (
 		<ResolutedContainer>
-			<ResolutionDate endTime={market.end_time}/>
+			<StyledResolutionDate endTime={market.end_time}/>
 			<Description>{capitalize(market.description)}</Description>
 
 			{ market.finalized ? <>
