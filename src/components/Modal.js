@@ -24,6 +24,7 @@ const ModalContainer = styled.div`
 	background-color: white;
 	position: fixed;
 	bottom: 0;
+	left: 0;
 	width: 90%;
 	z-index: 102;
 	animation: ${MoveUp} 500ms linear;
@@ -31,7 +32,7 @@ const ModalContainer = styled.div`
 	padding-bottom: 18px;
 `
 
-const Blackground = styled.div`
+export const Blackground = styled.div`
 	position: fixed;
 	width: 100vw;
 	height: 100vh;

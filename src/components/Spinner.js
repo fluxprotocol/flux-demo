@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { PINK } from '../constants';
 
-const Spinner = styled.div `
+const SpinnerStyles = styled.div `
 	display: inline-block;
 	position: absolute;
 	width: 80px;
@@ -92,6 +92,6 @@ const Spinner = styled.div `
 `
   
 
-const spinner = () => <Spinner ><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></Spinner>
+const Spinner = ({className}) => <SpinnerStyles className={className} ><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></SpinnerStyles>
 
-export default spinner;
+export default Spinner;

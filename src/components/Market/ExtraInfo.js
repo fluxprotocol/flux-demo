@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
-import { DARK_BLUE, WHITE } from '../../../constants';
+import { DARK_BLUE, WHITE } from '../../constants';
 
 const ExtraInfoContainer = styled.div`
 	padding: 20px 0 ;

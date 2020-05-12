@@ -1,26 +1,23 @@
 import React, { useEffect, useContext, useState} from 'react';
-import Header from './Header';
-import Markets from './Markets/Markets';
-import OwnerPortal from './OwnerPortal/OwnerPortal';
-import OrderModal from './Markets/Market/OrderModal';
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import Markets from './Markets';
 import Loader from './Loader';
 import { FluxContext, connect } from './FluxProvider';
-import { OrderProvider } from './OrderProvider';
 import { API_URL } from '../constants';
 import socketIOClient from "socket.io-client";
 import { WebSocketContext } from './WSProvider';
 import GAEvents from '../GAEvents';
-import {getMarkets} from '../utils/marketsUtils';
-
+import Header from './Header';
+import Market from './Market';
+import MarketCreation from './MarketCreation.js';
+import Governance from './Governance';
 const ws = socketIOClient(API_URL);
 
-function App({...props}) {
+function App() {
   const [{flux}, dispatch] = useContext(FluxContext);
-  const [socket, dispatchSocket] = useContext(WebSocketContext);
-  const [markets, setMarkets] = useState([]);
+  const [, dispatchSocket] = useContext(WebSocketContext);
 
   const ga = new GAEvents();
-  const specificId = props.match.params.marketId;
   
   useEffect(() => {
     dispatchSocket({type: "webSocketConnected", payload: ws});
@@ -32,36 +29,19 @@ function App({...props}) {
         ga.entryNoNearSession()
       }
       dispatch({type: 'connected', payload: {flux: fluxInstance}});
-      
-
-      let marketIds = [];
-      if (specificId) {
-        marketIds = [parseInt(specificId)];
-      } else {
-        const res = await getMarkets([])
-        marketIds = res.markets.length > 0 ? res.markets.map(market => parseInt(market.marketId)) : [];
-      }
-
-      fluxInstance.getMarketsById(marketIds).then(markets => {
-        console.log(markets);
-        setMarkets(fluxInstance.formatMarkets(markets));
-      });
-
     })
-  }, [specificId]);
-
-
+  }, []);
 
   return (
     flux ?
-    <>
-      <OwnerPortal markets={markets}/>
-      <Header ga={ga}/>
-      <OrderProvider>
-        <Markets specificId={specificId} markets={markets}/>
-        <OrderModal ga={ga}/>
-      </OrderProvider>
-    </>
+    <Router>
+      <Route path="/" component={() => <Header ga={ga}/>}/>
+      <Route path="/create" component={MarketCreation}/>
+      <Route path="/govern/:marketId?" component={Governance}/>
+      <Route path="/market/:marketId?" component={Market}/>
+      <Route path="/filter/:filterOptions?" component={Markets}/>
+      <Route exact path="/" component={Markets}/>
+    </Router>
     :
     <Loader txLoading={true}/>
   );

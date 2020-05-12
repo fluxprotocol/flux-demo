@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { DARK_BLUE, PINK } from '../../../constants';
-import ErrorIcon from './../../../assets/error.png'
-import SuccessIcon from './../../../assets/success.png';
-import ModalButton from '../../ModalButton';
+import { DARK_BLUE, PINK } from '../../constants';
+import ErrorIcon from './../../assets/error.png'
+import SuccessIcon from './../../assets/success.png';
+import ModalButton from '../ModalButton';
 const Container = styled.div`
 
 `;

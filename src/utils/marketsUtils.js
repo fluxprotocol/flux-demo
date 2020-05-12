@@ -21,7 +21,7 @@ export const addMarket = async (marketId, description, accountId ,categories, si
 }
 
 
-export const getMarkets = async (categories) => {
+export const getMarketIds = async (categories) => {
 	if (categories.length === undefined) throw new Error("categories need to be an array, pass an empty array if no category filters")
 	const res = await fetch(`${API_URL}/markets/get`, {
 		method: "POST",

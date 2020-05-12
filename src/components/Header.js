@@ -1,12 +1,14 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import fluxLogo from '../assets/flux-logo.png';
 import styled from 'styled-components';
 import { daiToDollars } from '../utils/unitConvertion';
 import { DARK_GRAY, WHITE, DARK_BLUE } from '../constants';
 import { FluxContext } from './FluxProvider';
+import { useHistory } from 'react-router-dom';
 
 const Logo = styled.img`
 	width: 12%;
+	align-self: center;
 	display: inline-block;
 	align-self: center;
 	@media (min-width: 560px) {
@@ -70,11 +72,15 @@ const AllowanceWarning = styled.div`
 function Header({ga}) {
 	const [{flux, balance}, dispatch] = useContext(FluxContext);
 	const isSignedIn = flux.walletConnection.isSignedIn();
-	
+	const history = useHistory();
+
 	const reloadApp = () => {
 		window.location.reload();
 	}
 
+	const navHome = () => {
+		history.push("/")
+	}
 	if ((balance === null || balance === undefined) && flux.isSignedIn()) {
 
 		flux.getFDaiBalance(flux.getAccountId).then(updatedBalance => 
@@ -84,7 +90,7 @@ function Header({ga}) {
 	
 	return (
 		<HeaderContainer>
-		  <Logo onClick={reloadApp} id="header-logo" src={fluxLogo} alt="our company logo"/>
+			<Logo onClick={navHome} id="header-logo" src={fluxLogo} alt="our company logo"/>
 		  {
 				!isSignedIn
 				? 
