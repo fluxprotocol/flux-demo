@@ -20,7 +20,7 @@ function App({...props}) {
   return (
     flux ?
     <Router>
-      <Route path="/" component={() => <Header ga={ga}/>}/>
+      <Route path="/" component={() => <Header />}/>
       <Route path="/create" component={MarketCreation}/>
       <Route path="/govern/:marketId?" component={Governance}/>
       <Route path="/market/:marketId?" component={Market}/>
