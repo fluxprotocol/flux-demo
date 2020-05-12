@@ -151,6 +151,7 @@ const MarketContent = ({...props}) => {
 						size={40}
 						round
 						iconFillColor={DARK_BLUE}
+						hashtags={["flux", "fluxProtocol", "markets"]}
 						bgStyle={
 							{fill: "white"}
 						}
