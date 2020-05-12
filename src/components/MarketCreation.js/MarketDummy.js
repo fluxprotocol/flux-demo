@@ -35,7 +35,6 @@ const IPhoneStyled = styled.img`
 
 
 const StyledDescription = styled(Description)`
-	line-break: anywhere;
 `
 
 function MarketDummy ({description, outcomes, outcomeTags}) {

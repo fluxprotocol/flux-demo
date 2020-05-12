@@ -1,8 +1,16 @@
 import React from 'react';
 import styled from 'styled-components'
+import { DARK_BLUE } from '../../constants';
 
 const Button = styled.button`
-	background-color: ${props => props.isActive ? "red": "transparent"};
+		padding: 15px;
+		background-color: ${props => props.isActive ? "white" : DARK_BLUE};
+		border: 2px solid ${DARK_BLUE};
+		border-radius: 6px;
+		font-size: 14px;
+		font-weight: 600;
+		margin: 10px 10px;
+		color: ${props => props.isActive ? DARK_BLUE : "white"};
 `
 
 function OutcomeButton({children, setOutcome, isActive}) {

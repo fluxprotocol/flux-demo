@@ -44,12 +44,15 @@ function Market({market, match}) {
 		}
 	}, [])
 
+
+	const hasEnded = market.end_time <= new Date().getTime();
+
 	return (
 		<MarketContainer single={match.params.marketId != undefined}>
 			{
 				marketData 
 				?
-					!marketData.resoluted ? <MarketContent market={marketData}/> : <ResolutedSection market={marketData}/>
+					!hasEnded ? <MarketContent market={marketData}/> : <ResolutedSection market={marketData}/>
 				:
 				null
 			}

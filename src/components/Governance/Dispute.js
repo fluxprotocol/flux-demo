@@ -6,6 +6,7 @@ import Countdown from 'react-countdown-now';
 import GovernanceAction from './GovernanceAction';
 import DisputeTimer from './DisputeTimer';
 import StandardTXLoader, { DEFAULT_STATE } from '../StandardTxLoader';
+import { Error } from './Resolute';
 
 const Container = styled.div``
 const CurrentOutcome = styled.h3``
@@ -15,9 +16,16 @@ function Dispute({ data, getAndSetMarkets }) {
 	const [{flux}, dispatch] = useContext(FluxContext)
 	const [newWinningOutcome, setNewWinningOutcome] = useState(false);
 	const [isLoading, setIsLoading] = useState(DEFAULT_STATE);
+	const [errorMsg, setErrorMsg] = useState(null);
 
 	const handleDispute = async (e) => {
 		e.preventDefault();
+		
+		if (newWinningOutcome === false || newWinningOutcome >= data.outcomes) {
+			return setErrorMsg("Please select an outcome")
+		} else {
+			setErrorMsg(null)
+		}
 
 		setIsLoading({loading: true, res: null, err: null});
 
@@ -51,6 +59,7 @@ function Dispute({ data, getAndSetMarkets }) {
 				setNewWinningOutcome={setNewWinningOutcome}
 				newWinningOutcome={newWinningOutcome}
 			/>
+			<Error>{errorMsg}</Error>
 			{(isLoading.loading || isLoading.res) && <StandardTXLoader res={isLoading.res} err={isLoading.err} closeLoader={closeLoader} />}
 		</Container>
 	)
