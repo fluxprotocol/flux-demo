@@ -49,7 +49,7 @@ function Resolute({ data, getAndSetMarkets }) {
 
 	return (
 		<Container>
-			<Title>RESOLUTABLE: {data.description}</Title>
+			<Title>Resolvable: {data.description}</Title>
 			<GovernanceAction  
 				data={data} 
 				actionName="resolute" 

@@ -8,7 +8,7 @@ import Market from './Market';
 import MarketCreation from './MarketCreation.js';
 import Governance from './Governance';
 
-function App({...props}) {
+function App() {
   const [{flux}, dispatch] = useContext(FluxContext);
   
   useEffect(() => {

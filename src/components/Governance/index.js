@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 
 const GovernanceContainer = styled.div`
 	padding: 0 5%; 
-	padding-top: 150px;
+	padding-top: 80px;
 `
 
 function Governance({match}) {
