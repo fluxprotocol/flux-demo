@@ -50,7 +50,7 @@ export default function OrderRes({amountOfShares, res, closeModal}) {
 			<Title>{!res.error ? "Success" : "Something went wrong"}</Title>
 			<ResIcon src={!res.error ? SuccessIcon : ErrorIcon} alt="logo reflecting if the order faield or was successful"/>
 			<Text>{!res.error ? "order placed for" : "couldn't place order for"} <BoldText>{amountOfShares.toFixed(2)} shares</BoldText></Text>
-			{!res.error && <LinkText onClick = {() => window.open(`https://explorer.nearprotocol.com/transactions/${res.tx}`)}>view tx</LinkText>}
+			{!res.error && <LinkText onClick = {() => window.open(`https://explorer.near.org/transactions/${res.tx}`)}>view tx</LinkText>}
 			<ModalButton onClick={closeModal} color={!res.error ? DARK_BLUE : PINK}>{!res.error ? "Done" : "Close"}</ModalButton>
 		</Container>
 	)

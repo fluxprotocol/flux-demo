@@ -7,7 +7,7 @@ const WAMP_NEAR_EXPLORER_TOPIC_PREFIX = 'com.nearprotocol.testnet.explorer'
 const wamp = new Wampy(WAMP_NEAR_EXPLORER_URL, { realm: 'near-explorer' })
 
 async function getFunctionCallArgs(txHash, accountId) {
-    const res = await fetch(`https://rpc.testnet.nearprotocol.com`, {
+    const res = await fetch(`https://rpc.testnet.near.org`, {
         method: 'POST',
         headers: { 'Content-type': 'application/json; charset=utf-8' },
         body: JSON.stringify({
