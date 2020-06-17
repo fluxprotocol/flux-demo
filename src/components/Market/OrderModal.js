@@ -14,6 +14,7 @@ function OrderModal({ga, market, hideOrderModal, outcome, price}) {
 	const [ orderRes, setOrderRes ] = useState(null);
 	const [ amountOfShares, setAmountOfShares ] = useState(0);
 	const signedIn = flux.isSignedIn();
+
 	if (!signedIn) ga.placeOrderClickedNoSignin();
 
 	const placeOrder = async (price, spend) => {

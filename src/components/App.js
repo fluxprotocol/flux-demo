@@ -38,9 +38,9 @@ function App() {
       <Route path="/" component={() => <Header ga={ga}/>}/>
       <Route path="/create" component={MarketCreation}/>
       <Route path="/govern/:marketId?" component={Governance}/>
-      <Route path="/market/:marketId?" component={Market}/>
+      <Route path="/market/:marketId?" component={() => <Market ga={ga}/>}/>
       <Route path="/filter/:filterOptions?" component={Markets}/>
-      <Route exact path="/" component={Markets}/>
+      <Route exact path="/" component={() => <Markets ga={ga}/>}/>
     </Router>
     :
     <Loader txLoading={true}/>

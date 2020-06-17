@@ -27,10 +27,10 @@ export const MarketContainer = styled.div`
 
 `;
 
-function Market({market, match}) {
+function Market({market, match, ga}) {
 	let [marketData, setMarketData] = useState(market);
 	const [{flux}, ] = useContext(FluxContext);
-
+	
 	useEffect(()=>{
 		let unmounted = false;
 		if (match.params.marketId != undefined) {
@@ -52,7 +52,7 @@ function Market({market, match}) {
 			{
 				marketData 
 				?
-					!hasEnded ? <MarketContent market={marketData}/> : <ResolutedSection market={marketData}/>
+					!hasEnded ? <MarketContent ga={ga} market={marketData}/> : <ResolutedSection market={marketData}/>
 				:
 				null
 			}

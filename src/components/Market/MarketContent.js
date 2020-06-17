@@ -174,7 +174,7 @@ const MarketContent = ({...props}) => {
 			</ButtonSection>
 			{showPositions && <UserPositions updateMarketOrders={getAndSetMarketPrices} market={market} closeModal={() => setShowPositions(false)}/>}
 			<PositionsButton onClick={() => setShowPositions(true)}>my positions</PositionsButton>
-			{selectedOutcome !== null && <OrderModal price={marketOrders[selectedOutcome]} outcome={selectedOutcome} market={market} hideOrderModal={() => setSelectedOutcome(null)}/>}
+			{selectedOutcome !== null && <OrderModal ga={props.ga} price={marketOrders[selectedOutcome]} outcome={selectedOutcome} market={market} hideOrderModal={() => setSelectedOutcome(null)}/>}
 		</div>
 
 	);

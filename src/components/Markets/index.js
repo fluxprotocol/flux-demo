@@ -32,11 +32,12 @@ const Button = styled.button`
 	margin-top: 15px;
 `
 
-const Markets = () => {
+const Markets = ({ga}) => {
+	console.log("ga markets", ga)
 	const [markets, setMarkets] = useState(null)
 	const [filteredMarkets, setFilteredMarkets] = useState(markets);
 	const [{flux}] = useContext(FluxContext);
-
+	
 	useEffect(() => {
 		flux.getAllMarkets().then(marketsObj => {
 			const formattedMarkets = flux.formatMarkets(marketsObj);
@@ -52,7 +53,7 @@ const Markets = () => {
 				<Spinner /> 
 				:
 				filteredMarkets.map((market) => (
-					<Market market={market} key={market.id}/>
+					<Market ga={ga} market={market} key={market.id}/>
 				))
 			}	
 		</MarketsContainer>
